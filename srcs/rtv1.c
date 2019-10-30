@@ -1,0 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rtv1.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: merras <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
+/*   Updated: 2019/10/30 19:23:05 by merras           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "rtv1.h"
+
+int		main(int argc, char **argv)
+{
+	int	fd;
+
+	if (argc != 2)
+		return (ft_perror(EXEC_NAME, NULL, N_SCENE));
+	if ((fd = open(argv[1], O_RDONLY)) == -1)
+		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
+	parse_scene(fd);
+	
+}
