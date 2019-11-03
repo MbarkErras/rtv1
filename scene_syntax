@@ -1,4 +1,4 @@
-cameraddd: [x,y,z] [x,y,z] 						
+camera: [x,y,z] [x,y,z] 						
 		postion direction
 light: [x,y,z] [intensity]
 	   position intensity
@@ -10,7 +10,7 @@ plane: [x,y,z] [x,y,z] [a] [b] [c] [d]
 	   translation direction ax+by+cz+d=0 
 
 cylinder: [x,y,z] [x,y,z]  [x,y,z] [x,y,z] [r]
-		  position direction radius translation rotation
+		  position direction translation rotation radius
 cone: [x,y,z] [x,y,z] [x,y,z] [x,y,z] [x,y,z]
-	  position direction angle translation rotation
+	  position direction translation rotation angle
 #comment

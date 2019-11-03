@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtv1.c                                             :+:      :+:    :+:   */
+/*   t_object.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: merras <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2019/11/03 06:00:24 by merras           ###   ########.fr       */
+/*   Created: 2019/11/03 05:51:49 by merras            #+#    #+#             */
+/*   Updated: 2019/11/03 06:00:17 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-int		main(int argc, char **argv)
+t_object	*create_object(t_object	o)
 {
-	int	fd;
+	t_object	*object;
+	int			i;
 
-	if (argc != 2)
-		return (ft_perror(EXEC_NAME, NULL, N_SCENE));
-	if ((fd = open(argv[1], O_RDONLY)) == -1)
-		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
-	parse_scene(fd);
-	
+	object = (t_object *)malloc(sizeof(t_object));
+	object->type = o.type;
+	i = -1;
+	while (++i < 5)
+		ft_memcpy(object->vectors[i], o.vectors[i], 3 * sizeof(int));
+	ft_memcpy(object->scalars, o.scalars, 4 * sizeof(int));
+	return (object);
 }

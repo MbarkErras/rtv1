@@ -6,7 +6,7 @@
 /*   By: merras <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 14:40:37 by merras            #+#    #+#             */
-/*   Updated: 2019/10/30 19:23:18 by merras           ###   ########.fr       */
+/*   Updated: 2019/11/03 06:00:15 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ char	*ft_strerror(int err)
 		return (N_SCENE_T);
 	if (err == N_PROP)
 		return (N_PROP_T);
+	if (err == P_MIXED)
+		return (P_MIXED_T);
+	if (err == P_EXTRA)
+		return (P_EXTRA_T);
+	if (err == P_MISSING)
+		return (P_MISSING_T);
 	return (NULL);
 }
 
