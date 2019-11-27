@@ -4,7 +4,8 @@ SRCS=	rtv1.c \
 		scene_parser.c \
 		t_object.c \
 		checkers.c \
-		error_handling.c
+		error_handling.c \
+		renderer.c
 
 OBJS=$(SRCS:.c=.o)
 
@@ -22,7 +23,7 @@ all: $(NAME)
 $(NAME): $(OBJS_PATH) $(INCLUDES)/rtv1.h
 	make -C $(LIBS_DIR)/centropy
 	make -C $(LIBS_DIR)/simplist
-	gcc $(OBJS_PATH) -I$(INCLUDES) -I$(LIBS_DIR)/centropy/includes -I$(LIBS_DIR)/simplist/includes $(LIBS_DIR)/*/*.a -o $(NAME) 
+	gcc $(OBJS_PATH) -I$(INCLUDES) -I$(LIBS_DIR)/centropy/includes -I$(LIBS_DIR)/simplist/includes $(LIBS_DIR)/*/*.a -o $(NAME) -lSDL
 #-lmlx -framework openGL -framework AppKit
 
 $(OBJS_PATH): $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c | $(OBJS_DIR)

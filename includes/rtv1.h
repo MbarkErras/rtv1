@@ -20,10 +20,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
+# include "SDL/SDL.h"
 # include "centropy.h"
 # include "simplist.h"
 
 # define EXEC_NAME "rtv1"
+# define WIDTH 500;
+# define HEIGHT 500;
 # define MAX_OBJECT_NAME_SIZE 8
 
 typedef struct	s_object
@@ -32,6 +35,13 @@ typedef struct	s_object
 	float		vectors[5][3];
 	float		scalars[4];
 }				t_object;
+
+typedef struct	s_scene
+{
+	t_object	*camera;
+	t_object	*lights;
+	t_object	*objects;
+}				t_scene;
 
 t_object		*create_object(t_object o);
 
@@ -50,6 +60,12 @@ t_object		*create_object(t_object o);
 
 t_list			*parse_scene(int fd);
 int				is_recognized(char *word);
+
+/*
+** RENDERING
+*/
+
+void    render_object();
 
 /*
 ** READING SCENE FILE FLAGS

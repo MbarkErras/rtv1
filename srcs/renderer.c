@@ -12,17 +12,23 @@
 
 #include "rtv1.h"
 
-int		main(int argc, char **argv)
+void    render_object()
 {
-	/*
-	int	fd;
+    int eye[3] = {20, 0, 0};
+    int direction[3] = {-1, 0, 0};
+    int vplane[3];
+    int hplane[3];
+    int ray[3];
 
-	if (argc != 2)
-		return (ft_perror(EXEC_NAME, NULL, N_SCENE));
-	if ((fd = open(argv[1], O_RDONLY)) == -1)
-		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
-	parse_scene(fd);
-	*/
-	render_object(();
-	
+    int y;
+    int x = -1;
+    while (++x < WIDTH)
+    {
+        y = -1;
+        while (++y < HEIGHT)
+        {
+            ray[0] = direction[0] + 
+
+        }
+    }
 }
