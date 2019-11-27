@@ -22,7 +22,6 @@
 # include <math.h>
 # include "centropy.h"
 # include "simplist.h"
-# include "mlx.h"
 
 # define EXEC_NAME "rtv1"
 # define MAX_OBJECT_NAME_SIZE 8
