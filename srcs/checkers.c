@@ -14,6 +14,7 @@
 
 int	is_recognized(char *word)
 {
+	printf("to check: |%s|\n", word);
 	if (!ft_strcmp(word, "plane:"))
 		return (PLANE);
 	if (!ft_strcmp(word, "sphere:"))

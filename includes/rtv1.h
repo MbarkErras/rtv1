@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
-# include "SDL/SDL.h"
+# include "mlx.h"
 # include "centropy.h"
 # include "simplist.h"
 

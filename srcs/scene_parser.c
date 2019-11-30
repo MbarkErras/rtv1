@@ -12,6 +12,7 @@
 
 #include "rtv1.h"
 
+/*
 void	assign_properties_to_object(t_object *o, int vectors[5][3], int scalars[4])
 {
 	int	i;
@@ -20,7 +21,6 @@ void	assign_properties_to_object(t_object *o, int vectors[5][3], int scalars[4])
 	while (++i < 5)
 		ft_memcpy(o->vectors[i], vectors[i], 3 * sizeof(int));
 	ft_memcpy(o->scalars, scalars, 4 * sizeof(int));
-	/*
 	i = -1;
 	while (++i < 5)
 	{
@@ -51,16 +51,15 @@ void	assign_properties_to_object(t_object *o, int vectors[5][3], int scalars[4])
 			if (o->type == CONE)
 				ft_memcpy(o->properties[ANG], vectors[i], 3 * sizeof(int));
 	}
-	*/
 }
-
+*/
 /*
 ** comment about parse_properties() first error checking condition.
 ** first i check if there is any character that doesn't belong to our grammar:
 ** precisely, any digit, ",", ".", " ".
 ** after i check that every "," or "." has a digit before and after.
 */
-
+/*
 t_object	parse_properties(int fd, int object_type)
 {
 	char	property_vcounter[7] = {-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT};
@@ -127,35 +126,62 @@ t_object	parse_properties(int fd, int object_type)
 	assign_properties_to_object(&o, vectors, scalars);
 	return (o);
 }
+*/
 
-t_list	*parse_scene(int fd)
+#define COMMA_COUNT 0
+
+# define VECTORS_INCREMENTOR 0
+# define SCALARS_INCREMENTOR 1
+t_object	parse_properties(int fd)
 {
+	t_object	o;
+	char		buffer[1000];
 	int			i;
-	char		flag;
-	char		buffer[MAX_OBJECT_NAME_SIZE + 1];
-	t_list		*objects_list;
-	t_object	object;
+	char		flags[8];
+	int			p[2];
 
-	objects_list = NULL;
-	bzero(buffer, MAX_OBJECT_NAME_SIZE + 1);
+	ft_bzero(flags, 8);
+	ft_bzero(p, 2);
 	i = -1;
 	while (read(fd, buffer + ++i, 1) > 0)
 	{
-		if (!flag && buffer[i] == ':')
+		if (!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' && buffer[i] != '.' ||
+		((buffer[i] == '.' || buffer[i] == ',') && (!i || (!ft_isdigit(buffer[i - 1]) && !ft_isdigit(buffer[i + 1]))))) // if i == 999
+			exit(ft_perror(EXEC_NAME, NULL, N_PROP));
+		
+	}
+	return (o);
+}
+
+t_list		*parse_scene(int fd)
+{
+	t_list		*objects_list;
+	char		buffer[MAX_OBJECT_NAME_SIZE + 1];
+	int			comment_flag;
+	t_object	object;
+	int			i;
+
+	objects_list = NULL;
+	bzero(buffer, MAX_OBJECT_NAME_SIZE + 1);
+	comment_flag = 0;
+	i = -1;
+	while (read(fd, buffer + ++i, 1) > 0)
+	{
+		if (!i && buffer[i] == '#')
+			comment_flag = 1;
+		if (!comment_flag && buffer[i] == ':')
 		{
-			if (!(flag = is_recognized(buffer)))
-				exit(ft_perror(EXEC_NAME, NULL, N_WORD));
-			object = parse_properties(fd, flag);
-			list_push_back(&objects_list, list_create_node(create_object(object),
-			sizeof(object)));
+			if (!is_recognized(buffer))
+				exit(ft_perror(EXEC_NAME, buffer, N_WORD));
+			object = parse_properties(fd);
 			bzero(buffer, 10);
 			i = -1;
 		}
-		if (!flag && i > MAX_OBJECT_NAME_SIZE)
+		else if (i > MAX_OBJECT_NAME_SIZE)
 			exit(ft_perror(EXEC_NAME, buffer, N_WORD));
-		if (buffer[i] == '#' || (buffer[i] == '\n' && flag))
-			flag = buffer[i] == '#';
-		if (flag)
+		if (comment_flag && buffer[i] == '\n')
+			comment_flag = 0;
+		if (comment_flag)
 			i = -1;
 	}
 	return (objects_list);

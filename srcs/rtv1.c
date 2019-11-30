@@ -14,7 +14,6 @@
 
 int		main(int argc, char **argv)
 {
-	/*
 	int	fd;
 
 	if (argc != 2)
@@ -22,7 +21,4 @@ int		main(int argc, char **argv)
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
 	parse_scene(fd);
-	*/
-	render_object();
-	
 }
