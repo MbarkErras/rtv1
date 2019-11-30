@@ -12,23 +12,36 @@
 
 #include "rtv1.h"
 
+void    evaluate_plane(int *camera, int *direction, int *vplane, int *hplane)
+{
+    /*
+    ** resizing length of {v} to {L}: resized_vector = L/||v||*v;
+    */
+    vplane[2] = -1 * direction[2] * tan(HFOV);
+    hplane[2] = -1 * vplane[2] * tan(VFOV);
+}
+
 void    render_object()
 {
-    int eye[3] = {20, 0, 0};
-    int direction[3] = {-1, 0, 0};
-    int vplane[3];
-    int hplane[3];
+    int camera[3] = {20, 0, 0};
+    int direction[3] = {-1, 0, 0}; // direction vector can't be the null vector
+    int vplane[3] = {0, 0, 0};
+    int hplane[3] = {0, 0, 0};
     int ray[3];
+    int rayline[3];
 
     int y;
     int x = -1;
+    evaluate_plane(camera, direction, vplane, hplane);
     while (++x < WIDTH)
     {
         y = -1;
         while (++y < HEIGHT)
         {
-            ray[0] = direction[0] + 
-
+            ray[0] = camera[0] + direction[0] + (2 * x / WIDTH - 1) * hplane[0] + (2 * x / HEIGHT - 1) * vplane[0];
+            ray[1] = camera[1] + direction[1] + (2 * x / WIDTH - 1) * hplane[1] + (2 * x / HEIGHT - 1) * vplane[1];
+            ray[2] = camera[2] + direction[2] + (2 * x / WIDTH - 1) * hplane[2] + (2 * x / HEIGHT - 1) * vplane[2];
+            
         }
     }
 }

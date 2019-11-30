@@ -27,6 +27,8 @@
 # define EXEC_NAME "rtv1"
 # define WIDTH 500;
 # define HEIGHT 500;
+# define VFOV 60; // check for undefined
+# define HFOV 60; // check for undefined
 # define MAX_OBJECT_NAME_SIZE 8
 
 typedef struct	s_object
@@ -60,6 +62,12 @@ t_object		*create_object(t_object o);
 
 t_list			*parse_scene(int fd);
 int				is_recognized(char *word);
+
+/*
+** UTILITY MACROS
+*/
+
+# define VECTOR_LENGTH(v) sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2])
 
 /*
 ** RENDERING
