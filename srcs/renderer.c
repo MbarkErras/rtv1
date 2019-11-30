@@ -12,6 +12,20 @@
 
 #include "rtv1.h"
 
+void    hit_procedure(int *hit)
+{
+
+}
+
+int     *hit_loop(int *ray, t_list *objects)
+{
+    while (objects)
+    {
+        
+        objects = objects->next;
+    }
+}
+
 void    evaluate_plane(int *camera, int *direction, int *vplane, int *hplane)
 {
     /*
@@ -29,6 +43,7 @@ void    render_object()
     int hplane[3] = {0, 0, 0};
     int ray[3];
     int rayline[3];
+    int *hit;
 
     int y;
     int x = -1;
@@ -41,7 +56,8 @@ void    render_object()
             ray[0] = camera[0] + direction[0] + (2 * x / WIDTH - 1) * hplane[0] + (2 * x / HEIGHT - 1) * vplane[0];
             ray[1] = camera[1] + direction[1] + (2 * x / WIDTH - 1) * hplane[1] + (2 * x / HEIGHT - 1) * vplane[1];
             ray[2] = camera[2] + direction[2] + (2 * x / WIDTH - 1) * hplane[2] + (2 * x / HEIGHT - 1) * vplane[2];
-            
+            if ((hit = hit_loop(ray))
+                hit_procedure(hit);
         }
     }
 }
