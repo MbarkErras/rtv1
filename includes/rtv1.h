@@ -31,11 +31,16 @@
 # define HFOV 60; // check for undefined
 # define MAX_OBJECT_NAME_SIZE 8
 
-typedef struct	s_object
+typedef struct	s_object_raw
 {
-	char		type;
+	int			type;
 	float		vectors[5][3];
 	float		scalars[4];
+}				t_object_raw;
+
+typedef struct	s_object
+{
+	
 }				t_object;
 
 typedef struct	s_scene
@@ -59,6 +64,11 @@ t_object		*create_object(t_object o);
 # define CONE 4
 # define CAMERA 5
 # define LIGHT 6
+
+#define COMMA_COUNT 0
+#define JIDAR_BERLIN 1
+# define VECTORS_INCREMENTOR 0
+# define SCALARS_INCREMENTOR 1
 
 t_list			*parse_scene(int fd);
 int				is_recognized(char *word);
