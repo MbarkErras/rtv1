@@ -155,10 +155,11 @@ t_object	*parse_properties(int fd, int object_type)
 	int				read_return;
 
 	o.type = object_type;
-	ft_bzero(flags, 2);
-	ft_bzero(p, 2);
+	ft_bzero(flags, sizeof(flags));
+	ft_bzero(p, sizeof(p));
 	i = -1;
 	offset = -1;
+	printf(">> %d\n", flags[COMMA_COUNT]);
 	while (1)
 	{
 		if ((read_return = read(fd, buffer + ++i, 1)) < 0)
@@ -171,8 +172,9 @@ t_object	*parse_properties(int fd, int object_type)
 			exit(ft_perror(EXEC_NAME, NULL, N_PROP));
 		if (buffer[i] == ',')
 		{
+			printf(">> %d\n", flags[COMMA_COUNT]);
 			if (flags[COMMA_COUNT] > 1)
-				exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+				exit(ft_perror(EXEC_NAME, "yoyo", P_EXTRA));
 			vectors[p[VECTORS_INCREMENTOR]][flags[COMMA_COUNT]] = ft_atoi(buffer + offset);
 			flags[COMMA_COUNT]++;
 			offset = i + 1;
@@ -231,7 +233,7 @@ t_list		*parse_scene(int fd)
 		if ((read_return = read(fd, buffer + ++i, 1)) < 0)
 			break ;//read error: do something!!
 		if (!read_return)
-			break ;
+			break ;//is the file content complete?
 		if (!i && buffer[i] == '#')
 			comment_flag = 1;
 		if (!comment_flag && buffer[i] == ':')
