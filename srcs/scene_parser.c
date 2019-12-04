@@ -12,137 +12,17 @@
 
 #include "rtv1.h"
 
-/*
-void	assign_properties_to_object(t_object *o, int vectors[5][3], int scalars[4])
-{
-	int	i;
-
-	i = -1;
-	while (++i < 5)
-		ft_memcpy(o->vectors[i], vectors[i], 3 * sizeof(int));
-	ft_memcpy(o->scalars, scalars, 4 * sizeof(int));
-	i = -1;
-	while (++i < 5)
-	{
-		if (i == 0)
-		{
-			if (o->type != PLANE)
-				ft_memcpy(o->properties[POS], vectors[i], 3 * sizeof(int));
-			else
-				ft_memcpy(o->properties[TRA], vectors[i], 3 * sizeof(int));
-		}
-		if (i == 1)
-		{
-			if (o->type != SPHERE && o->type != LIGHT)
-				ft_memcpy(o->properties[DIR], vectors[i], 3 * sizeof(int));
-			if 
-		}
-		if (i == 2)
-		{
-			if (o->type == CYLINDER || o->type == CONE)
-				ft_memcpy(o->properties[TRA], vectors[i], 3 * sizeof(int));
-		}
-		if (i == 3)
-		{
-			if (o->type == CYLINDER || o->type == CONE)
-				ft_memcpy(o->properties[ROT], vectors[i], 3 * sizeof(int));
-		}
-		if (i == 4)
-			if (o->type == CONE)
-				ft_memcpy(o->properties[ANG], vectors[i], 3 * sizeof(int));
-	}
-}
-*/
-/*
-** comment about parse_properties() first error checking condition.
-** first i check if there is any character that doesn't belong to our grammar:
-** precisely, any digit, ",", ".", " ".
-** after i check that every "," or "." has a digit before and after.
-*/
-/*
-t_object	parse_properties(int fd, int object_type)
-{
-	char	property_vcounter[7] = {-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT};
-	char	property_scounter[7] = {-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, CONE_SCOUNT, CAMERA_SCOUNT, LIGHT_SCOUNT};
-	int			offset;
-	int			i;
-	t_object	o;
-	char		b[1000];
-	int			*value_pointer;
-	int			vectors[5][3];  //should be changed to double
-	int			scalars[4];
-	char		flags[8];
-	int			p[2];
-
-	ft_bzero(flags, 8);
-	ft_bzero(p, 2);
-	o.type = object_type;
-	offset = -1;
-	i = -1;
-	//do not forget to set a limit over line
-	while (read(fd, b + ++i, 1) > 0)
-	{
-		if (!ft_isdigit(b[i]) || b[i] != ' ' || b[i] != '\n' || b[i] != '.' || 
-		((b[i] == '.' || b[i] == ',') && (!i || (!ft_isdigit(b[i - 1]) &&
-		!ft_isdigit(b[i + 1])))))
-			exit(ft_perror(EXEC_NAME, NULL, N_PROP));
-		if (b[i] == ',')
-		{
-			if (flags[1] || flags[0] > 1)
-				exit(ft_perror(EXEC_NAME, NULL, P_MIXED));
-			vectors[p[1]][flags[0]] = atoi(b + offset);
-			flags[0]++;
-			offset = i + 1;
-		}
-		if (b[i] == ' ' || b[i] == '\n')
-		{
-			if (flags[0] == 2)
-			{
-				if (!property_vcounter[o.type])
-					exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
-				vectors[p[1]][2] = ft_atoi(b + offset);
-				p[1]++;
-				property_vcounter[o.type]--;
-			}
-			else if (!flags[0])
-			{
-				if (!property_scounter[o.type])
-					exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
-				scalars[p[0]] = ft_atoi(b + offset);
-				p[0]++;
-				property_scounter[o.type]--;
-				flags[1] = 1;
-			}
-			else
-				exit(ft_perror(EXEC_NAME, NULL, P_MIXED));
-			flags[0] = 0;
-			offset = i + 1;
-		}
-		if (offset == -1 && ft_isdigit(b[i]))
-			offset = i;
-	}
-	if (property_vcounter[o.type] || property_scounter[o.type])
-		exit(ft_perror(EXEC_NAME, NULL, P_MISSING));
-	assign_properties_to_object(&o, vectors, scalars);
-	return (o);
-}
-*/
-
-t_object	*mathematize_object_properties(t_object_raw *o, int vectors[5][3], int scalars[4])
+t_object	*mathematize_object_properties(int object_type, int vectors[5][3], int scalars[4])
 {
 	t_object *object;
 
 	object = NULL;
-	(void)o;
-	(void)vectors;
-	(void)scalars;
 
 	return (object);
 }
 
 t_object	*parse_properties(int fd, int object_type)
 {
-	t_object_raw	o;
 	char			buffer[1000];
 	int				vectors[5][3];  //should be changed to double
 	int				scalars[4];
@@ -241,7 +121,7 @@ t_list		*parse_scene(int fd)
 			printf(">> |%s|\n", buffer);
 			if (!(object_type = is_recognized(buffer)))
 				exit(ft_perror(EXEC_NAME, buffer, N_WORD));
-			object = parse_properties(fd, object_type);
+			object = parse_properties(fd, object_type); // add to a list that should be returned
 			bzero(buffer, MAX_OBJECT_NAME_SIZE + 2);
 			i = -1;
 		}

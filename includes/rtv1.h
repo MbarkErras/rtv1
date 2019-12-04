@@ -31,13 +31,6 @@
 # define HFOV 60; // check for undefined
 # define MAX_OBJECT_NAME_SIZE 8
 
-typedef struct	s_object_raw
-{
-	int			type;
-	float		vectors[5][3];
-	float		scalars[4];
-}				t_object_raw;
-
 typedef struct	s_object
 {
 	
