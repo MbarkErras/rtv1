@@ -14,11 +14,13 @@
 
 int		main(int argc, char **argv)
 {
-	int	fd;
+	int		fd;
+	t_scene	scene;
 
 	if (argc != 2)
 		return (ft_perror(EXEC_NAME, NULL, N_SCENE));
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
-	parse_scene(fd);
+	scene = parse_scene(fd);
+	render_scene(scene);
 }

@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-t_object	*mathematize_object_properties(int object_type, int vectors[5][3], int scalars[4])
+t_object	*package_object_properties(int object_type, int vectors[5][3], int scalars[4])
 {
 	t_object *object;
 
@@ -34,7 +34,6 @@ t_object	*parse_properties(int fd, int object_type)
 	int				offset;
 	int				read_return;
 
-	o.type = object_type;
 	ft_bzero(flags, sizeof(flags));
 	ft_bzero(p, sizeof(p));
 	i = -1;
@@ -54,7 +53,7 @@ t_object	*parse_properties(int fd, int object_type)
 		{
 			printf(">> %d\n", flags[COMMA_COUNT]);
 			if (flags[COMMA_COUNT] > 1)
-				exit(ft_perror(EXEC_NAME, "yoyo", P_EXTRA));
+				exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
 			vectors[p[VECTORS_INCREMENTOR]][flags[COMMA_COUNT]] = ft_atoi(buffer + offset);
 			flags[COMMA_COUNT]++;
 			offset = i + 1;
@@ -63,19 +62,19 @@ t_object	*parse_properties(int fd, int object_type)
 		{
 			if (flags[COMMA_COUNT] == 2)
 			{
-				if (!property_vcounter[o.type])
+				if (!property_vcounter[object_type])
 					exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
 				vectors[p[VECTORS_INCREMENTOR]][2] = ft_atoi(buffer + offset);
 				p[VECTORS_INCREMENTOR]++;
-				property_vcounter[o.type]--;
+				property_vcounter[object_type]--;
 			}
 			else if (!flags[COMMA_COUNT])
 			{
-				if (!property_scounter[o.type])
+				if (!property_scounter[object_type])
 					exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
 				scalars[p[SCALARS_INCREMENTOR]] = ft_atoi(buffer + offset);
 				p[SCALARS_INCREMENTOR]++;
-				property_scounter[o.type]--;
+				property_scounter[object_type]--;
 				flags[JIDAR_BERLIN] = 1;
 			}
 			else
@@ -88,17 +87,18 @@ t_object	*parse_properties(int fd, int object_type)
 		if (buffer[i] == '\n')
 			break ;
 	}
-	if (property_vcounter[o.type] || property_scounter[o.type])
+	if (property_vcounter[object_type] || property_scounter[object_type])
 		exit(ft_perror(EXEC_NAME, NULL, P_MISSING));
-	return (mathematize_object_properties(&o, vectors, scalars));
+	return (package_object_properties(object_type, vectors, scalars));
 }
 
-t_list		*parse_scene(int fd)
+t_scene		parse_scene(int fd)
 {
 	t_list		*objects_list;
 	char		buffer[MAX_OBJECT_NAME_SIZE + 2];
 	int			comment_flag;
 	t_object	*object;
+	t_scene		scene;
 	int			object_type;
 	int			i;
 	int			read_return;
@@ -121,7 +121,9 @@ t_list		*parse_scene(int fd)
 			printf(">> |%s|\n", buffer);
 			if (!(object_type = is_recognized(buffer)))
 				exit(ft_perror(EXEC_NAME, buffer, N_WORD));
-			object = parse_properties(fd, object_type); // add to a list that should be returned
+			//check for object type
+			//require camera
+			list_push_back(&objects_list, list_create_node(create_object(parse_properties(fd, object_type)), sizeof(t_object)));
 			bzero(buffer, MAX_OBJECT_NAME_SIZE + 2);
 			i = -1;
 		}
@@ -132,7 +134,7 @@ t_list		*parse_scene(int fd)
 		if (comment_flag)
 			i = -1;
 	}
-	return (objects_list);
+	return (scene);
 }
 
 /* to-do list:

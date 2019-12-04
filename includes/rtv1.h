@@ -33,7 +33,9 @@
 
 typedef struct	s_object
 {
-	
+	int 		type;
+	int			vectors[5][3];
+	int 		scalars[4];
 }				t_object;
 
 typedef struct	s_scene

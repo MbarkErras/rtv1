@@ -1,16 +1,16 @@
-camera: [x,y,z] [x,y,z] 						
+camera: [x,y,z] [x,y,z]
 		postion direction
-light: [x,y,z] [intensity]
+light: [x,y,z] [intensity] [c]
 	   position intensity
 
-sphere: [x,y,z] [x,y,z] [r] 
+sphere: [x,y,z] [x,y,z] [r] [c]
 		positon translation
 
-plane: [x,y,z] [x,y,z] [a] [b] [c] [d] 
+plane: [x,y,z] [x,y,z] [a] [b] [c] [d] [c]
 	   translation direction ax+by+cz+d=0 
 
-cylinder: [x,y,z] [x,y,z]  [x,y,z] [x,y,z] [r]
+cylinder: [x,y,z] [x,y,z]  [x,y,z] [x,y,z] [r] [c]
 		  position direction translation rotation radius
-cone: [x,y,z] [x,y,z] [x,y,z] [x,y,z] [x,y,z]
+cone: [x,y,z] [x,y,z] [x,y,z] [x,y,z] [x,y,z] [c]
 	  position direction translation rotation angle
 #comment

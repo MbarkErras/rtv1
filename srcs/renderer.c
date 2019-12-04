@@ -61,3 +61,8 @@ void    render_object()
         }
     }
 }
+
+void    render_scene(t_scene scene)
+{
+    
+}
