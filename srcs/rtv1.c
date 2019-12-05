@@ -21,6 +21,7 @@ int		main(int argc, char **argv)
 		return (ft_perror(EXEC_NAME, NULL, N_SCENE));
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
-	scene = parse_scene(fd);
+	scene = (t_scene){NULL, NULL, NULL};
+	parse_scene(fd, &scene);
 	render_scene(scene);
 }

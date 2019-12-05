@@ -24,12 +24,27 @@
 # include "centropy.h"
 # include "simplist.h"
 
+char	property_vcounter[7] = {-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT};
+char	property_scounter[7] = {-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, CONE_SCOUNT, CAMERA_SCOUNT, LIGHT_SCOUNT};
+
 # define EXEC_NAME "rtv1"
 # define WIDTH 500;
 # define HEIGHT 500;
 # define VFOV 60; // check for undefined
 # define HFOV 60; // check for undefined
 # define MAX_OBJECT_NAME_SIZE 8
+
+typedef struct	s_scene_parser
+{
+	double				vectors[5][3];
+	double				scalars[4];
+	int					properties_incrementors[2];
+	int					comma_counter;
+	int					vectors_scalars_separator;
+	int					object_type;
+	int					offset;
+	int					i;
+}				t_scene_parser;
 
 typedef struct	s_object
 {
@@ -41,8 +56,8 @@ typedef struct	s_object
 typedef struct	s_scene
 {
 	t_object	*camera;
-	t_object	*lights;
-	t_object	*objects;
+	t_list		*lights;
+	t_list		*objects;
 }				t_scene;
 
 t_object		*create_object(t_object o);
@@ -65,7 +80,7 @@ t_object		*create_object(t_object o);
 # define VECTORS_INCREMENTOR 0
 # define SCALARS_INCREMENTOR 1
 
-t_list			*parse_scene(int fd);
+t_scene			parse_scene(int fd);
 int				is_recognized(char *word);
 
 /*
@@ -77,7 +92,7 @@ int				is_recognized(char *word);
 /*
 ** RENDERING
 */
-
+cam
 void    render_object();
 
 /*
@@ -89,16 +104,16 @@ void    render_object();
 # define CAMERA_VCOUNT 2
 # define LIGHT_VCOUNT 1
 # define SPHERE_VCOUNT 2
-# define PLANE_VCOUNT 2
+# define PLANE_VCOUNT 4
 # define CYLINDER_VCOUNT 4
 # define CONE_VCOUNT 5
 
 # define CAMERA_SCOUNT 0
 # define LIGHT_SCOUNT 1
-# define SPHERE_SCOUNT 1
-# define PLANE_SCOUNT 4
-# define CYLINDER_SCOUNT 1
-# define CONE_SCOUNT 0
+# define SPHERE_SCOUNT 2
+# define PLANE_SCOUNT 1
+# define CYLINDER_SCOUNT 2
+# define CONE_SCOUNT 1
 
 
 int				ft_perror(char *command, char *arg, int err);
