@@ -12,14 +12,17 @@
 
 #include "rtv1.h"
 
-void		init_scene_parser(t_scene_parser *p, int object_type)
+void		init_scene_parser(t_scene_parser *p, int fd, int object_type)
 {
+	p->fd = fd;
+	p->property_vcounter[7] = (int[7]){-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT};
+	p->property_scounter[7] = (int[7]){-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, CONE_SCOUNT, CAMERA_SCOUNT, LIGHT_SCOUNT};
 	ft_bzero(p->properties_incrementors, sizeof(p->properties_incrementors));
 	p->offset = -1;
 	p->i = -1;
 }
 
-t_object	package_object_properties(int object_type, int vectors[5][3], int scalars[4])
+t_object	package_object_properties(t_scene_parser s)
 {
 	t_object object;
 
@@ -33,13 +36,14 @@ t_object	parse_properties(int fd, int object_type)
 	char			buffer[1000];
 	int				i;
 
-	init_scene_parse(&automata, object_type);
+	init_scene_parse(&automata, fd, object_type);
 	while (1)
-		if (scene_parser_loop())
+		if (scene_parser_loop(buffer, &automata))
 			break ;
-	if (property_vcounter[object_type] || property_scounter[object_type])
+	if (automata.property_vcounter[automata.object_type] ||
+		automata.property_scounter[automata.object_type])
 		exit(ft_perror(EXEC_NAME, NULL, P_MISSING));
-	return (package_object_properties(object_type,));
+	return (package_object_properties(automata));
 }
 
 t_scene		parse_scene(int fd, t_scene *scene)
@@ -51,8 +55,6 @@ t_scene		parse_scene(int fd, t_scene *scene)
 	int			i;
 	int			read_return;
 
-	(void)object;
-	objects_list = NULL;
 	bzero(buffer, MAX_OBJECT_NAME_SIZE + 2);
 	comment_flag = 0;
 	i = -1;

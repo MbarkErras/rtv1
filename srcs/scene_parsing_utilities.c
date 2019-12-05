@@ -19,58 +19,62 @@ int     grammar_checker(char *buffer, int i)
 		(i && ((buffer[i - 1] == '.' || buffer[i - 1] == ',') && !ft_isdigit(buffer[i]))));
 }
 
-void    comma_state()
+void    scalar_state(char *buffer, t_scene_parser *s)
 {
-    if (flags[COMMA_COUNT] > 1)
+    if (!s->property_scounter[s->object_type])
+		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+	s->scalars[s->properties_incrementors[SCALARS_INCREMENTOR]] = ft_atoi(buffer + s->offset);
+	s->properties_incrementors[SCALARS_INCREMENTOR]++;
+	s->property_scounter[s->object_type]--;
+	s->vectors_scalars_separator = 1;
+}
+
+void    vector_state(char *buffer, t_scene_parser *s)
+{
+    if (!s->property_vcounter[s->object_type])
+		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] = ft_atoi(buffer + s->offset);
+	s->properties_incrementors[VECTORS_INCREMENTOR]++;
+	s->property_vcounter[s->object_type]--;
+}
+
+
+void    comma_state(char *buffer, t_scene_parser *s)
+{
+    if (s->comma_counter > 1)
 				exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
-	vectors[p[VECTORS_INCREMENTOR]][flags[COMMA_COUNT]] = ft_atoi(buffer + offset);
-	flags[COMMA_COUNT]++;
-	offset = i + 1;
+	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] = ft_atoi(buffer + s->offset);
+	s->comma_counter++;
+	s->offset = s->i + 1;
 }
 
-void    vector_state()
+void    scene_parser_loop(char *buffer, t_scene_parser *s)
 {
-    if (!property_vcounter[object_type])
-					exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
-	vectors[p[VECTORS_INCREMENTOR]][2] = ft_atoi(buffer + offset);
-	p[VECTORS_INCREMENTOR]++;
-	property_vcounter[object_type]--;
-}
+	int	read_return;
 
-void    color_state()
-{
-    if (!property_scounter[object_type])
-					exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
-	scalars[p[SCALARS_INCREMENTOR]] = ft_atoi(buffer + offset);
-	p[SCALARS_INCREMENTOR]++;
-	property_scounter[object_type]--;
-	flags[JIDAR_BERLIN] = 1;
-}
-
-void    scene_parser_loop()
-{
-    if ((read_return = read(fd, buffer + ++i, 1)) < 0)
+    if ((read_return = read(s->fd, buffer + ++s->i, 1)) < 0)
 			break ;//read error: do something!!
-	if (!read_return && (!i || buffer[i - 1] != '\n'))
-		buffer[i] = '\n';
-	if (grammar_checker(buffer, i)) // if i == 999
+	if (!read_return && (!s->i || buffer[s->i - 1] != '\n'))
+		buffer[s->i] = '\n';
+	if (grammar_checker(buffer, s->i)) // if i == 999
 		exit(ft_perror(EXEC_NAME, NULL, N_PROP));
-	if (buffer[i] == ',')
-		comma_state();
-	else if (offset != -1 && (buffer[i] == ' ' || buffer[i] == '\n'))
+	if (buffer[s->i] == ',')
+		comma_state(buffer, s);
+	else if (s->offset != -1 &&
+			(buffer[s->i] == ' ' || buffer[s->i] == '\n'))
 	{
-		if (flags[COMMA_COUNT] == 2)
-			vector_state();
-		else if (!flags[COMMA_COUNT])
-			scalar_state();
+		if (s->comma_counter == 2)
+			vector_state(buffer, s);
+		else if (!s->comma_counter)
+			scalar_state(buffer, s);
 		else
 			exit(ft_perror(EXEC_NAME, NULL, P_MIXED));
-		flags[COMMA_COUNT] = 0;
-		offset = -1;
+		s->comma_counter = 0;
+		s->offset = -1;
 	}
-	if (offset == -1 && ft_isdigit(buffer[i]))
-		offset = i;
-	if (buffer[i] == '\n')
-        return (1)
+	if (s->offset == -1 && ft_isdigit(buffer[s->i]))
+		s->offset = s->i;
+	if (buffer[s->i] == '\n')
+        return (1);
     return (0);
 }

@@ -36,6 +36,9 @@ char	property_scounter[7] = {-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, C
 
 typedef struct	s_scene_parser
 {
+	int 				fd;
+	char				property_vcounter[7];
+	char				property_scounter[7];
 	double				vectors[5][3];
 	double				scalars[4];
 	int					properties_incrementors[2];
@@ -75,8 +78,6 @@ t_object		*create_object(t_object o);
 # define CAMERA 5
 # define LIGHT 6
 
-#define COMMA_COUNT 0
-#define JIDAR_BERLIN 1
 # define VECTORS_INCREMENTOR 0
 # define SCALARS_INCREMENTOR 1
 
