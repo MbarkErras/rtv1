@@ -18,7 +18,7 @@ t_object	*create_object(t_object	o)
 	int			i;
 
 	object = (t_object *)malloc(sizeof(t_object));
-	object->type = o.type;
+	object->object_type = o.object_type;
 	i = -1;
 	while (++i < 5)
 		ft_memcpy(object->vectors[i], o.vectors[i], 3 * sizeof(int));

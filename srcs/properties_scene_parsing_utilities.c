@@ -48,12 +48,13 @@ void    comma_state(char *buffer, t_scene_parser *s)
 	s->offset = s->i + 1;
 }
 
-void    scene_parser_loop(char *buffer, t_scene_parser *s)
+int    properties_parser_loop(t_scene_parser *s)
 {
-	int	read_return;
+	char	buffer[1000];
+	int		read_return;
 
     if ((read_return = read(s->fd, buffer + ++s->i, 1)) < 0)
-			break ;//read error: do something!!
+			exit(0) ;//read error: do something!!
 	if (!read_return && (!s->i || buffer[s->i - 1] != '\n'))
 		buffer[s->i] = '\n';
 	if (grammar_checker(buffer, s->i)) // if i == 999

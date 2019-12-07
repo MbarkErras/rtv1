@@ -4,7 +4,7 @@ SRCS=	rtv1.c \
 		scene_parser.c \
 		error_handling.c \
 		checkers.c \
-		#t_object.c \
+		t_object.c \
 		renderer.c
 
 OBJS=$(SRCS:.c=.o)

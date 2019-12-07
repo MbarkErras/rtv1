@@ -24,9 +24,6 @@
 # include "centropy.h"
 # include "simplist.h"
 
-char	property_vcounter[7] = {-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT};
-char	property_scounter[7] = {-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, CONE_SCOUNT, CAMERA_SCOUNT, LIGHT_SCOUNT};
-
 # define EXEC_NAME "rtv1"
 # define WIDTH 500;
 # define HEIGHT 500;
@@ -34,27 +31,31 @@ char	property_scounter[7] = {-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, C
 # define HFOV 60; // check for undefined
 # define MAX_OBJECT_NAME_SIZE 8
 
+typedef struct	s_object
+{
+	int 		object_type;
+	int			vectors[5][3];
+	int 		scalars[4];
+}				t_object;
+
 typedef struct	s_scene_parser
 {
 	int 				fd;
-	char				property_vcounter[7];
-	char				property_scounter[7];
+	t_scene				*scene;
+	char				object_name_buffer[MAX_OBJECT_NAME_SIZE + 2];
+	int					*property_vcounter;
+	int					*property_scounter;
 	double				vectors[5][3];
 	double				scalars[4];
 	int					properties_incrementors[2];
 	int					comma_counter;
 	int					vectors_scalars_separator;
 	int					object_type;
+	int					read_return;
+	int					comment_flag;
 	int					offset;
 	int					i;
 }				t_scene_parser;
-
-typedef struct	s_object
-{
-	int 		type;
-	int			vectors[5][3];
-	int 		scalars[4];
-}				t_object;
 
 typedef struct	s_scene
 {
@@ -62,6 +63,9 @@ typedef struct	s_scene
 	t_list		*lights;
 	t_list		*objects;
 }				t_scene;
+
+t_object	properties_parser(t_scene_parser *automata);
+void		parse_scene(int fd, t_scene *scene);
 
 t_object		*create_object(t_object o);
 
@@ -81,20 +85,12 @@ t_object		*create_object(t_object o);
 # define VECTORS_INCREMENTOR 0
 # define SCALARS_INCREMENTOR 1
 
-t_scene			parse_scene(int fd);
-int				is_recognized(char *word);
-
 /*
 ** UTILITY MACROS
 */
 
 # define VECTOR_LENGTH(v) sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2])
 
-/*
-** RENDERING
-*/
-cam
-void    render_object();
 
 /*
 ** READING SCENE FILE FLAGS
