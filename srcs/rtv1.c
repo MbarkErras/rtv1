@@ -23,5 +23,6 @@ int		main(int argc, char **argv)
 		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
 	scene = (t_scene){NULL, NULL, NULL};
 	parse_scene(fd, &scene);
-	render_scene(scene);
+	print_parsing_results(scene);
+	//render_scene(scene);
 }

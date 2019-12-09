@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
+/*
 void    hit_procedure(int *hit)
 {
 
@@ -28,9 +28,7 @@ int     *hit_loop(int *ray, t_list *objects)
 
 void    evaluate_plane(int *camera, int *direction, int *vplane, int *hplane)
 {
-    /*
-    ** resizing length of {v} to {L}: resized_vector = L/||v||*v;
-    */
+    // resizing length of {v} to {L}: resized_vector = L/||v||*v;
     vplane[2] = -1 * direction[2] * tan(HFOV);
     hplane[2] = -1 * vplane[2] * tan(VFOV);
 }
@@ -61,8 +59,9 @@ void    render_object()
         }
     }
 }
-
+*/
 void    render_scene(t_scene scene)
 {
+    (void)scene;
     
 }

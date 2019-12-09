@@ -1,7 +1,10 @@
 NAME=rtv1
 
-SRCS=	rtv1.c \
+SRCS=	_dev_.c \
+		rtv1.c \
 		scene_parser.c \
+		initial_parsing_utilities.c \
+		properties_scene_parsing_utilities.c \
 		error_handling.c \
 		checkers.c \
 		t_object.c \

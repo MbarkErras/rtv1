@@ -38,6 +38,19 @@ typedef struct	s_object
 	int 		scalars[4];
 }				t_object;
 
+typedef struct	s_scene
+{
+	t_object	*camera;
+	t_list		*lights;
+	t_list		*objects;
+}				t_scene;
+
+
+void    print_parsing_results(t_scene scene); //DEVVVVVV
+/*
+** PARSING
+*/
+
 typedef struct	s_scene_parser
 {
 	int 				fd;
@@ -57,15 +70,11 @@ typedef struct	s_scene_parser
 	int					i;
 }				t_scene_parser;
 
-typedef struct	s_scene
-{
-	t_object	*camera;
-	t_list		*lights;
-	t_list		*objects;
-}				t_scene;
-
 t_object	properties_parser(t_scene_parser *automata);
 void		parse_scene(int fd, t_scene *scene);
+int	is_recognized(char *word);
+int    properties_parser_loop(t_scene_parser *s);
+void     scene_parser_loop(t_scene_parser *s);
 
 t_object		*create_object(t_object o);
 
@@ -84,6 +93,13 @@ t_object		*create_object(t_object o);
 
 # define VECTORS_INCREMENTOR 0
 # define SCALARS_INCREMENTOR 1
+
+
+/*
+** RENDERING
+*/
+
+void    render_scene(t_scene scene);
 
 /*
 ** UTILITY MACROS

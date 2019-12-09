@@ -26,7 +26,7 @@ void    scene_object_dispatcher(t_scene_parser *s)
 		list_push_back(&s->scene->objects, list_create_node(create_object(properties_parser(s)), sizeof(t_object)));
 }
 
-int     scene_parser_loop(t_scene_parser *s)
+void     scene_parser_loop(t_scene_parser *s)
 {
     if ((s->read_return = read(s->fd, s->object_name_buffer + ++s->i, 1)) < 0)
 		exit(0) ;//read error: do something!!

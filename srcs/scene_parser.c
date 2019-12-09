@@ -36,9 +36,9 @@ void		init_properties_parser(t_scene_parser *p)
 
 t_object	properties_parser(t_scene_parser *automata)
 {
-	init_properties_parser(fd, automata);
+	init_properties_parser(automata);
 	while (1)
-		if (properties_parser_loop(&automata))
+		if (properties_parser_loop(automata))
 			break ;
 	if (automata->property_vcounter[automata->object_type] ||
 		automata->property_scounter[automata->object_type])
@@ -61,8 +61,7 @@ void	parse_scene(int fd, t_scene *scene)
 
 	init_scene_parser(fd, &automata, scene);
 	while (1)
-		if (scene_parser_loop(&automata))
-			break ;
+		scene_parser_loop(&automata);
 	if (!scene->camera)
 		exit(0); //error!!!!!!!!!!!
 }
