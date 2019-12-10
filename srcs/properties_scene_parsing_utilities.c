@@ -32,7 +32,7 @@ void    scalar_state(char *buffer, t_scene_parser *s)
 void    vector_state(char *buffer, t_scene_parser *s)
 {
     if (!s->property_vcounter[s->object_type])
-		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+		exit(ft_perror(EXEC_NAME, "lah", P_EXTRA));
 	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] = ft_atoi(buffer + s->offset);
 	s->properties_incrementors[VECTORS_INCREMENTOR]++;
 	s->property_vcounter[s->object_type]--;
@@ -42,7 +42,7 @@ void    vector_state(char *buffer, t_scene_parser *s)
 void    comma_state(char *buffer, t_scene_parser *s)
 {
     if (s->comma_counter > 1)
-				exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+		exit(ft_perror(EXEC_NAME, "lwatan", P_EXTRA));
 	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] = ft_atoi(buffer + s->offset);
 	s->comma_counter++;
 	s->offset = s->i + 1;
@@ -50,32 +50,32 @@ void    comma_state(char *buffer, t_scene_parser *s)
 
 int    properties_parser_loop(t_scene_parser *s)
 {
-	char	buffer[1000];
 	int		read_return;
 
-    if ((read_return = read(s->fd, buffer + ++s->i, 1)) < 0)
+    if ((read_return = read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
 			exit(0) ;//read error: do something!!
-	if (!read_return && (!s->i || buffer[s->i - 1] != '\n'))
-		buffer[s->i] = '\n';
-	if (grammar_checker(buffer, s->i)) // if i == 999
-		exit(ft_perror(EXEC_NAME, NULL, N_PROP));
-	if (buffer[s->i] == ',')
-		comma_state(buffer, s);
+	printf(">> |%c| %d\n", s->properties_buffer[s->i], s->i);
+	if (!read_return && (!s->i || s->properties_buffer[s->i - 1] != '\n'))
+		s->properties_buffer[s->i] = '\n';
+	if (grammar_checker(s->properties_buffer, s->i)) // if i == 999
+		exit(ft_perror(EXEC_NAME, ft_itoa(s->i), N_PROP));
+	if (s->properties_buffer[s->i] == ',')
+		comma_state(s->properties_buffer, s);
 	else if (s->offset != -1 &&
-			(buffer[s->i] == ' ' || buffer[s->i] == '\n'))
+			(s->properties_buffer[s->i] == ' ' || s->properties_buffer[s->i] == '\n'))
 	{
 		if (s->comma_counter == 2)
-			vector_state(buffer, s);
+			vector_state(s->properties_buffer, s);
 		else if (!s->comma_counter)
-			scalar_state(buffer, s);
+			scalar_state(s->properties_buffer, s);
 		else
 			exit(ft_perror(EXEC_NAME, NULL, P_MIXED));
 		s->comma_counter = 0;
 		s->offset = -1;
 	}
-	if (s->offset == -1 && ft_isdigit(buffer[s->i]))
+	if (s->offset == -1 && ft_isdigit(s->properties_buffer[s->i]))
 		s->offset = s->i;
-	if (buffer[s->i] == '\n')
-        return (1);
+	if (s->properties_buffer[s->i] == '\n')
+       return (1);
     return (0);
 }

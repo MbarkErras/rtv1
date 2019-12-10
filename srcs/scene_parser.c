@@ -21,22 +21,26 @@ t_object	package_object_properties(t_scene_parser s)
 	i = -1;
 	while (++i < 5)
 		ft_memcpy(object.vectors[i], s.vectors[i], 3 * sizeof(int));
-	ft_memcpy(object.scalars, s.scalars, 4 * sizeof(int)); 
+	ft_memcpy(object.scalars, s.scalars, 4 * sizeof(int));
 	return (object);
 }
 
-void		init_properties_parser(t_scene_parser *p)
+void		init_properties_parser(char *buffer, t_scene_parser *p)
 {
-	p->property_vcounter = (int[7]){-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT};
-	p->property_scounter = (int[7]){-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, CONE_SCOUNT, CAMERA_SCOUNT, LIGHT_SCOUNT};
+	ft_memcpy(p->property_vcounter, (int[7]){-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT}, sizeof(int[7]));
+	ft_memcpy(p->property_scounter, (int[7]){-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, CONE_SCOUNT, CAMERA_SCOUNT, LIGHT_SCOUNT}, sizeof(int[7]));
 	ft_bzero(p->properties_incrementors, sizeof(p->properties_incrementors));
+	p->properties_buffer = buffer;
 	p->offset = -1;
+	p->comma_counter = 0;
 	p->i = -1;
 }
 
 t_object	properties_parser(t_scene_parser *automata)
 {
-	init_properties_parser(automata);
+	char	buffer[1000];
+
+	init_properties_parser(buffer, automata);
 	while (1)
 		if (properties_parser_loop(automata))
 			break ;
@@ -59,6 +63,7 @@ void	parse_scene(int fd, t_scene *scene)
 {
 	t_scene_parser	automata;
 
+	ft_bzero(&automata, sizeof(t_scene_parser));
 	init_scene_parser(fd, &automata, scene);
 	while (1)
 		scene_parser_loop(&automata);

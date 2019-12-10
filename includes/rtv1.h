@@ -55,9 +55,10 @@ typedef struct	s_scene_parser
 {
 	int 				fd;
 	t_scene				*scene;
+	char				*properties_buffer;
 	char				object_name_buffer[MAX_OBJECT_NAME_SIZE + 2];
-	int					*property_vcounter;
-	int					*property_scounter;
+	int					property_vcounter[7];
+	int					property_scounter[7];
 	double				vectors[5][3];
 	double				scalars[4];
 	int					properties_incrementors[2];

@@ -15,12 +15,12 @@
 void    scene_object_dispatcher(t_scene_parser *s)
 {
     if (!(s->object_type = is_recognized(s->object_name_buffer)))
-		exit(ft_perror(EXEC_NAME, NULL, N_WORD));
+		exit(ft_perror(EXEC_NAME, "alo", N_WORD));
+	if (s->object_type == CAMERA && s->scene->camera)
+		exit(ft_perror(EXEC_NAME, "**", N_WORD)); //error!!!!!!!!!!!!
     if (s->object_type == CAMERA)
 		s->scene->camera = create_object(properties_parser(s));
-	if (s->object_type == CAMERA && s->scene->camera)
-		exit(0); //error!!!!!!!!!!!!
-	if (s->object_type == LIGHT)
+	else if (s->object_type == LIGHT)
 		list_push_back(&s->scene->lights, list_create_node(create_object(properties_parser(s)), sizeof(t_object)));
 	else
 		list_push_back(&s->scene->objects, list_create_node(create_object(properties_parser(s)), sizeof(t_object)));
@@ -29,9 +29,9 @@ void    scene_object_dispatcher(t_scene_parser *s)
 void     scene_parser_loop(t_scene_parser *s)
 {
     if ((s->read_return = read(s->fd, s->object_name_buffer + ++s->i, 1)) < 0)
-		exit(0) ;//read error: do something!!
+		exit(ft_perror(EXEC_NAME, "??", N_WORD)) ;//read error: do something!!
 	if (!s->read_return)
-		exit(0) ;//is the file content complete?
+		exit(ft_perror(EXEC_NAME, "!!", N_WORD)) ;//is the file content complete?
 	if (!s->i && s->object_name_buffer[s->i] == '#')
 		s->comment_flag = 1;
 	if (!s->comment_flag && s->object_name_buffer[s->i] == ':')
@@ -41,7 +41,7 @@ void     scene_parser_loop(t_scene_parser *s)
 		s->i = -1;
 	}
 	else if (s->i > MAX_OBJECT_NAME_SIZE)
-		exit(ft_perror(EXEC_NAME, NULL, N_WORD));
+		exit(ft_perror(EXEC_NAME, "ass", N_WORD));
 	if (s->comment_flag && s->object_name_buffer[s->i] == '\n')
 		s->comment_flag = 0;
 	if (s->comment_flag)
