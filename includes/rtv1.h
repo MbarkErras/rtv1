@@ -71,11 +71,11 @@ typedef struct	s_scene_parser
 	int					i;
 }				t_scene_parser;
 
-t_object	properties_parser(t_scene_parser *automata);
-void		parse_scene(int fd, t_scene *scene);
-int	is_recognized(char *word);
-int    properties_parser_loop(t_scene_parser *s);
-void     scene_parser_loop(t_scene_parser *s);
+t_object				properties_parser(t_scene_parser *automata);
+void					parse_scene(int fd, t_scene *scene);
+int						is_recognized(char *word);
+int						properties_parser_loop(t_scene_parser *s);
+int						scene_parser_loop(t_scene_parser *s);
 
 t_object		*create_object(t_object o);
 
@@ -118,12 +118,12 @@ void    render_scene(t_scene scene);
 # define CAMERA_VCOUNT 2
 # define LIGHT_VCOUNT 1
 # define SPHERE_VCOUNT 2
-# define PLANE_VCOUNT 4
+# define PLANE_VCOUNT 3
 # define CYLINDER_VCOUNT 4
 # define CONE_VCOUNT 5
 
 # define CAMERA_SCOUNT 0
-# define LIGHT_SCOUNT 1
+# define LIGHT_SCOUNT 2
 # define SPHERE_SCOUNT 2
 # define PLANE_SCOUNT 1
 # define CYLINDER_SCOUNT 2

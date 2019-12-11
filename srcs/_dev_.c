@@ -21,7 +21,7 @@ void    print_parsing_results(t_scene scene)
         for (int i = 0; i < LIGHT_SCOUNT; i++)
             printf("%d ", TLIST(light, t_object)->scalars[i]);
         printf("\n");
-        light++;
+        light = light->next;
     }
     printf("objects:\n");
     t_list *object = scene.objects;
@@ -33,7 +33,7 @@ void    print_parsing_results(t_scene scene)
         for (int i = 0; i < property_scounter[TLIST(object, t_object)->object_type]; i++)
             printf("%d ", TLIST(object, t_object)->scalars[i]);
         printf("\n");
-        light++;
+        object = object->next;
     }
     (void)scene;
 }

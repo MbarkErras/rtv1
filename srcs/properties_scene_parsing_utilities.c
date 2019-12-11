@@ -22,7 +22,7 @@ int     grammar_checker(char *buffer, int i)
 void    scalar_state(char *buffer, t_scene_parser *s)
 {
     if (!s->property_scounter[s->object_type])
-		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+		exit(ft_perror(EXEC_NAME, "alamlik", P_EXTRA));
 	s->scalars[s->properties_incrementors[SCALARS_INCREMENTOR]] = ft_atoi(buffer + s->offset);
 	s->properties_incrementors[SCALARS_INCREMENTOR]++;
 	s->property_scounter[s->object_type]--;
@@ -54,7 +54,6 @@ int    properties_parser_loop(t_scene_parser *s)
 
     if ((read_return = read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
 			exit(0) ;//read error: do something!!
-	printf(">> |%c| %d\n", s->properties_buffer[s->i], s->i);
 	if (!read_return && (!s->i || s->properties_buffer[s->i - 1] != '\n'))
 		s->properties_buffer[s->i] = '\n';
 	if (grammar_checker(s->properties_buffer, s->i)) // if i == 999

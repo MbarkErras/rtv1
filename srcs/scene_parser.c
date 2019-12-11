@@ -66,7 +66,8 @@ void	parse_scene(int fd, t_scene *scene)
 	ft_bzero(&automata, sizeof(t_scene_parser));
 	init_scene_parser(fd, &automata, scene);
 	while (1)
-		scene_parser_loop(&automata);
+		if (scene_parser_loop(&automata))
+			break ;
 	if (!scene->camera)
 		exit(0); //error!!!!!!!!!!!
 }
