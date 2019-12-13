@@ -31,8 +31,10 @@ void    scalar_state(char *buffer, t_scene_parser *s)
 
 void    vector_state(char *buffer, t_scene_parser *s)
 {
+	(void)buffer;
     if (!s->property_vcounter[s->object_type])
 		exit(ft_perror(EXEC_NAME, "lah", P_EXTRA));
+	
 	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] = ft_atoi(buffer + s->offset);
 	s->properties_incrementors[VECTORS_INCREMENTOR]++;
 	s->property_vcounter[s->object_type]--;
@@ -44,6 +46,7 @@ void    comma_state(char *buffer, t_scene_parser *s)
     if (s->comma_counter > 1)
 		exit(ft_perror(EXEC_NAME, "lwatan", P_EXTRA));
 	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] = ft_atoi(buffer + s->offset);
+	(void)buffer;
 	s->comma_counter++;
 	s->offset = s->i + 1;
 }

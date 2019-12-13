@@ -21,7 +21,7 @@ t_object	*create_object(t_object	o)
 	object->object_type = o.object_type;
 	i = -1;
 	while (++i < 5)
-		ft_memcpy(object->vectors[i], o.vectors[i], 3 * sizeof(int));
-	ft_memcpy(object->scalars, o.scalars, 4 * sizeof(int));
+		ft_memcpy(object->vectors[i], o.vectors[i], sizeof(double[3]));
+	ft_memcpy(object->scalars, o.scalars, sizeof(double[4]));
 	return (object);
 }

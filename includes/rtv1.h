@@ -17,6 +17,8 @@
 # include <stdio.h>
 // // // //
 
+#include "../srcs/vec3.h"
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
@@ -25,11 +27,21 @@
 # include "simplist.h"
 
 # define EXEC_NAME "rtv1"
-# define WIDTH 500;
-# define HEIGHT 500;
-# define VFOV 60; // check for undefined
-# define HFOV 60; // check for undefined
+# define WIDTH 500
+# define HEIGHT 500
+# define VFOV 60 // check for undefined
+# define HFOV 60 // check for undefined
 # define MAX_OBJECT_NAME_SIZE 8
+
+# define VEC(a, b, c) (t_vec3){a, b, c}
+# define RGB(x) (int)(x)
+# define RGBTOI(x, y, z) (x * 256 * 256 + y * 256 + z)
+
+typedef struct  s_ray
+{
+    t_vec3   org;
+    t_vec3   dir;
+}               t_ray;
 
 typedef struct	s_object
 {
@@ -38,13 +50,41 @@ typedef struct	s_object
 	double 		scalars[4];
 }				t_object;
 
+typedef struct	s_camera
+{
+	t_vec3	origin;
+	t_vec3	lower_left_corner;
+	t_vec3	horizontal;
+	t_vec3	vertical;
+	t_vec3	lookat;
+	t_vec3	w;
+	t_vec3	u;
+	t_vec3	v;
+	double		fov;
+	double		half_h;
+	double		half_w;
+}				t_camera;
+
 typedef struct	s_scene
 {
 	t_object	*camera;
+	t_camera	new_cam;
 	t_list		*lights;
 	t_list		*objects;
+	double		anti_a;
 }				t_scene;
 
+typedef struct	s_ptr
+{
+	void		*win;
+	void		*mlx;
+	void		*img;
+	int			*data;
+	int			bpp;
+	int			size;
+	int			endian;
+	t_scene		*scene;
+}				t_ptr;
 
 void    print_parsing_results(t_scene scene); //DEVVVVVV
 /*
@@ -147,5 +187,13 @@ int				ft_perror(char *command, char *arg, int err);
 # define P_MIXED_T ": mixed properties types."
 # define P_EXTRA_T ": extranous properties values."
 # define P_MISSING_T ": missing properties."
+
+
+void	ft_create_window(t_ptr *p);
+void	ft_create_image(t_ptr *p);
+int			ft_draw(t_ptr *p);
+void		ft_calcul(t_ptr *p);
+void		ft_mlx_putpixel(t_ptr *p, int x, int y, int color);
+t_camera	ft_init_camera(t_vec3 lookfrom, t_vec3 lookat, double vfov);
 
 #endif

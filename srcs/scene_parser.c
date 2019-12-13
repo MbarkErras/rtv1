@@ -20,8 +20,8 @@ t_object	package_object_properties(t_scene_parser s)
 	object.object_type = s.object_type;
 	i = -1;
 	while (++i < 5)
-		ft_memcpy(object.vectors[i], s.vectors[i], 3 * sizeof(int));
-	ft_memcpy(object.scalars, s.scalars, 4 * sizeof(int));
+		ft_memcpy(object.vectors[i], s.vectors[i], sizeof(double[3]));
+	ft_memcpy(object.scalars, s.scalars, sizeof(double[4]));
 	return (object);
 }
 
@@ -29,7 +29,7 @@ void		init_properties_parser(char *buffer, t_scene_parser *p)
 {
 	ft_memcpy(p->property_vcounter, (int[7]){-1, PLANE_VCOUNT, SPHERE_VCOUNT, CYLINDER_VCOUNT, CONE_VCOUNT, CAMERA_VCOUNT, LIGHT_VCOUNT}, sizeof(int[7]));
 	ft_memcpy(p->property_scounter, (int[7]){-1, PLANE_SCOUNT, SPHERE_SCOUNT, CYLINDER_SCOUNT, CONE_SCOUNT, CAMERA_SCOUNT, LIGHT_SCOUNT}, sizeof(int[7]));
-	ft_bzero(p->properties_incrementors, sizeof(p->properties_incrementors));
+	ft_bzero(p->properties_incrementors, sizeof(int[2]));
 	p->properties_buffer = buffer;
 	p->offset = -1;
 	p->comma_counter = 0;
