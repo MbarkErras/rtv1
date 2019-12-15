@@ -1,4 +1,4 @@
-#include "vec3.h"
+#include "../includes/vec3.h"
 
 t_vec3  vecopplus(t_vec3 a, double x)
 {
@@ -47,22 +47,22 @@ t_vec3  vecreflect(t_vec3 i, t_vec3 n)
   vec.z = ft_clamp(vec.z, a, b);
   }*/
 
-double	ft_atof(const char *str)
-{
-	double	res;
-	double	res2;
-	char	*c;
-	int		len;
+// double	ft_atof(const char *str)
+// {
+// 	double	res;
+// 	double	res2;
+// 	char	*c;
+// 	int		len;
 
-	c = (char *)str;
-	res = (double)ft_atoi(c);
-	while (*c && *c != '.')
-		c++;
-	if (*c == '.')
-		c++;
-	res2 = (double)ft_atoi(c);
-	len = ft_strlen(c);
-	while (len--)
-		res2 /= 10;
-	return (res + ((res > 0) ? res2 : -res2));
-}
+// 	c = (char *)str;
+// 	res = (double)ft_atoi(c);
+// 	while (*c && *c != '.')
+// 		c++;
+// 	if (*c == '.')
+// 		c++;
+// 	res2 = (double)ft_atoi(c);
+// 	len = ft_strlen(c);
+// 	while (len--)
+// 		res2 /= 10;
+// 	return (res + ((res > 0) ? res2 : -res2));
+// }

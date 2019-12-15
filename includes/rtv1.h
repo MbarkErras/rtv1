@@ -17,7 +17,7 @@
 # include <stdio.h>
 // // // //
 
-#include "../srcs/vec3.h"
+
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -25,7 +25,7 @@
 # include "mlx.h"
 # include "centropy.h"
 # include "simplist.h"
-
+# include "vec3.h"
 # define EXEC_NAME "rtv1"
 # define WIDTH 500
 # define HEIGHT 500
@@ -52,14 +52,14 @@ typedef struct	s_object
 
 typedef struct	s_camera
 {
-	t_vec3	origin;
-	t_vec3	lower_left_corner;
-	t_vec3	horizontal;
-	t_vec3	vertical;
-	t_vec3	lookat;
-	t_vec3	w;
-	t_vec3	u;
-	t_vec3	v;
+	t_vec3		origin;
+	t_vec3		lower_left_corner;
+	t_vec3		horizontal;
+	t_vec3		vertical;
+	t_vec3		lookat;
+	t_vec3		w;
+	t_vec3		u;
+	t_vec3		v;
 	double		fov;
 	double		half_h;
 	double		half_w;
@@ -71,7 +71,6 @@ typedef struct	s_scene
 	t_camera	new_cam;
 	t_list		*lights;
 	t_list		*objects;
-	double		anti_a;
 }				t_scene;
 
 typedef struct	s_ptr

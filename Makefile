@@ -9,7 +9,10 @@ SRCS=	_dev_.c \
 		checkers.c \
 		t_object.c \
 		renderer.c \
-		draw.c
+		draw.c\
+		vec1.c\
+		vec2.c\
+		vec3.c
 
 OBJS=$(SRCS:.c=.o)
 

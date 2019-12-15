@@ -1,4 +1,4 @@
-#include "vec3.h"
+#include "../includes/vec3.h"
 
 double  veclength(t_vec3 vec)
 {

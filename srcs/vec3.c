@@ -1,4 +1,4 @@
-#include "vec3.h"
+#include "../includes/vec3.h"
 
 t_vec3  vecadd(t_vec3 a, t_vec3 b)
 {
@@ -7,6 +7,7 @@ t_vec3  vecadd(t_vec3 a, t_vec3 b)
 	v.x = a.x + b.x;
 	v.y = a.y + b.y;
 	v.z = a.z + b.z;
+	printf("sdf\n");
 	return (v);
 }
 

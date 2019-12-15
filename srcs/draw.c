@@ -5,16 +5,6 @@ t_vec3	ft_pro_k(t_vec3 a, double k)
 	return (VEC(a.x * k, a.y * k, a.z * k));
 }
 
-t_vec3	vecnorm(t_vec3 a)
-{
-	float k;
-
-	if (a.x == 0.0 && a.y == 0.0 && a.z == 0.0)
-		return (VEC(0, 0, 0));
-	k = 1.0 / sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
-	return (ft_pro_k(a, k));
-}
-
 t_vec3	ft_div_k(t_vec3 a, double k)
 {
 	return (VEC(a.x / k, a.y / k, a.z / k));
@@ -24,12 +14,6 @@ t_vec3	ft_cross(t_vec3 a, t_vec3 b)
 {
 	return (VEC((a.y * b.z - a.z * b.y), -(a.x * b.z - a.z * b.x),
 				(a.x * b.y - a.y * b.x)));
-}
-
-
-t_vec3	ft_add(t_vec3 a, t_vec3 b)
-{
-	return (VEC(a.x + b.x, a.y + b.y, a.z + b.z));
 }
 
 t_vec3	ft_sub(t_vec3 a, t_vec3 b)
@@ -49,9 +33,9 @@ t_camera	ft_init_camera(t_vec3 lookfrom, t_vec3 lookat, double vfov)
 	c.w = vecnorm(ft_sub(lookat, lookfrom));
 	c.u = vecnorm(ft_cross(c.w, vup));
 	c.v = ft_cross(c.u, c.w);
-	c.lower_left_corner = ft_sub(c.origin, ft_add(ft_pro_k(c.v, c.half_h),
+	c.lower_left_corner = ft_sub(c.origin, vecadd(ft_pro_k(c.v, c.half_h),
 				ft_pro_k(c.u, c.half_w)));
-	c.lower_left_corner = ft_add(c.lower_left_corner, c.w);
+	c.lower_left_corner = vecadd(c.lower_left_corner, c.w);
 	c.horizontal = ft_pro_k(c.u, 2.0 * c.half_w);
 	c.vertical = ft_pro_k(c.v, 2.0 * c.half_h);
 	c.fov = vfov;
@@ -79,7 +63,7 @@ t_camera	ft_init_camera(t_vec3 lookfrom, t_vec3 lookat, double vfov)
 // }
 
 
-// t_vec3		ft_ray_tracer(t_scene *scene, int col, int row)
+// t_vec3		ft_ray_tracer(t_scene *scene, position)
 // {
 // 	t_vec3		c;
 // 	t_ray		r;
@@ -89,8 +73,8 @@ t_camera	ft_init_camera(t_vec3 lookfrom, t_vec3 lookat, double vfov)
 // 	ss = -1;
 // 	while (++ss < (int)scene->anti_a)
 // 	{
-// 		r = ft_get_ray(&scene->new_cam, col, row);
-// 		c = ft_add_c(c, ft_raytrace_color(scene, &r, scene->object));
+// 		r = ft_get_ray(scene->new_cam, position);
+// 		c = vecadd_c(c, ft_raytrace_color(scene, &r, scene->object));
 // 	}
 // 	c = vecopdiv(c, scene->anti_a);
 // 	return (c);
@@ -108,6 +92,7 @@ void		ft_mlx_putpixel(t_ptr *p, int x, int y, int color)
 void		ft_calcul(t_ptr *p)
 {
 	t_vec3		c;
+	// t_vec3		position;
 	int			color;
 	int			col;
 	int			row;
@@ -117,8 +102,9 @@ void		ft_calcul(t_ptr *p)
 	{
 		col = 0;
 		while (++col < WIDTH)
-		{														//*********************
-			//c = ft_ray_tracer(p->scene, col, row);			//*********************
+		{
+			// position = addition(addition(p->scene->new_cam.lower_left_corner, multiplication(rt->cam.u, rt->x * 2 * rt->cam.h / WIDHT)), multiplication(rt->cam.v, rt->y * 2 * rt->cam.h / WIDHT));												//*********************
+			//c = ft_ray_tracer(p->scene, position);			//*********************
 			color = RGBTOI(RGB(c.x), RGB(c.y), RGB(c.z));
 			ft_mlx_putpixel(p, col, HEIGHT - row, color);
 		}

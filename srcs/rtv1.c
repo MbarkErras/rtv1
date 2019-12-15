@@ -35,7 +35,7 @@ int		main(int argc, char **argv)
 	scene.new_cam.lookat.z = scene.camera->vectors[1][2];
 	scene.new_cam.fov = 60.0;
 	scene.new_cam = ft_init_camera(scene.new_cam.origin, scene.new_cam.lookat, 60.0);
-	p.scene = &scene;
+	p.scene = &scene;            
 
 	ft_create_window(&p);
 	ft_create_image(&p);
