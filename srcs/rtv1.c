@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rtv1.h"
+#include "rtv1.h"
 
 int		main(int argc, char **argv)
 {
@@ -27,6 +27,9 @@ int		main(int argc, char **argv)
 	scene.objects = NULL;
 	parse_scene(fd, &scene);
 	print_parsing_results(scene);
+	scene.new_cam.origin.x = scene.camera->vectors[0][0];
+	scene.new_cam.origin.y = scene.camera->vectors[0][1];
+	scene.new_cam.origin.z = scene.camera->vectors[0][2];
 	scene.new_cam.origin.x = scene.camera->vectors[0][0];
 	scene.new_cam.origin.y = scene.camera->vectors[0][1];
 	scene.new_cam.origin.z = scene.camera->vectors[0][2];

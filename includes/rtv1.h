@@ -26,6 +26,7 @@
 # include "centropy.h"
 # include "simplist.h"
 # include "vec3.h"
+
 # define EXEC_NAME "rtv1"
 # define WIDTH 500
 # define HEIGHT 500
@@ -71,6 +72,9 @@ typedef struct	s_scene
 	t_camera	new_cam;
 	t_list		*lights;
 	t_list		*objects;
+	int			x;
+	int			y;
+	double		t;
 }				t_scene;
 
 typedef struct	s_ptr

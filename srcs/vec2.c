@@ -39,30 +39,3 @@ t_vec3  vecreflect(t_vec3 i, t_vec3 n)
 	v.z = i.z - 2.0 * vecdot(n, i) * n.z;
 	return (v);
 }
-
-/*void    vecclamp(t_vec3 *vec, double a, double b)
-  {
-  vec.x = ft_clamp(vec.x, a, b);
-  vec.y = ft_clamp(vec.y, a, b);
-  vec.z = ft_clamp(vec.z, a, b);
-  }*/
-
-// double	ft_atof(const char *str)
-// {
-// 	double	res;
-// 	double	res2;
-// 	char	*c;
-// 	int		len;
-
-// 	c = (char *)str;
-// 	res = (double)ft_atoi(c);
-// 	while (*c && *c != '.')
-// 		c++;
-// 	if (*c == '.')
-// 		c++;
-// 	res2 = (double)ft_atoi(c);
-// 	len = ft_strlen(c);
-// 	while (len--)
-// 		res2 /= 10;
-// 	return (res + ((res > 0) ? res2 : -res2));
-// }
