@@ -14,7 +14,7 @@
 
 int     grammar_checker(char *buffer, int i)
 {
-    return((!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' && buffer[i] != '.' && buffer[i] != ',') ||
+    return((!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' && buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-' && buffer[i] != '+') ||
 		(i && (buffer[i] == '.' || buffer[i] == ',') && (!ft_isdigit(buffer[i - 1]))) ||
 		(i && ((buffer[i - 1] == '.' || buffer[i - 1] == ',') && !ft_isdigit(buffer[i]))));
 }
@@ -75,7 +75,7 @@ int    properties_parser_loop(t_scene_parser *s)
 		s->comma_counter = 0;
 		s->offset = -1;
 	}
-	if (s->offset == -1 && ft_isdigit(s->properties_buffer[s->i]))
+	if (s->offset == -1 && (ft_isdigit(s->properties_buffer[s->i]) || s->properties_buffer[s->i] == '-'))
 		s->offset = s->i;
 	if (s->properties_buffer[s->i] == '\n')
        return (1);

@@ -25,11 +25,15 @@
 # include "simplist.h"
 
 # define EXEC_NAME "rtv1"
-# define WIDTH 500;
-# define HEIGHT 500;
-# define VFOV 60; // check for undefined
-# define HFOV 60; // check for undefined
+# define WIDTH 3
+# define HEIGHT 3
+# define VFOV DEG_TO_RAD(60) // check for undefined
+# define HFOV DEG_TO_RAD(60) // check for undefined
+# define X 0
+# define Y 1
 # define MAX_OBJECT_NAME_SIZE 8
+# define PI 3.14
+# define DEG_TO_RAD(x) (x / 180 * PI)
 
 typedef struct	s_object
 {
@@ -44,9 +48,8 @@ typedef struct	s_scene
 	t_list		*lights;
 	t_list		*objects;
 }				t_scene;
+void    print_parsing_results(t_scene scene);
 
-
-void    print_parsing_results(t_scene scene); //DEVVVVVV
 /*
 ** PARSING
 */
@@ -99,6 +102,12 @@ t_object		*create_object(t_object o);
 /*
 ** RENDERING
 */
+
+typedef	struct	s_hit
+{
+	t_object	hitted;
+	double		hit_position[3];
+}				t_hit;
 
 void    render_scene(t_scene scene);
 
