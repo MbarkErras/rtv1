@@ -17,12 +17,15 @@
 # include <stdio.h>
 // // // //
 
+
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
 # include "mlx.h"
 # include "centropy.h"
 # include "simplist.h"
+# include "vec3.h"
 
 # define EXEC_NAME "rtv1"
 # define WIDTH 3
@@ -34,6 +37,19 @@
 # define MAX_OBJECT_NAME_SIZE 8
 # define PI 3.14
 # define DEG_TO_RAD(x) (x / 180 * PI)
+# define PERP_LENGTH 5
+
+# define VECTOR_LENGTH(v) sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2])
+
+# define VEC(a, b, c) (t_vec3){a, b, c}
+# define RGB(x) (int)(x)
+# define RGBTOI(x, y, z) (x * 256 * 256 + y * 256 + z)
+
+typedef struct  s_ray
+{
+    t_vec3   org;
+    t_vec3   dir;
+}               t_ray;
 
 typedef struct	s_object
 {
@@ -42,11 +58,31 @@ typedef struct	s_object
 	double 		scalars[4];
 }				t_object;
 
+typedef struct	s_camera
+{
+	t_vec3		origin;
+	t_vec3		lower_left_corner;
+	t_vec3		horizontal;
+	t_vec3		vertical;
+	t_vec3		lookat;
+	t_vec3		w;
+	t_vec3		u;
+	t_vec3		v;
+	double		fov;
+	double		half_h;
+	double		half_w;
+}				t_camera;
+
 typedef struct	s_scene
 {
 	t_object	*camera;
 	t_list		*lights;
 	t_list		*objects;
+	double      plane_vectors[2][3];
+	t_camera	new_cam;
+	int			x;
+	int			y;
+	double		t;
 }				t_scene;
 void    print_parsing_results(t_scene scene);
 
@@ -124,7 +160,7 @@ void    render_scene(t_scene scene);
 
 # define COMMENT 0
 
-# define CAMERA_VCOUNT 2
+# define CAMERA_VCOUNT 3
 # define LIGHT_VCOUNT 1
 # define SPHERE_VCOUNT 2
 # define PLANE_VCOUNT 3
@@ -156,5 +192,13 @@ int				ft_perror(char *command, char *arg, int err);
 # define P_MIXED_T ": mixed properties types."
 # define P_EXTRA_T ": extranous properties values."
 # define P_MISSING_T ": missing properties."
+
+
+// void	ft_create_window(t_ptr *p);
+// void	ft_create_image(t_ptr *p);
+// int			ft_draw(t_ptr *p);
+// void		ft_calcul(t_ptr *p);
+// void		ft_mlx_putpixel(t_ptr *p, int x, int y, int color);
+// t_camera	ft_init_camera(t_vec3 lookfrom, t_vec3 lookat, double vfov);
 
 #endif
