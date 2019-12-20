@@ -28,8 +28,8 @@
 # include "vec3.h"
 
 # define EXEC_NAME "rtv1"
-# define WIDTH 3
-# define HEIGHT 3
+# define WIDTH 500
+# define HEIGHT 500
 # define VFOV DEG_TO_RAD(60) // check for undefined
 # define HFOV DEG_TO_RAD(60) // check for undefined
 # define X 0
@@ -78,7 +78,6 @@ typedef struct	s_scene
 	t_object	*camera;
 	t_list		*lights;
 	t_list		*objects;
-	double      plane_vectors[2][3];
 	t_camera	new_cam;
 	int			x;
 	int			y;
@@ -141,12 +140,12 @@ t_object		*create_object(t_object o);
 
 typedef	struct	s_hit
 {
-	t_object	hitted;
-	double		hit_position[3];
+	int			color;
+	double		distance;
 }				t_hit;
 
 void    render_scene(t_scene scene);
-
+int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *distance);
 /*
 ** UTILITY MACROS
 */

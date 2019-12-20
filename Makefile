@@ -8,7 +8,11 @@ SRCS=	_dev_.c \
 		error_handling.c \
 		checkers.c \
 		t_object.c \
-		renderer.c
+		renderer.c \
+		vec1.c \
+		vec2.c \
+		vec3.c \
+		intersections.c
 
 OBJS=$(SRCS:.c=.o)
 
