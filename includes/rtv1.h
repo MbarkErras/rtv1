@@ -27,9 +27,11 @@
 # include "simplist.h"
 # include "vec3.h"
 
+# define BIG 100000000000
+
 # define EXEC_NAME "rtv1"
-# define WIDTH 500
-# define HEIGHT 500
+# define WIDTH 1000
+# define HEIGHT 1000
 # define VFOV DEG_TO_RAD(60) // check for undefined
 # define HFOV DEG_TO_RAD(60) // check for undefined
 # define X 0

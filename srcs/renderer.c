@@ -24,9 +24,10 @@ int     hit_loop(t_object camera, t_list *objects, double ray[3], t_hit *hit)
     double hit_distance;
     int color;
 
-    shortest_hit_distance = INFINITY;
+    shortest_hit_distance = BIG;
     while (objects)
     {
+        hit_distance = BIG;
         if (TLIST(objects, t_object)->object_type == SPHERE)
             hit_sphere(camera, *TLIST(objects, t_object), ray, &hit_distance);
         if (hit_distance < shortest_hit_distance)
@@ -36,7 +37,7 @@ int     hit_loop(t_object camera, t_list *objects, double ray[3], t_hit *hit)
         }
         objects = objects->next;
     }
-    return (shortest_hit_distance == INFINITY ? 0 : 1);
+    return (shortest_hit_distance == BIG ? 0 : 1);
 }
 
 void    ray_constructor(double *ray, t_object camera,
@@ -54,7 +55,7 @@ void    ray_constructor(double *ray, t_object camera,
 
 void    plane_vectors_constructor(t_scene scene, t_vec3 *planes_vectors)
 {
-    planes_vectors[0] = vecnorm(vecset(scene.camera->vectors[2][0],
+    planes_vectors[0] = vecnormvecset(scene.camera->vectors[2][0],
         scene.camera->vectors[2][1], scene.camera->vectors[2][2]));
     planes_vectors[1] = vecnorm(veccross((t_vec3){scene.camera->vectors[1][0],
         scene.camera->vectors[1][1], scene.camera->vectors[1][2]},
@@ -82,6 +83,7 @@ void    render_scene(t_scene scene)
                                             plane_vectors[1]});
             if (hit_loop(*scene.camera, scene.objects, ray, &hit))
                 hit_procedure(mlx_ptr, win_ptr, hit, plane_indexes[X], plane_indexes[Y]);
+            
         }
     }
     mlx_loop(win_ptr);
