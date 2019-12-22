@@ -12,7 +12,7 @@
 
 #include "rtv1.h"
 
-int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *distance)
+int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *distance, int x, int y)
 {
     t_vec3 oc;
     t_vec3 center;
@@ -21,6 +21,9 @@ int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *dist
     double b;
     double c;
     double delta;
+
+          if (x == 750 && y == 500)
+            printf("*nn** test\n");
     rayv = vecset(ray[0], ray[1], ray[2]);
     rayv = vecnorm(rayv);
     center = vecset(sphere.vectors[0][0], sphere.vectors[0][1], sphere.vectors[0][2]);
@@ -30,13 +33,36 @@ int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *dist
     c = vecdot(oc, oc) - (sphere.scalars[1] * sphere.scalars[1]);
     delta = b * b - 4.0 * a * c;
     if (delta < 0.0)
+    {
+        if (x == 750 && y == 500)
+            printf("*1*\n");
+        //printf("\tn/a*\n");
         return (0);
+    }
     double solutions[2] = {((-b - sqrt(delta)) / (2.0 * a)), ((-b + sqrt(delta)) / (2.0 * a))};
     if (solutions[0] > 0.0 && solutions[1] > 0.0)
+    {
+
         *distance = solutions[0] < solutions[1] ? solutions[0] : solutions[1];
+        if (x == 750 && y == 500)
+            printf("*%f*\n", *distance);
+        ////printf("\t%f*\n", *distance);
+    }
     else  if (solutions[0] < 0.0 && solutions[1] < 0.0)
+    {
+        if (x == 750 && y == 500)
+            printf("*2*\n");
+        //printf("\tn/a-\n");
         return (0);
+    }
     else
+    {
+                if (x == 750 && y == 500)
+            printf("*3*\n");
         *distance = solutions[0] > solutions[1] ? solutions[0] : solutions[1];
+        //printf("\t%f-\n", *distance);
+    }
+            if (x == 750 && y == 500)
+            printf("*5*\n");
     return (1);
 }

@@ -147,7 +147,7 @@ typedef	struct	s_hit
 }				t_hit;
 
 void    render_scene(t_scene scene);
-int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *distance);
+int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *distance, int x, int y);
 /*
 ** UTILITY MACROS
 */
