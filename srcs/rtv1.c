@@ -14,15 +14,15 @@
 
 int		main(int argc, char **argv)
 {
-	int		fd;
-	t_scene	scene;
+	int			fd;
+	t_raytracer	raytracer;
 
 	if (argc != 2)
 		return (ft_perror(EXEC_NAME, NULL, N_SCENE));
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
-	scene = (t_scene){NULL, NULL, NULL};
-	parse_scene(fd, &scene);
-	print_parsing_results(scene);
-	render_scene(scene);
+	raytracer.scene = (t_scene){NULL, NULL, NULL};
+	parse_scene(fd, &raytracer.scene);
+	print_parsing_results(raytracer.scene);
+	render_scene(&raytracer);
 }

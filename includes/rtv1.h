@@ -56,7 +56,7 @@ typedef struct  s_ray
 typedef struct	s_object
 {
 	int 		object_type;
-	double		vectors[5][3];
+	t_vec3		vectors[5];
 	double 		scalars[4];
 }				t_object;
 
@@ -140,6 +140,20 @@ t_object		*create_object(t_object o);
 ** RENDERING
 */
 
+
+
+typedef struct	s_raytracer
+{
+	t_vec3		plane_vectors[2];
+	t_ray		ray;
+	t_hit		hit;
+	void		*mlx_pointers[3];
+	int			*image_data;
+	int			mlx_properties[3];
+	t_scene		scene;
+}				t_raytracer;
+
+
 typedef	struct	s_hit
 {
 	int			color;
@@ -164,7 +178,7 @@ int     hit_sphere(t_object camera, t_object sphere, double ray[3], double *dist
 # define CAMERA_VCOUNT 3
 # define LIGHT_VCOUNT 1
 # define SPHERE_VCOUNT 2
-# define PLANE_VCOUNT 3
+# define PLANE_VCOUNT 4
 # define CYLINDER_VCOUNT 4
 # define CONE_VCOUNT 5
 
@@ -193,13 +207,5 @@ int				ft_perror(char *command, char *arg, int err);
 # define P_MIXED_T ": mixed properties types."
 # define P_EXTRA_T ": extranous properties values."
 # define P_MISSING_T ": missing properties."
-
-
-// void	ft_create_window(t_ptr *p);
-// void	ft_create_image(t_ptr *p);
-// int			ft_draw(t_ptr *p);
-// void		ft_calcul(t_ptr *p);
-// void		ft_mlx_putpixel(t_ptr *p, int x, int y, int color);
-// t_camera	ft_init_camera(t_vec3 lookfrom, t_vec3 lookat, double vfov);
 
 #endif
