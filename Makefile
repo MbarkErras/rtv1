@@ -7,9 +7,7 @@ SRCS=	vec1.c \
 		scene_parser.c \
 		initial_parsing_utilities.c \
 		properties_scene_parsing_utilities.c \
-		error_handling.c \
 		checkers.c \
-		t_object.c \
 		renderer.c \
 		hit.c \
 		intersections.c

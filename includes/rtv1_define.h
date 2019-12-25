@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-el- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 23:17:18 by aait-el-          #+#    #+#             */
-/*   Updated: 2019/12/23 23:17:22 by aait-el-         ###   ########.fr       */
+/*   Updated: 2019/12/25 16:53:22 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef RTV1_DEFINE_H
 # define RTV1_DEFINE_H
 
@@ -38,6 +39,7 @@
 # define VECTORS_INCREMENTOR 0
 # define SCALARS_INCREMENTOR 1
 # define COMMENT 0
+
 # define CAMERA_VCOUNT 3
 # define LIGHT_VCOUNT 1
 # define SPHERE_VCOUNT 2
@@ -50,6 +52,7 @@
 # define PLANE_SCOUNT 1
 # define CYLINDER_SCOUNT 2
 # define CONE_SCOUNT 2
+
 # define N_SCENE 0
 # define F_OPEN 1
 # define N_WORD 2

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2019/11/03 06:00:22 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/25 16:49:57 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct  s_ray
 typedef struct	s_object
 {
 	int 		object_type;
-	double 		scalars[4];
-	t_vec3		vectors[5];
+	double 		scalars[2];
+	t_vec3		vectors[4];
 }				t_object;
 
 typedef struct	s_scene
@@ -64,8 +64,8 @@ typedef struct	s_raytracer
 typedef struct	s_scene_parser
 {
 	t_scene		*scene;
-	t_vec3		vectors[5];
-	double		scalars[4];
+	double		vectors[4][3];
+	double		scalars[2];
 	char		object_name_buffer[MAX_OBJECT_NAME_SIZE + 2];
 	char		*properties_buffer;
 	int			properties_incrementors[2];

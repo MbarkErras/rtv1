@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "algorithm": "c",
+        "ios": "c",
+        "rtv1.h": "c",
+        "iterator": "c"
+    }
+}

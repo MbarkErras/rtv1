@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2019/11/03 06:00:14 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/25 16:51:49 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_object	package_object_properties(t_scene_parser s)
 	object.object_type = s.object_type;
 	i = -1;
 	while (++i < 5)
-		ft_memcpy(object.vectors[i], s.vectors[i], sizeof(double[3]));
+		object.vectors[i] = vecset(s.vectors[i][0], s.vectors[i][1], s.vectors[i][2]);
 	ft_memcpy(object.scalars, s.scalars, sizeof(double[4]));
 	return (object);
 }
