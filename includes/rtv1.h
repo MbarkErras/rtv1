@@ -97,7 +97,7 @@ int     		hit_sphere(t_raytracer *r, double *distance);
 int     		hit_plane(t_raytracer *r, double *distance);
 int     		hit_cylinder(t_raytracer *r, double *distance);
 int     		hit_cone(t_raytracer *r, double *distance);
-int     		hit_loop(t_raytracer *r);
+int     		hit_loop(t_raytracer *r, double big);
 
 				//// DEV ///
 

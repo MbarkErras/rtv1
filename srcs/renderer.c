@@ -14,13 +14,14 @@
 
 void	initialize_raytracer(t_raytracer *r)
 {
-	r->plane_vectors[X] = vecnorm(r->scene.camera->vectors[0]);
-    r->plane_vectors[Y] = vecnorm(veccross(r->scene.camera->vectors[1], r->plane_vectors[0]));
 	r->mlx_pointers[0] = mlx_init();
 	r->mlx_pointers[1] = mlx_new_window(r->mlx_pointers[0], WIDTH, HEIGHT, "rtv1");
 	r->mlx_pointers[2] = mlx_new_image(r->mlx_pointers[0], WIDTH, HEIGHT);
 	r->image_data = (int *)mlx_get_data_addr(r->mlx_pointers[2],
 		&r->mlx_properties[0], &r->mlx_properties[1], &r->mlx_properties[2]);
+    r->plane_vectors[X] = vecnorm(r->scene.camera->vectors[0]);
+    r->plane_vectors[Y] = vecnorm(veccross(r->scene.camera->vectors[1], r->plane_vectors[0]));
+    r->hit.distance = BIG;
 }
 
 void	ray_constructor(t_raytracer *r, int plane_indexes[2])
@@ -48,7 +49,7 @@ void    render_scene(t_raytracer *raytracer)
         while (++plane_indexes[Y] < HEIGHT)
         {
             ray_constructor(raytracer, plane_indexes);         
-            if (hit_loop(raytracer))
+            if (hit_loop(raytracer, BIG))
                 raytracer->image_data[plane_indexes[Y] * WIDTH + plane_indexes[X]] = 
                     color_picker(raytracer);
         }

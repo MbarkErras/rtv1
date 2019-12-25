@@ -15,22 +15,22 @@
 t_vec3      get_normal(t_raytracer *r)
 {
     t_vec3  vec;
-    t_vec3  p_c;
+    t_vec3  o_c;
 
     if (r->hit.object->object_type == SPHERE)
         return(vecnorm(vecsub(r->hit.p, r->hit.object->vectors[0])));
     if (r->hit.object->object_type == PLANE)
         return(r->hit.object->vectors[3]);
 
-    p_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
+    o_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
 
     if (r->hit.object->object_type == CYLINDER)
         return(vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), 
         vecopx(r->hit.object->vectors[3], vecdot(r->ray.dir, r->hit.object->vectors[3])
-		* r->hit.distance + vecdot(p_c, r->hit.object->vectors[3])))));
+		* r->hit.distance + vecdot(o_c, r->hit.object->vectors[3])))));
 
     vec = vecopx(r->hit.object->vectors[3], vecdot(r->ray.dir, r->hit.object->vectors[3]) * 
-        r->hit.distance + vecdot(p_c, r->hit.object->vectors[3]));
+        r->hit.distance + vecdot(o_c, r->hit.object->vectors[3]));
     vec = vecopx(vec, 1.0 / pow(cos(r->hit.object->scalars[1]), 2));
 
     if (r->hit.object->object_type == CONE)
@@ -49,13 +49,12 @@ void     hit_objects(t_raytracer *r, t_list *object, double hit_distance)
         hit_cone(r, &hit_distance);
 }
 
-int     hit_loop(t_raytracer *r)
+int     hit_loop(t_raytracer *r, double big)
 {
     double	    hit_distance;
 	t_list		*object;
 
-    hit_distance = BIG;
-    r->hit.distance = BIG;
+    hit_distance = big;
 	object = r->scene.objects;
     while (object)
     {
@@ -63,12 +62,11 @@ int     hit_loop(t_raytracer *r)
         if (hit_distance < r->hit.distance)
 		{
             r->hit.distance = hit_distance;
-            r->hit.distance = hit_distance;
             r->hit.p = vecadd(r->ray.org, vecopx(r->ray.dir, r->hit.distance));
             r->hit.normal = get_normal(r);
 			r->hit.object = object;
         }
         object = object->next;
     }
-    return (r->hit.distance == BIG ? 0 : 1);
+    return (r->hit.distance == big ? 0 : 1);
 }
