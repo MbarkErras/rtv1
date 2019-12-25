@@ -1,6 +1,0 @@
-[submodule "libs/centropy"]
-	path = libs/centropy
-	url = http://github.com/MbarkErras/centropy
-[submodule "libs/simplist"]
-	path = libs/simplist
-	url = http://github.com/MbarkErras/simplist

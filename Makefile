@@ -1,6 +1,8 @@
 NAME=rtv1
 
-SRCS=	_dev_.c \
+SRCS=	vec1.c \
+		vec2.c \
+		vec3.c \
 		rtv1.c \
 		scene_parser.c \
 		initial_parsing_utilities.c \
@@ -9,9 +11,7 @@ SRCS=	_dev_.c \
 		checkers.c \
 		t_object.c \
 		renderer.c \
-		vec1.c \
-		vec2.c \
-		vec3.c \
+		hit.c \
 		intersections.c
 
 OBJS=$(SRCS:.c=.o)

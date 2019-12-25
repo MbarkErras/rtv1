@@ -1,16 +1,20 @@
-camera: [x,y,z] [x,y,z] [x,y,z]
-		postion direction top
-light: [x,y,z] [intensity] [c]
-	   position intensity
 
-sphere: [x,y,z] [x,y,z] [c] [r]
-		positon translation
+camera:   [x,y,z]   [x,y,z]    [x,y,z]
+		  postion   direction  top
 
-plane: [x,y,z] [x,y,z] [x,y,z] [x,y,z] [c]
-	   translation direction rotation position color 
+light:    [x,y,z]       										  [c]	 [i]
+	      position      										  color  intensity
 
-cylinder: [x,y,z] [x,y,z]  [x,y,z] [x,y,z] [c] [r]
-		  position direction translation rotation radius
-cone: [x,y,z] [x,y,z] [x,y,z] [x,y,z] [x,y,z] [c]
-	  position direction translation rotation angle
+sphere:   [x,y,z]   		   [x,y,z] 							  [c]    [r]
+		  positon   		   translation						  color  radius
+
+plane:    [x,y,z]   [x,y,z] 	[x,y,z]      [x,y,z]    		  [c]
+	  	 position   direction  translation  rotation   			  color 
+
+cylinder: [x,y,z] 	[x,y,z]    [x,y,z]       [x,y,z]    		  [c]    [r]
+		  position 	direction  translation   rotation   		  color  radius
+
+cone:     [x,y,z]   [x,y,z]    [x,y,z] 	     [x,y,z]       		  [c]	 [alpha]
+	      position 	direction  translation   rotation  		  	  color	 angle
+
 #comment

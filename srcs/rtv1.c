@@ -23,6 +23,5 @@ int		main(int argc, char **argv)
 		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
 	raytracer.scene = (t_scene){NULL, NULL, NULL};
 	parse_scene(fd, &raytracer.scene);
-	print_parsing_results(raytracer.scene);
 	render_scene(&raytracer);
 }

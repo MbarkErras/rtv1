@@ -7,7 +7,7 @@ double  veclength(t_vec3 vec)
 
 t_vec3    vecnorm(t_vec3 a)
 {
-float k;
+	double k;
 
 	if (a.x == 0.0 && a.y == 0.0 && a.z == 0.0)
 		return (VEC(0, 0, 0));
