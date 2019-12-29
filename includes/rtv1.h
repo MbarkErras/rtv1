@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2019/12/25 16:49:57 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 17:11:19 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct	s_object
 {
 	int 		object_type;
 	double 		scalars[2];
-	t_vec3		vectors[4];
+	t_vec3		vectors[5];
 }				t_object;
 
 typedef struct	s_scene
@@ -93,10 +93,10 @@ int				scene_parser_loop(t_scene_parser *s);
 
 void    		render_scene(t_raytracer *raytracer);
 
-int     		hit_sphere(t_raytracer *r, double *distance);
-int     		hit_plane(t_raytracer *r, double *distance);
-int     		hit_cylinder(t_raytracer *r, double *distance);
-int     		hit_cone(t_raytracer *r, double *distance);
+int     		hit_sphere(t_raytracer *r, t_object *object, double *distance);
+int     		hit_plane(t_raytracer *r, t_object *object, double *distance);
+int     		hit_cylinder(t_raytracer *r, t_object *object, double *distance);
+int     		hit_cone(t_raytracer *r, t_object *object, double *distance);
 int     		hit_loop(t_raytracer *r);
 
 				//// DEV ///

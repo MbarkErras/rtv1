@@ -8,8 +8,8 @@ light:    [x,y,z]       										  [c]	 [i]
 sphere:   [x,y,z]   		   [x,y,z] 							  [c]    [r]
 		  positon   		   translation						  color  radius
 
-plane:    [x,y,z]   [x,y,z] 	[x,y,z]      [x,y,z]    		  [c]
-	  	 position   direction  translation  rotation   			  color 
+plane:    [x,y,z]   [x,y,z] 	[x,y,z]      [x,y,z]    [x,y,z]   [c]
+	  	 position   direction  translation  rotation	normal    color 
 
 cylinder: [x,y,z] 	[x,y,z]    [x,y,z]       [x,y,z]    		  [c]    [r]
 		  position 	direction  translation   rotation   		  color  radius

@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtv1.c                                             :+:      :+:    :+:   */
+/*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2019/11/03 06:00:24 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 17:44:41 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtv1.h"
 
-int     hit_plane(t_raytracer *r, double *distance)
+
+
+int     hit_plane(t_raytracer *r, t_object *object, double *distance)
 {
     double      solution;
+	t_vec3		c_o;
 
-    solution = ((vecdot(r->hit.object->vectors[2], r->hit.object->vectors[0]) - 
-        vecdot(r->hit.object->vectors[2], r->ray.org)) / 
-        vecdot(r->hit.object->vectors[2], r->ray.dir));
-    if (solution <= 0.0)
+	c_o = vecsub(object->vectors[0], r->ray.org);
+    solution = vecdot(object->vectors[1], c_o) / vecdot(object->vectors[1], r->ray.dir);
+    if (solution <= 0.00000001)
         return (0);
     *distance = solution;
     return (1);
 }
 
-int     hit_sphere(t_raytracer *r, double *distance)
+int     hit_sphere(t_raytracer *r, t_object *object, double *distance)
 {
     t_vec3      p_c;
     double      coef[4];
     double      solutions[2];
 
-    p_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
+    p_c = vecsub(r->ray.org, object->vectors[0]);
     coef[0] = vecdot(r->ray.dir, r->ray.dir);
     coef[1] = 2.0 * vecdot(p_c, r->ray.dir);
-    coef[2] = vecdot(p_c, p_c) - pow(r->hit.object->scalars[1], 2);
+    coef[2] = vecdot(p_c, p_c) - pow(object->scalars[1], 2);
     coef[3] = pow(coef[1], 2) - 4.0 * coef[0] * coef[2];
     if (coef[3] < 0.0)
         return (0);
@@ -44,11 +46,12 @@ int     hit_sphere(t_raytracer *r, double *distance)
         *distance = solutions[0] < solutions[1] ? solutions[0] : solutions[1];
     else  if (solutions[0] < 0.0 && solutions[1] < 0.0)
         return (0);
-    *distance = solutions[0] > solutions[1] ? solutions[0] : solutions[1];
+	else
+    	*distance = solutions[0] > solutions[1] ? solutions[0] : solutions[1];
     return (1);
 }
 
-int     hit_cylinder(t_raytracer *r, double *distance)
+int     hit_cylinder(t_raytracer *r, t_object *object, double *distance)
 {
     t_vec3      p_c;
     double      coef[4];
@@ -74,7 +77,7 @@ int     hit_cylinder(t_raytracer *r, double *distance)
     return (1);
 }
 
-int     hit_cone(t_raytracer *r, double *distance)
+int     hit_cone(t_raytracer *r, t_object *object, double *distance)
 {
     t_vec3      p_c;
     double      coef[4];

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtv1.c                                             :+:      :+:    :+:   */
+/*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2019/11/03 06:00:24 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 16:40:45 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ void	initialize_raytracer(t_raytracer *r)
 	r->mlx_pointers[2] = mlx_new_image(r->mlx_pointers[0], WIDTH, HEIGHT);
 	r->image_data = (int *)mlx_get_data_addr(r->mlx_pointers[2],
 		&r->mlx_properties[0], &r->mlx_properties[1], &r->mlx_properties[2]);
+    r->plane_vectors[0] = vecnorm(r->scene.camera->vectors[2]);
+    r->plane_vectors[1] = vecnorm(veccross(r->plane_vectors[0], r->scene.camera->vectors[1]));
 }
 
 void	ray_constructor(t_raytracer *r, int plane_indexes[2])
 {
 	double      scalars[2];
 
-	scalars[X] =  2 * plane_indexes[X] / (double)WIDTH - 1;
-	scalars[Y] =  2 * plane_indexes[Y] / (double)HEIGHT - 1;
+	scalars[X] =  2.0 * plane_indexes[X] / (double)WIDTH - 1;
+	scalars[Y] =  2.0 * plane_indexes[Y] / (double)HEIGHT - 1;
 
 	r->ray.org = r->scene.camera->vectors[0];
 	r->ray.dir = vecnorm(vecadd(vecadd(r->ray.org, r->scene.camera->vectors[1]), 
@@ -49,9 +51,11 @@ void    render_scene(t_raytracer *raytracer)
         {
             ray_constructor(raytracer, plane_indexes);         
             if (hit_loop(raytracer))
-                raytracer->image_data[plane_indexes[Y] * WIDTH + plane_indexes[X]] = 
-                    color_picker(raytracer);
-        }
+			{
+                raytracer->image_data[plane_indexes[Y] * WIDTH + plane_indexes[X]] = 0xffffff;
+                    // color_picker(raytracer);
+			}
+		}
     }
     mlx_put_image_to_window(raytracer->mlx_pointers[0], raytracer->mlx_pointers[1],
 		raytracer->mlx_pointers[2], 0,0);
