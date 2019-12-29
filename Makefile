@@ -10,7 +10,8 @@ SRCS=	vec1.c \
 		checkers.c \
 		renderer.c \
 		hit.c \
-		intersections.c
+		intersections.c \
+		color_picker.c
 
 OBJS=$(SRCS:.c=.o)
 

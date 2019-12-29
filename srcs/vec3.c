@@ -30,7 +30,6 @@ t_vec3	vecset(double x, double y, double z)
 	return (v);
 }
 
-
 t_vec3  vecopx(t_vec3 a, double x)
 {
 	t_vec3  v;

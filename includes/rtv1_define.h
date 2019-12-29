@@ -13,7 +13,7 @@
 #ifndef RTV1_DEFINE_H
 # define RTV1_DEFINE_H
 
-# define BIG 100000000000
+# define BIG 100000000000.0
 # define EXEC_NAME "rtv1"
 # define WIDTH 1000
 # define HEIGHT 1000

@@ -26,7 +26,7 @@ t_vec3                          vecreflect(t_vec3 i, t_vec3 n);
 t_vec3                          vecadd(t_vec3 a, t_vec3 b);
 t_vec3                          vecprod(t_vec3 a, t_vec3 b);
 t_vec3                          vecopx(t_vec3 a, double x);
-double                          vecdistance(t_vec3 a, t_vec3 b);
 t_vec3	                        vecset(double x, double y, double z);
+int                             veccompare(t_vec3 a, t_vec3 b);
 
 #endif

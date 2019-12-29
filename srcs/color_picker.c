@@ -35,20 +35,19 @@ int     color_picker(t_raytracer *r)
         if (!hit_loop(r, veclength(pos_point)))
         {
             diffuse += vecdot(vecnorm(pos_point), r->hit.normal);
-            specular += pow(vecdot(vecnorm(reflect), r->hit.normal), 40.0);
+            specular += pow(vecdot(vecnorm(reflect), r->hit.normal), 4444.4) ;
         }
         light = light->next;
     }
-    rgb.x = (0.25 + diffuse + specular) * (((int)r->hit.object->scalars[0] >> 16) & 0xFF);
-    rgb.y = (0.25 + diffuse + specular) * (((int)r->hit.object->scalars[0] >> 8) & 0xFF);
-    rgb.z = (0.25 + diffuse + specular) * ((int)r->hit.object->scalars[0] & 0xFF);
+    rgb.x = (0.15 + diffuse + specular) * (((int)r->hit.object->scalars[0] >> 16) & 0xFF);
+    rgb.y = (0.15 + diffuse + specular) * (((int)r->hit.object->scalars[0] >> 8) & 0xFF);
+    rgb.z = (0.15 + diffuse + specular) * ((int)r->hit.object->scalars[0] & 0xFF);
+    (rgb.x > 255) ? rgb.x = 255 : 0;
+    (rgb.y > 255) ? rgb.y = 255 : 0;
+    (rgb.z > 255) ? rgb.z = 255 : 0;
     color = (((int)rgb.x & 0x0ff) << 16) | (((int)rgb.y & 0x0ff) << 8) | ((int)rgb.z & 0x0ff);
     return (color);
 }
-
-
-
-
 
 
 // int red = (rgb >> 16) & 0xFF;

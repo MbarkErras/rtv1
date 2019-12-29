@@ -59,6 +59,7 @@ typedef struct	s_raytracer
 	t_vec3		plane_vectors[2];
 	t_ray		ray;
 	t_hit		hit;
+	t_vec3		left_corner;
 }				t_raytracer;
 
 typedef struct	s_scene_parser
@@ -93,11 +94,13 @@ int				scene_parser_loop(t_scene_parser *s);
 
 void    		render_scene(t_raytracer *raytracer);
 
-int     		hit_sphere(t_raytracer *r, double *distance);
-int     		hit_plane(t_raytracer *r, double *distance);
-int     		hit_cylinder(t_raytracer *r, double *distance);
-int     		hit_cone(t_raytracer *r, double *distance);
+int     		hit_sphere(t_raytracer *r, t_object *object, double *distance);
+int     		hit_plane(t_raytracer *r, t_object *object, double *distance);
+int     		hit_cylinder(t_raytracer *r, t_object *object, double *distance);
+int     		hit_cone(t_raytracer *r, t_object *object, double *distance);
 int     		hit_loop(t_raytracer *r, double big);
+
+int     		color_picker(t_raytracer *r);
 
 				//// DEV ///
 
