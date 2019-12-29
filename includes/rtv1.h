@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 17:11:19 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 17:48:49 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct	s_raytracer
 	t_vec3		plane_vectors[2];
 	t_ray		ray;
 	t_hit		hit;
+	t_vec3		left_corner;
 }				t_raytracer;
 
 typedef struct	s_scene_parser
@@ -97,7 +98,9 @@ int     		hit_sphere(t_raytracer *r, t_object *object, double *distance);
 int     		hit_plane(t_raytracer *r, t_object *object, double *distance);
 int     		hit_cylinder(t_raytracer *r, t_object *object, double *distance);
 int     		hit_cone(t_raytracer *r, t_object *object, double *distance);
-int     		hit_loop(t_raytracer *r);
+int     		hit_loop(t_raytracer *r, double big);
+
+int     		color_picker(t_raytracer *r);
 
 				//// DEV ///
 

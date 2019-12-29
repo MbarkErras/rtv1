@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 16:40:45 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 17:48:39 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	initialize_raytracer(t_raytracer *r)
 {
-	r->plane_vectors[X] = vecnorm(r->scene.camera->vectors[0]);
-    r->plane_vectors[Y] = vecnorm(veccross(r->scene.camera->vectors[1], r->plane_vectors[0]));
+    t_vec3    direction;
+
 	r->mlx_pointers[0] = mlx_init();
 	r->mlx_pointers[1] = mlx_new_window(r->mlx_pointers[0], WIDTH, HEIGHT, "rtv1");
 	r->mlx_pointers[2] = mlx_new_image(r->mlx_pointers[0], WIDTH, HEIGHT);
@@ -33,9 +33,9 @@ void	ray_constructor(t_raytracer *r, int plane_indexes[2])
 	scalars[Y] =  2.0 * plane_indexes[Y] / (double)HEIGHT - 1;
 
 	r->ray.org = r->scene.camera->vectors[0];
-	r->ray.dir = vecnorm(vecadd(vecadd(r->ray.org, r->scene.camera->vectors[1]), 
+	r->ray.dir = vecnorm(vecsub(vecadd(vecadd(r->left_corner, r->scene.camera->vectors[1]), 
 				vecadd(vecopx(r->plane_vectors[X], scalars[X]),
-				vecopx(r->plane_vectors[Y], scalars[Y]))));
+				vecopx(r->plane_vectors[Y], scalars[Y]))), r->scene.camera->vectors[0]));
 }
 
 void    render_scene(t_raytracer *raytracer)

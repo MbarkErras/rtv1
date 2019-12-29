@@ -30,7 +30,6 @@ t_vec3	vecset(double x, double y, double z)
 	return (v);
 }
 
-
 t_vec3  vecopx(t_vec3 a, double x)
 {
 	t_vec3  v;
@@ -39,13 +38,4 @@ t_vec3  vecopx(t_vec3 a, double x)
 	v.y = a.y * x;
 	v.z = a.z * x;
 	return (v);
-}
-
-double  vecdistance(t_vec3 a, t_vec3 b)
-{
-	double  distance;
-
-	distance = sqrt((a.x - b.x) * (a.x - b.x) + \
-			(a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z));
-	return (distance);
 }

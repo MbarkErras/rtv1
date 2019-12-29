@@ -19,7 +19,7 @@ t_object	package_object_properties(t_scene_parser s)
 
 	object.object_type = s.object_type;
 	i = -1;
-	while (++i < 5)
+	while (++i < 4)
 		object.vectors[i] = vecset(s.vectors[i][0], s.vectors[i][1], s.vectors[i][2]);
 	ft_memcpy(object.scalars, s.scalars, sizeof(double[2]));
 	return (object);

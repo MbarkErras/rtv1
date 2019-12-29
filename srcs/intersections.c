@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
@@ -29,7 +29,7 @@ int     hit_plane(t_raytracer *r, t_object *object, double *distance)
 
 int     hit_sphere(t_raytracer *r, t_object *object, double *distance)
 {
-    t_vec3      p_c;
+    t_vec3      o_c;
     double      coef[4];
     double      solutions[2];
 
@@ -53,18 +53,18 @@ int     hit_sphere(t_raytracer *r, t_object *object, double *distance)
 
 int     hit_cylinder(t_raytracer *r, t_object *object, double *distance)
 {
-    t_vec3      p_c;
+    t_vec3      o_c;
     double      coef[4];
     double      solutions[2];
 
-    p_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
+    o_c = vecsub(r->ray.org, object->vectors[0]);
     coef[0] = vecdot(r->ray.dir, r->ray.dir); 
-    coef[1] = 2.0 * (vecdot(r->ray.dir, p_c) - 
-        (vecdot(r->ray.dir, r->hit.object->vectors[3]) * 
-        vecdot(p_c, r->hit.object->vectors[3])));
-    coef[2] = vecdot(p_c, p_c) - pow(vecdot(p_c, r->hit.object->vectors[3]), 2) - 
-        pow(r->hit.object->scalars[1], 2);
-    coef[3] = pow(coef[1], 2) - 4.0 * coef[0] * coef[2];
+    coef[1] = 2.0 * (vecdot(r->ray.dir, o_c) - 
+        (vecdot(r->ray.dir, object->vectors[3]) * 
+        vecdot(o_c, object->vectors[3])));
+    coef[2] = vecdot(o_c, o_c) - pow(vecdot(o_c, object->vectors[3]), 2.0) - 
+        pow(object->scalars[1], 2.0);
+    coef[3] = pow(coef[1], 2.0) - 4.0 * coef[0] * coef[2];
     if (coef[3] < 0.0)
         return (0);
     solutions[0] = (-coef[1] - sqrt(coef[3])) / (2.0 * coef[0]);
@@ -79,19 +79,19 @@ int     hit_cylinder(t_raytracer *r, t_object *object, double *distance)
 
 int     hit_cone(t_raytracer *r, t_object *object, double *distance)
 {
-    t_vec3      p_c;
+    t_vec3      o_c;
     double      coef[4];
     double      solutions[2];
 
-    p_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
+    o_c = vecsub(r->ray.org, object->vectors[0]);
     coef[0] = vecdot(r->ray.dir, r->ray.dir) -
-        (pow(vecdot(r->ray.dir, r->hit.object->vectors[3]), 2) / pow(cos(r->hit.object->scalars[1]), 2));
-    coef[1] = 2.0 * (vecdot(r->ray.dir, p_c) -
-        (vecdot(r->ray.dir, r->hit.object->vectors[3]) *
-        vecdot(p_c, r->hit.object->vectors[3])) / pow(cos(r->hit.object->scalars[1]), 2));
-    coef[2] = vecdot(p_c, p_c) - 
-        (pow(vecdot(p_c, r->hit.object->vectors[3]), 2) / pow(cos(r->hit.object->scalars[1]), 2));
-    coef[3] = pow(coef[1], 2) - 4.0 * coef[0] * coef[2];
+        (pow(vecdot(r->ray.dir, object->vectors[3]), 2.0) / pow(cos(object->scalars[1]), 2.0));
+    coef[1] = 2.0 * (vecdot(r->ray.dir, o_c) -
+        (vecdot(r->ray.dir, object->vectors[3]) *
+        vecdot(o_c, object->vectors[3])) / pow(cos(object->scalars[1]), 2.0));
+    coef[2] = vecdot(o_c, o_c) - 
+        (pow(vecdot(o_c, object->vectors[3]), 2.0) / pow(cos(object->scalars[1]), 2.0));
+    coef[3] = pow(coef[1], 2.0) - 4.0 * coef[0] * coef[2];
     if (coef[3] < 0.0)
         return (0);
     solutions[0] = (-coef[1] - sqrt(coef[3])) / (2.0 * coef[0]);
