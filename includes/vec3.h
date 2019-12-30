@@ -12,8 +12,6 @@ typedef struct  s_vec3
     double      z;    
 }               t_vec3;
 
-# define VEC(a, b, c) (t_vec3){a, b, c}
-
 double                          veclength(t_vec3 vec);
 t_vec3                            vecnorm(t_vec3 vec);
 double                          vecdot(t_vec3 a, t_vec3 b);
