@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2019/12/30 17:49:42 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/30 19:37:43 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int     grammar_checker(char *buffer, int i)
 {
-    return((!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' && buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-' && buffer[i] != '+') ||
-		(i && (buffer[i] == '.' || buffer[i] == ',') && (!ft_isdigit(buffer[i - 1]))) ||
-		(i && ((buffer[i - 1] == '.' || buffer[i - 1] == ',') && !ft_isdigit(buffer[i]))));
+    return(
+		(!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' && buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-') ||
+		(i && (buffer[i] == '.' || buffer[i] == ',') && !ft_isdigit(buffer[i - 1]) ) ||
+		(i && (buffer[i - 1] == '.' || buffer[i - 1] == ',') && (!ft_isdigit(buffer[i]) && buffer[i] != '-') ) ||
+		(i && buffer[i] == '-' && buffer[i - 1] != ' ' && buffer[i - 1] != ',') ||
+		(i && buffer[i - 1] == '-' && !ft_isdigit(buffer[i]))
+		);
 }
 
 void    scalar_state(char *buffer, t_scene_parser *s)
@@ -60,7 +64,7 @@ int    properties_parser_loop(t_scene_parser *s)
 	if (!read_return && (!s->i || s->properties_buffer[s->i - 1] != '\n'))
 		s->properties_buffer[s->i] = '\n';
 	if (grammar_checker(s->properties_buffer, s->i)) // if i == 999
-		exit(ft_perror(EXEC_NAME, ft_itoa(s->i), N_PROP));
+		exit(ft_perror(EXEC_NAME, NULL, N_PROP));
 	if (s->properties_buffer[s->i] == ',')
 		comma_state(s->properties_buffer, s);
 	else if (s->offset != -1 &&
