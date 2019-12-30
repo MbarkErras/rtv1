@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2019/12/25 16:49:58 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/30 17:49:42 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    scalar_state(char *buffer, t_scene_parser *s)
 {
     if (!s->property_scounter[s->object_type])
 		exit(ft_perror(EXEC_NAME, "alamlik", P_EXTRA));
-	s->scalars[s->properties_incrementors[SCALARS_INCREMENTOR]] = ft_atoi(buffer + s->offset);
+	s->scalars[s->properties_incrementors[SCALARS_INCREMENTOR]] = ft_atof(buffer + s->offset, 6);
 	s->properties_incrementors[SCALARS_INCREMENTOR]++;
 	s->property_scounter[s->object_type]--;
 	s->vectors_scalars_separator = 1;
@@ -35,7 +35,7 @@ void    vector_state(char *buffer, t_scene_parser *s)
     if (!s->property_vcounter[s->object_type])
 		exit(ft_perror(EXEC_NAME, "lah", P_EXTRA));
 	
-	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] = ft_atoi(buffer + s->offset);
+	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] = ft_atof(buffer + s->offset, 6);
 	s->properties_incrementors[VECTORS_INCREMENTOR]++;
 	s->property_vcounter[s->object_type]--;
 }
@@ -45,7 +45,7 @@ void    comma_state(char *buffer, t_scene_parser *s)
 {
     if (s->comma_counter > 1)
 		exit(ft_perror(EXEC_NAME, "lwatan", P_EXTRA));
-	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] = ft_atoi(buffer + s->offset);
+	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] = ft_atof(buffer + s->offset, 6);
 	(void)buffer;
 	s->comma_counter++;
 	s->offset = s->i + 1;

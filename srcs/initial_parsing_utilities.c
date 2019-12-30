@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 17:10:15 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 19:20:30 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_object	*create_object(t_object	o)
 	object = (t_object *)malloc(sizeof(t_object));
 	object->object_type = o.object_type;
 	i = -1;
-	while (++i < 5)
+	while (++i < MAX_VCOUNT)
 		object->vectors[i] = o.vectors[i];
-	ft_memcpy(object->scalars, o.scalars, sizeof(double[2]));
+	ft_memcpy(object->scalars, o.scalars, sizeof(double[MAX_SCOUNT]));
 	return (object);
 }
 

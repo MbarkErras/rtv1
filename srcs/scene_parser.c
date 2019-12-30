@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 17:10:05 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 18:06:04 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_object	package_object_properties(t_scene_parser s)
 
 	object.object_type = s.object_type;
 	i = -1;
-	while (++i < 4)
+	while (++i < MAX_VCOUNT)
 		object.vectors[i] = vecset(s.vectors[i][0], s.vectors[i][1], s.vectors[i][2]);
-	ft_memcpy(object.scalars, s.scalars, sizeof(double[2]));
+	ft_memcpy(object.scalars, s.scalars, sizeof(double[MAX_SCOUNT]));
 	return (object);
 }
 
