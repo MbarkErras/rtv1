@@ -14,8 +14,6 @@
 
 void	initialize_raytracer(t_raytracer *r)
 {
-    t_vec3    direction;
-
 	r->mlx_pointers[0] = mlx_init();
 	r->mlx_pointers[1] = mlx_new_window(r->mlx_pointers[0], WIDTH, HEIGHT, "rtv1");
 	r->mlx_pointers[2] = mlx_new_image(r->mlx_pointers[0], WIDTH, HEIGHT);

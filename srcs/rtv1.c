@@ -44,5 +44,5 @@ int		main(int argc, char **argv)
 	raytracer.scene = (t_scene){NULL, NULL, NULL};
 	parse_scene(fd, &raytracer.scene);
 	print_parse_results(raytracer.scene);
-	//render_scene(&raytracer);
+	render_scene(&raytracer);
 }

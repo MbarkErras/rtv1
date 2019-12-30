@@ -7,11 +7,11 @@ SRCS=	vec1.c \
 		scene_parser.c \
 		initial_parsing_utilities.c \
 		properties_scene_parsing_utilities.c \
-		checkers.c
-		#renderer.c \
-		#hit.c \
-		#intersections.c \
-		#color_picker.c
+		checkers.c \
+		renderer.c \
+		hit.c \
+		intersections.c \
+		color_picker.c
 
 OBJS=$(SRCS:.c=.o)
 
