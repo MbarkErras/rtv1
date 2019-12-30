@@ -6,7 +6,7 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 23:17:18 by aait-el-          #+#    #+#             */
-/*   Updated: 2019/12/29 17:11:39 by merras           ###   ########.fr       */
+/*   Updated: 2019/12/29 18:06:05 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@
 # define PLANE_SCOUNT 1
 # define CYLINDER_SCOUNT 2
 # define CONE_SCOUNT 2
+
+# define MAX_VCOUNT 4
+# define MAX_SCOUNT 2
 
 # define N_SCENE 0
 # define F_OPEN 1
