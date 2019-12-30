@@ -20,7 +20,7 @@ t_object	*create_object(t_object	o)
 	object = (t_object *)malloc(sizeof(t_object));
 	object->object_type = o.object_type;
 	i = -1;
-	while (++i < 5)
+	while (++i < 4)
 		object->vectors[i] = o.vectors[i];
 	ft_memcpy(object->scalars, o.scalars, sizeof(double[2]));
 	return (object);

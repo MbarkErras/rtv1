@@ -12,6 +12,20 @@
 
 #include "rtv1.h"
 
+// t_vec3	get_normal(t_raytracer *r)
+// {
+// 	t_vec3	normal;
+
+// 	normal = vecset(0.0, 1.0, 0.0);
+// 	if (r->hit.object->object_type == SPHERE)
+// 		normal = vecsub(r->hit.p, r->hit.object->vectors[0]);
+// 	else if (r->hit.object->object_type == CYLINDER)
+// 		normal = vecset(r->hit.p.x - r->hit.object->vectors[0].x, 0.0, r->hit.p.z - r->hit.object->vectors[0].z);
+// 	else if (r->hit.object->object_type == CONE)
+// 		normal = vecset(r->hit.p.x - r->hit.object->vectors[0].x, 0.0, r->hit.p.z - r->hit.object->vectors[0].z);
+// 	return (vecnorm(normal));
+// }
+
 t_vec3      get_normal(t_raytracer *r)
 {
     t_vec3  vec;
@@ -63,7 +77,6 @@ int     hit_loop(t_raytracer *r, double big)
         if (hit_distance < r->hit.distance)
 		{
 			r->hit.object = object->content;
-            r->hit.distance = hit_distance;
             r->hit.distance = hit_distance;
             r->hit.p = vecadd(r->ray.org, vecopx(r->ray.dir, r->hit.distance));
             r->hit.normal = get_normal(r);

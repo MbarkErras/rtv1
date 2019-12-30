@@ -10,7 +10,7 @@ t_vec3    vecnorm(t_vec3 a)
 	double k;
 
 	if (a.x == 0.0 && a.y == 0.0 && a.z == 0.0)
-		return (VEC(0, 0, 0));
+		return (vecset(0, 0, 0));
 	k = 1.0 / sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
 	return (vecopx(a, k));
 }

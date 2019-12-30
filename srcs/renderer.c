@@ -50,10 +50,10 @@ void    render_scene(t_raytracer *raytracer)
         while (++plane_indexes[Y] < HEIGHT)
         {
             ray_constructor(raytracer, plane_indexes);         
-            if (hit_loop(raytracer))
+            if (hit_loop(raytracer, BIG))
 			{
-                raytracer->image_data[plane_indexes[Y] * WIDTH + plane_indexes[X]] = 0xffffff;
-                    // color_picker(raytracer);
+                raytracer->image_data[plane_indexes[Y] * WIDTH + plane_indexes[X]] = 
+                    color_picker(raytracer);
 			}
 		}
     }

@@ -24,38 +24,37 @@ int     color_picker(t_raytracer *r)
 
     diffuse = 0.0;
     specular = 0.0;
+    color = 0;
     light = r->scene.lights;
     while (light)
     {
-        pos_point = vecsub(TLIST(light, t_object)->vectors[0], r->hit.p);
-        reflect = vecreflect(r->ray.dir, r->hit.p);
+        pos_point = vecsub(r->hit.p, TLIST(light, t_object)->vectors[0]);
+        vecdot(vecnorm(pos_point), r->hit.normal) > 0.0 ? diffuse += vecdot(vecnorm(pos_point), r->hit.normal) : 0;
 
+        reflect = vecreflect(r->ray.dir, r->hit.p);
         r->ray.org = r->hit.p;
-        r->ray.dir = vecnorm(vecsub(r->hit.p, TLIST(light, t_object)->vectors[0]));
-        if (!hit_loop(r, veclength(pos_point)))
-        {
-            diffuse += vecdot(vecnorm(pos_point), r->hit.normal);
-            specular += pow(vecdot(vecnorm(reflect), r->hit.normal), 4444.4) ;
-        }
+        r->ray.dir = vecnorm(vecsub(TLIST(light, t_object)->vectors[0], r->hit.p));
+        specular += pow(vecdot(vecnorm(reflect), r->hit.normal), 44.0);
         light = light->next;
     }
     rgb.x = (0.15 + diffuse + specular) * (((int)r->hit.object->scalars[0] >> 16) & 0xFF);
     rgb.y = (0.15 + diffuse + specular) * (((int)r->hit.object->scalars[0] >> 8) & 0xFF);
     rgb.z = (0.15 + diffuse + specular) * ((int)r->hit.object->scalars[0] & 0xFF);
-    (rgb.x > 255) ? rgb.x = 255 : 0;
-    (rgb.y > 255) ? rgb.y = 255 : 0;
-    (rgb.z > 255) ? rgb.z = 255 : 0;
+    (rgb.x > 255.0) ? rgb.x = 255.0 : 0;
+    (rgb.y > 255.0) ? rgb.y = 255.0 : 0;
+    (rgb.z > 255.0) ? rgb.z = 255.0 : 0;
     color = (((int)rgb.x & 0x0ff) << 16) | (((int)rgb.y & 0x0ff) << 8) | ((int)rgb.z & 0x0ff);
     return (color);
 }
-
 
 // int red = (rgb >> 16) & 0xFF;
 // int green = (rgb >> 8) & 0xFF;
 // int blue = rgb & 0xFF;
 
 
+
 // 1111 1010   1010 1001    1100 1100
+
 
 // 1111 1111   1111 1010    1010 1001
 // 0000 0000   0000 0000    1111 1111
