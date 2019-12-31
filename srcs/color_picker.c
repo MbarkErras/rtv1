@@ -19,7 +19,7 @@ int     color_picker(t_raytracer *r)
     double  specular;
     t_vec3  rgb;
     t_vec3  pos_point;
-    t_vec3  reflect;
+   // t_vec3  reflect;
     t_list  *light;
 
     diffuse = 0.0;
@@ -31,10 +31,10 @@ int     color_picker(t_raytracer *r)
         pos_point = vecsub(r->hit.p, TLIST(light, t_object)->vectors[0]);
         vecdot(vecnorm(pos_point), r->hit.normal) > 0.0 ? diffuse += vecdot(vecnorm(pos_point), r->hit.normal) : 0;
 
-        reflect = vecreflect(r->ray.dir, r->hit.p);
-        r->ray.org = r->hit.p;
-        r->ray.dir = vecnorm(vecsub(TLIST(light, t_object)->vectors[0], r->hit.p));
-        specular += pow(vecdot(vecnorm(reflect), r->hit.normal), 44.0);
+        // reflect = vecreflect(r->ray.dir, r->hit.p);
+        // r->ray.org = r->hit.p;
+        // r->ray.dir = vecnorm(vecsub(TLIST(light, t_object)->vectors[0], r->hit.p));
+        // specular += pow(vecdot(vecnorm(reflect), r->hit.normal), 44.0);
         light = light->next;
     }
     rgb.x = (0.15 + diffuse + specular) * (((int)r->hit.object->scalars[0] >> 16) & 0xFF);
