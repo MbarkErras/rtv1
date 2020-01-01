@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 18:10:54 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/01 19:15:36 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	ray_constructor(t_raytracer *r, int plane_indexes[2])
 	scalars[Y] =  2.0 * plane_indexes[Y] / (double)HEIGHT - 1;
 
 	r->ray.org = r->scene.camera->vectors[0];
-	r->ray.dir = vecnorm(vecsub(vecadd(vecadd(r->left_corner, r->scene.camera->vectors[1]), 
-				vecadd(vecopx(r->plane_vectors[X], scalars[X]),
-				vecopx(r->plane_vectors[Y], scalars[Y]))), r->scene.camera->vectors[0]));
+	// position + direction + scaledv + scaledh
+	r->ray.dir = vecnorm(vecadd(vecadd(r->ray.org, r->scene.camera->vectors[1]), vecadd(vecopx(r->plane_vectors[X], scalars[X]),
+				vecopx(r->plane_vectors[Y], scalars[Y]))));
 }
 
 void    render_scene(t_raytracer *raytracer)
