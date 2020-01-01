@@ -78,6 +78,10 @@ int     hit_cylinder(t_raytracer *r, t_object *object, double *distance)
     return (1);
 }
 
+
+
+
+
 int     hit_cone(t_raytracer *r, t_object *object, double *distance)
 {
     t_vec3      o_c;

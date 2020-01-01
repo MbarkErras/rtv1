@@ -31,9 +31,7 @@ void	ray_constructor(t_raytracer *r, int plane_indexes[2])
 	scalars[Y] =  2.0 * plane_indexes[Y] / (double)HEIGHT - 1;
 
 	r->ray.org = r->scene.camera->vectors[0];
-	r->ray.dir = vecnorm(vecsub(vecadd(vecadd(r->left_corner, r->scene.camera->vectors[1]), 
-				vecadd(vecopx(r->plane_vectors[X], scalars[X]),
-				vecopx(r->plane_vectors[Y], scalars[Y]))), r->scene.camera->vectors[0]));
+	r->ray.dir = vecnorm(vecadd(vecadd(vecadd(r->scene.camera->vectors[1],r->scene.camera->vectors[0]),vecopx(r->plane_vectors[X], scalars[X])),vecopx(r->plane_vectors[Y], scalars[Y])));
 }
 
 void    render_scene(t_raytracer *raytracer)
