@@ -27,7 +27,7 @@ int     hit_plane(t_raytracer *r, t_object *object, double *distance)
     return (1);
 }
 
-int     hit_sphere(t_raytracer *r, t_object *object, double *distance)
+int     hit_sphere(t_raytracer *r, t_object *object, double *distance) // X
 {
     t_vec3      o_c;
     double      coef[4];
@@ -78,11 +78,15 @@ int     hit_cylinder(t_raytracer *r, t_object *object, double *distance)
     return (1);
 }
 
+<<<<<<< HEAD
 
 
 
 
 int     hit_cone(t_raytracer *r, t_object *object, double *distance)
+=======
+int     hit_cone(t_raytracer *r, t_object *object, double *distance) // X
+>>>>>>> a235640ef6ac31e4f7521fe1c713936171df9434
 {
     t_vec3      o_c;
     double      coef[4];
