@@ -59,7 +59,6 @@ typedef struct	s_raytracer
 	t_vec3		plane_vectors[2];
 	t_ray		ray;
 	t_hit		hit;
-	t_vec3		left_corner;
 }				t_raytracer;
 
 typedef struct	s_scene_parser
