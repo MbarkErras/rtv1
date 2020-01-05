@@ -36,7 +36,7 @@ void	ray_constructor(t_raytracer *r, int plane_indexes[2])
 
 void    render_scene(t_raytracer *raytracer)
 {
-    int         plane_indexes[2];
+    int       plane_indexes[2];
 
 	initialize_raytracer(raytracer);
     plane_indexes[X] = -1;

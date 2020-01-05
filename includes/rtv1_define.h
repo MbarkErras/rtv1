@@ -56,6 +56,11 @@
 # define MAX_VCOUNT 4
 # define MAX_SCOUNT 2
 
+# define A 0
+# define B 1
+# define C 2
+# define DELTA 3
+
 # define N_SCENE 0
 # define F_OPEN 1
 # define N_WORD 2
