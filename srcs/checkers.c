@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-el- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 21:30:59 by aait-el-          #+#    #+#             */
-/*   Updated: 2019/12/24 21:31:00 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:32:57 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ char	*ft_strerror(int err)
 		return (P_EXTRA_T);
 	if (err == P_MISSING)
 		return (P_MISSING_T);
+	if (err == P_CAM_MISSING)
+		return (P_CAM_MISSING_T);
+	if (err == P_READ_ERROR)
+		return (P_READ_ERROR_T);
+	if (err == P_CAM_DUPLICATE)
+		return (P_CAM_DUPLICATE_T);
+	if (err == P_NOT_COMPLETE)
+		return (P_NOT_COMPLETE_T);
 	return (NULL);
 }
 

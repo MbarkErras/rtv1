@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 18:06:04 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/04 17:30:11 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,5 @@ void	parse_scene(int fd, t_scene *scene)
 		if (scene_parser_loop(&automata))
 			break ;
 	if (!scene->camera)
-		exit(0); //error!!!!!!!!!!!
+		exit(ft_perror(EXEC_NAME, NULL, P_CAM_MISSING));
 }
-
-/* to-do list:
-	- adjust offsets correctly.
-	- manage anomalies: empty lines..
-	- norming
-*/

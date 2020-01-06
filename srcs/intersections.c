@@ -76,17 +76,9 @@ int     hit_cylinder(t_raytracer *r, t_object *object, double *distance)
     return (1);
 }
 
-<<<<<<< HEAD
 # define A 0
 # define B 1
 # define C 2
-
-int     hit_cone(t_raytracer *r, t_object *object, double *distance)
-=======
-<<<<<<< HEAD
-
-
-
 
 int     hit_cone(t_raytracer *r, t_object *object, double *distance)
 {

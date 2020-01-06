@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   properties_scene_parsing_utilities.c               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2019/12/30 19:37:43 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/04 17:28:54 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
