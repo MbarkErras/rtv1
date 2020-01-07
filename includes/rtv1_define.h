@@ -72,6 +72,7 @@
 # define P_READ_ERROR 8
 # define P_CAM_DUPLICATE 9
 # define P_NOT_COMPLETE 10
+# define P_LONG 11
 
 # define N_SCENE_T ": no passed scene file."
 # define F_OPEN_T ": cannot open scene file: "
@@ -84,4 +85,5 @@
 # define P_READ_ERROR_T ": error occured while processing scene file."
 # define P_CAM_DUPLICATE_T ": multiple cameras."
 # define P_NOT_COMPLETE_T ": scene file is not complete."
+# define P_LONG_T ": properties input is too long."
 #endif

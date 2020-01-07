@@ -26,7 +26,10 @@ int     grammar_checker(char *buffer, int i)
 void    scalar_state(char *buffer, t_scene_parser *s)
 {
     if (!s->property_scounter[s->object_type])
-		exit(ft_perror(EXEC_NAME, "alamlik", P_EXTRA));
+	{
+		parsing_cleanup(s->scene);
+		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+	}
 	s->scalars[s->properties_incrementors[SCALARS_INCREMENTOR]] = ft_atof(buffer + s->offset, 6);
 	s->properties_incrementors[SCALARS_INCREMENTOR]++;
 	s->property_scounter[s->object_type]--;
@@ -37,8 +40,10 @@ void    vector_state(char *buffer, t_scene_parser *s)
 {
 	(void)buffer;
     if (!s->property_vcounter[s->object_type])
-		exit(ft_perror(EXEC_NAME, "lah", P_EXTRA));
-	
+	{
+		parsing_cleanup(s->scene);
+		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+	}
 	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] = ft_atof(buffer + s->offset, 6);
 	s->properties_incrementors[VECTORS_INCREMENTOR]++;
 	s->property_vcounter[s->object_type]--;
@@ -48,7 +53,10 @@ void    vector_state(char *buffer, t_scene_parser *s)
 void    comma_state(char *buffer, t_scene_parser *s)
 {
     if (s->comma_counter > 1)
-		exit(ft_perror(EXEC_NAME, "lwatan", P_EXTRA));
+	{
+		parsing_cleanup(s->scene);
+		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
+	}
 	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] = ft_atof(buffer + s->offset, 6);
 	(void)buffer;
 	s->comma_counter++;
@@ -59,12 +67,18 @@ int    properties_parser_loop(t_scene_parser *s)
 {
 	int		read_return;
 
-    if ((read_return = read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
-			exit(0) ;//read error: do something!!
+    if (s->i > 998 || (read_return = read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
+	{
+		// cleanup
+		exit(ft_perror(EXEC_NAME, NULL, s->i > 998 ? P_LONG : P_READ_ERROR));
+	}
 	if (!read_return && (!s->i || s->properties_buffer[s->i - 1] != '\n'))
 		s->properties_buffer[s->i] = '\n';
-	if (grammar_checker(s->properties_buffer, s->i)) // if i == 999
+	if (grammar_checker(s->properties_buffer, s->i))
+	{
+		//cleanup
 		exit(ft_perror(EXEC_NAME, NULL, N_PROP));
+	}
 	if (s->properties_buffer[s->i] == ',')
 		comma_state(s->properties_buffer, s);
 	else if (s->offset != -1 &&
@@ -75,7 +89,10 @@ int    properties_parser_loop(t_scene_parser *s)
 		else if (!s->comma_counter)
 			scalar_state(s->properties_buffer, s);
 		else
+		{
+			parsing_cleanup(s->scene);
 			exit(ft_perror(EXEC_NAME, NULL, P_MIXED));
+		}
 		s->comma_counter = 0;
 		s->offset = -1;
 	}

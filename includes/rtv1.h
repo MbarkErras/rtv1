@@ -100,7 +100,7 @@ int     		hit_cone(t_raytracer *r, t_object *object, double *distance);
 int     		hit_loop(t_raytracer *r, double big);
 
 int     		color_picker(t_raytracer *r);
-
+void			parsing_cleanup(t_scene *s);
 				//// DEV ///
 
 # include <stdio.h>

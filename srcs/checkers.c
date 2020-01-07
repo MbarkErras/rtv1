@@ -36,6 +36,8 @@ char	*ft_strerror(int err)
 		return (P_CAM_DUPLICATE_T);
 	if (err == P_NOT_COMPLETE)
 		return (P_NOT_COMPLETE_T);
+	if (err == P_LONG)
+		return (P_LONG_T);
 	return (NULL);
 }
 

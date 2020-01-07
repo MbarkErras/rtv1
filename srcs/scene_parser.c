@@ -46,7 +46,10 @@ t_object	properties_parser(t_scene_parser *automata)
 			break ;
 	if (automata->property_vcounter[automata->object_type] ||
 		automata->property_scounter[automata->object_type])
+	{
+		parsing_cleanup(automata->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_MISSING));
+	}
 	return (package_object_properties(*automata));
 }
 
@@ -57,6 +60,9 @@ void    init_scene_parser(int fd, t_scene_parser *automata, t_scene *scene)
     bzero(automata->object_name_buffer, MAX_OBJECT_NAME_SIZE + 2);
     automata->comment_flag = 0;
     automata->i = -1;
+	scene->camera = NULL;
+	scene->lights = NULL;
+	scene->objects = NULL;
 }
 
 void	parse_scene(int fd, t_scene *scene)
@@ -70,7 +76,7 @@ void	parse_scene(int fd, t_scene *scene)
 			break ;
 	if (!scene->camera)
 	{
-		// chi cleanup
+		parsing_cleanup(scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_CAM_MISSING));
 	}
 }
