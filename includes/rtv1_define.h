@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 23:17:18 by aait-el-          #+#    #+#             */
-/*   Updated: 2020/01/04 17:35:50 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/06 17:39:47 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@
 # define MAX_VCOUNT 4
 # define MAX_SCOUNT 2
 
+# define A 0
+# define B 1
+# define C 2
+# define DELTA 3
 
 # define N_SCENE 0
 # define F_OPEN 1

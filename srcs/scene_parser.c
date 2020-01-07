@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/04 17:30:11 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/06 18:50:40 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,8 @@ void	parse_scene(int fd, t_scene *scene)
 		if (scene_parser_loop(&automata))
 			break ;
 	if (!scene->camera)
+	{
+		// chi cleanup
 		exit(ft_perror(EXEC_NAME, NULL, P_CAM_MISSING));
+	}
 }

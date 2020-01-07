@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/04 17:37:27 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/06 18:50:41 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,17 @@ void    scene_object_dispatcher(t_scene_parser *s)
 int     scene_parser_loop(t_scene_parser *s)
 {
     if ((s->read_return = read(s->fd, s->object_name_buffer + ++s->i, 1)) < 0)
+	{
+		// cleanup
 		exit(ft_perror(EXEC_NAME, NULL, N_WORD)) ;
+	}
 	if (!s->read_return)
-		return(ft_perror(EXEC_NAME, NULL, P_NOT_COMPLETE));
+	{
+		if (s->i != -1)
+			return(ft_perror(EXEC_NAME, NULL, P_NOT_COMPLETE));
+		else
+			return (1);
+	}
 	if (!s->i && s->object_name_buffer[s->i] == '#')
 		s->comment_flag = 1;
 	if (!s->comment_flag && s->object_name_buffer[s->i] == ':')
