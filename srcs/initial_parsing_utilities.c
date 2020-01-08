@@ -41,12 +41,14 @@ void    scene_object_dispatcher(t_scene_parser *s)
 	if (s->object_type == CAMERA)
 		s->scene->camera = create_object(properties_parser(s));
 	else if (s->object_type == LIGHT)
-		list_push_back(&s->scene->lights, list_create_node(create_object(properties_parser(s)), sizeof(t_object)));
+		list_push_back(&s->scene->lights, list_create_node(
+			create_object(properties_parser(s)), sizeof(t_object)));
 	else
-		list_push_back(&s->scene->objects, list_create_node(create_object(properties_parser(s)), sizeof(t_object)));
+		list_push_back(&s->scene->objects, list_create_node(
+			create_object(properties_parser(s)), sizeof(t_object)));
 }
 
-// scene_parser_loop is clean now
+//norm this
 int     scene_parser_loop(t_scene_parser *s)
 {
     if ((s->read_return = read(s->fd, s->object_name_buffer + ++s->i, 1)) < 0)

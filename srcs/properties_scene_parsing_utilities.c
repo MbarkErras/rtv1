@@ -15,10 +15,14 @@
 int     grammar_checker(char *buffer, int i)
 {
     return(
-		(!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' && buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-') ||
-		(i && (buffer[i] == '.' || buffer[i] == ',') && !ft_isdigit(buffer[i - 1]) ) ||
-		(i && (buffer[i - 1] == '.' || buffer[i - 1] == ',') && (!ft_isdigit(buffer[i]) && buffer[i] != '-') ) ||
-		(i && buffer[i] == '-' && buffer[i - 1] != ' ' && buffer[i - 1] != ',') ||
+		(!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' &&
+			buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-') ||
+		(i && (buffer[i] == '.' || buffer[i] == ',') &&
+			!ft_isdigit(buffer[i - 1]) ) ||
+		(i && (buffer[i - 1] == '.' || buffer[i - 1] == ',') &&
+			(!ft_isdigit(buffer[i]) && buffer[i] != '-') ) ||
+		(i && buffer[i] == '-' && buffer[i - 1] != ' ' &&
+			buffer[i - 1] != ',') ||
 		(i && buffer[i - 1] == '-' && !ft_isdigit(buffer[i]))
 		);
 }
@@ -30,7 +34,8 @@ void    scalar_state(char *buffer, t_scene_parser *s)
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
 	}
-	s->scalars[s->properties_incrementors[SCALARS_INCREMENTOR]] = ft_atof(buffer + s->offset, 6);
+	s->scalars[s->properties_incrementors[SCALARS_INCREMENTOR]] =
+		ft_atof(buffer + s->offset, 6);
 	s->properties_incrementors[SCALARS_INCREMENTOR]++;
 	s->property_scounter[s->object_type]--;
 	s->vectors_scalars_separator = 1;
@@ -44,11 +49,11 @@ void    vector_state(char *buffer, t_scene_parser *s)
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
 	}
-	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] = ft_atof(buffer + s->offset, 6);
+	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][2] =
+		ft_atof(buffer + s->offset, 6);
 	s->properties_incrementors[VECTORS_INCREMENTOR]++;
 	s->property_vcounter[s->object_type]--;
 }
-
 
 void    comma_state(char *buffer, t_scene_parser *s)
 {
@@ -57,26 +62,29 @@ void    comma_state(char *buffer, t_scene_parser *s)
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
 	}
-	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] = ft_atof(buffer + s->offset, 6);
+	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] =
+		ft_atof(buffer + s->offset, 6);
 	(void)buffer;
 	s->comma_counter++;
 	s->offset = s->i + 1;
 }
 
+// norm this
 int    properties_parser_loop(t_scene_parser *s)
 {
 	int		read_return;
 
-    if (s->i > 998 || (read_return = read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
+    if (s->i > 998 || (read_return =
+		read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
 	{
-		// cleanup
+		parsing_cleanup(s);
 		exit(ft_perror(EXEC_NAME, NULL, s->i > 998 ? P_LONG : P_READ_ERROR));
 	}
 	if (!read_return && (!s->i || s->properties_buffer[s->i - 1] != '\n'))
 		s->properties_buffer[s->i] = '\n';
 	if (grammar_checker(s->properties_buffer, s->i))
 	{
-		//cleanup
+		parsing_cleanup(s);
 		exit(ft_perror(EXEC_NAME, NULL, N_PROP));
 	}
 	if (s->properties_buffer[s->i] == ',')
