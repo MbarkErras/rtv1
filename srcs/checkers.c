@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 21:30:59 by aait-el-          #+#    #+#             */
-/*   Updated: 2020/01/06 18:50:41 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/22 18:58:03 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		ft_perror(char *command, char *arg, int err)
 	return (err);
 }
 
-int	is_recognized(char *word)
+int		is_recognized(char *word)
 {
 	if (!ft_strcmp(word, "plane:"))
 		return (PLANE);

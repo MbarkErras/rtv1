@@ -6,15 +6,15 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/06 18:50:43 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/22 20:26:38 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-int     grammar_checker(char *buffer, int i)
+int			grammar_checker(char *buffer, int i)
 {
-    return(
+	return(
 		(!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' &&
 			buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-') ||
 		(i && (buffer[i] == '.' || buffer[i] == ',') &&
@@ -69,7 +69,6 @@ void    comma_state(char *buffer, t_scene_parser *s)
 	s->offset = s->i + 1;
 }
 
-// norm this
 int    properties_parser_loop(t_scene_parser *s)
 {
 	int		read_return;
@@ -77,14 +76,14 @@ int    properties_parser_loop(t_scene_parser *s)
     if (s->i > 998 || (read_return =
 		read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
 	{
-		parsing_cleanup(s);
+		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, s->i > 998 ? P_LONG : P_READ_ERROR));
 	}
 	if (!read_return && (!s->i || s->properties_buffer[s->i - 1] != '\n'))
 		s->properties_buffer[s->i] = '\n';
 	if (grammar_checker(s->properties_buffer, s->i))
 	{
-		parsing_cleanup(s);
+		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, N_PROP));
 	}
 	if (s->properties_buffer[s->i] == ',')

@@ -6,13 +6,14 @@
 /*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 18:13:12 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/22 20:52:47 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
+#include <stdio.h>
 
-void	print_parse_results(t_scene s)
+static void		print_parse_results(t_scene s)
 {
 	printf("camera:\n\t(%f, %f, %f)    (%f, %f, %f)    (%f, %f, %f)\n",
 		s.camera->vectors[0].x, s.camera->vectors[0].y, s.camera->vectors[0].z,
@@ -44,7 +45,7 @@ void	print_parse_results(t_scene s)
 	printf("");
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	int			fd;
 	t_raytracer	raytracer;
@@ -52,7 +53,7 @@ int		main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_perror(EXEC_NAME, NULL, N_SCENE));
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
-		return(ft_perror(EXEC_NAME, argv[1], F_OPEN));
+		return (ft_perror(EXEC_NAME, argv[1], F_OPEN));
 	raytracer.scene = (t_scene){NULL, NULL, NULL};
 	parse_scene(fd, &raytracer.scene);
 	print_parse_results(raytracer.scene);

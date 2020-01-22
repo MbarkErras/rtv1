@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2020/01/06 18:51:04 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/22 20:35:31 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,23 @@
 # include "../libs/simplist/includes/simplist.h"
 # include "rtv1_define.h"
 
-typedef struct  s_vec3
+typedef struct	s_vec3
 {
-    double      x; 
-    double      y;   
-    double      z;    
-}               t_vec3;
+	double		x;
+	double		y;
+	double		z;
+}				t_vec3;
 
-typedef struct  s_ray
+typedef struct	s_ray
 {
-    t_vec3   org;
-    t_vec3   dir;
-}               t_ray;
+	t_vec3		org;
+	t_vec3		dir;
+}				t_ray;
 
 typedef struct	s_object
 {
-	int 		object_type;
-	double 		scalars[2];
+	int			object_type;
+	double		scalars[2];
 	t_vec3		vectors[5];
 }				t_object;
 
@@ -83,20 +83,20 @@ typedef struct	s_scene_parser
 	int			object_type;
 	int			read_return;
 	int			offset;
-	int 		fd;
+	int			fd;
 	int			i;
 }				t_scene_parser;
 
-t_vec3          vecnorm(t_vec3 vec);
-t_vec3          veccross(t_vec3 a, t_vec3 b);
-t_vec3          vecsub(t_vec3 a, t_vec3 b);
-t_vec3          vecreflect(t_vec3 i, t_vec3 n);
-t_vec3          vecadd(t_vec3 a, t_vec3 b);
-t_vec3          vecopx(t_vec3 a, double x);
-t_vec3	        vecset(double x, double y, double z);
-double          vecdot(t_vec3 a, t_vec3 b);
-double          veclength(t_vec3 vec);
-void            clamping_vector(t_vec3 *rgb);
+t_vec3			vecnorm(t_vec3 vec);
+t_vec3			veccross(t_vec3 a, t_vec3 b);
+t_vec3			vecsub(t_vec3 a, t_vec3 b);
+t_vec3			vecreflect(t_vec3 i, t_vec3 n);
+t_vec3			vecadd(t_vec3 a, t_vec3 b);
+t_vec3			vecopx(t_vec3 a, double x);
+t_vec3			vecset(double x, double y, double z);
+double			vecdot(t_vec3 a, t_vec3 b);
+double			veclength(t_vec3 vec);
+void			clamping_vector(t_vec3 *rgb);
 
 t_object		*create_object(t_object o);
 t_object		properties_parser(t_scene_parser *automata);
@@ -107,22 +107,14 @@ int				is_recognized(char *word);
 int				properties_parser_loop(t_scene_parser *s);
 int				scene_parser_loop(t_scene_parser *s);
 
-void    		render_scene(t_raytracer *raytracer);
+void			render_scene(t_raytracer *raytracer);
+int				hit_sphere(t_raytracer *r, t_object *object, double *distance);
+int				hit_plane(t_raytracer *r, t_object *object, double *distance);
+int				hit_cylinder(t_raytracer *r, t_object *obj, double *distance);
+int				hit_cone(t_raytracer *r, t_object *object, double *distance);
+int				hit_loop(t_raytracer *r, double big, int c, t_object *self);
+int				color_picker(t_raytracer *r);
 
-int     		hit_sphere(t_raytracer *r, t_object *object, double *distance);
-int     		hit_plane(t_raytracer *r, t_object *object, double *distance);
-int     		hit_cylinder(t_raytracer *r, t_object *object, double *distance);
-int     		hit_cone(t_raytracer *r, t_object *object, double *distance);
-int     		hit_loop(t_raytracer *r, double big, int c, t_object *self);
-
-int     		color_picker(t_raytracer *r);
 void			parsing_cleanup(t_scene *s);
-				//// DEV ///
-
-# include <stdio.h>
-
-void    		print_parsing_results(t_scene scene);
-
-				//// DEV ////
 
 #endif

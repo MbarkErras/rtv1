@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/06 18:50:40 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/22 20:39:45 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_object	package_object_properties(t_scene_parser s)
 {
-	t_object	object;
-	int			i;
+	t_object		object;
+	int				i;
 
 	object.object_type = s.object_type;
 	i = -1;
@@ -41,7 +41,7 @@ void		init_properties_parser(char *buffer, t_scene_parser *p)
 
 t_object	properties_parser(t_scene_parser *automata)
 {
-	char	buffer[1000];
+	char			buffer[1000];
 
 	init_properties_parser(buffer, automata);
 	while (1)
@@ -56,19 +56,19 @@ t_object	properties_parser(t_scene_parser *automata)
 	return (package_object_properties(*automata));
 }
 
-void    init_scene_parser(int fd, t_scene_parser *automata, t_scene *scene)
+void		init_scene_parser(int fd, t_scene_parser *automata, t_scene *scene)
 {
-    automata->fd = fd;
+	automata->fd = fd;
 	automata->scene = scene;
-    bzero(automata->object_name_buffer, MAX_OBJECT_NAME_SIZE + 2);
-    automata->comment_flag = 0;
-    automata->i = -1;
+	bzero(automata->object_name_buffer, MAX_OBJECT_NAME_SIZE + 2);
+	automata->comment_flag = 0;
+	automata->i = -1;
 	scene->camera = NULL;
 	scene->lights = NULL;
 	scene->objects = NULL;
 }
 
-void	parse_scene(int fd, t_scene *scene)
+void		parse_scene(int fd, t_scene *scene)
 {
 	t_scene_parser	automata;
 
