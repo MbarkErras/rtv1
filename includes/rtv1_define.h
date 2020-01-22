@@ -69,6 +69,11 @@
 # define P_MIXED 4
 # define P_EXTRA 5
 # define P_MISSING 6
+# define P_CAM_MISSING 7
+# define P_READ_ERROR 8
+# define P_CAM_DUPLICATE 9
+# define P_NOT_COMPLETE 10
+# define P_LONG 11
 
 # define N_SCENE_T ": no passed scene file."
 # define F_OPEN_T ": cannot open scene file: "
