@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2019/12/29 17:48:49 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/06 18:51:04 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int     		hit_cone(t_raytracer *r, t_object *object, double *distance);
 int     		hit_loop(t_raytracer *r, double big, int c, t_object *self);
 
 int     		color_picker(t_raytracer *r);
-
+void			parsing_cleanup(t_scene *s);
 				//// DEV ///
 
 # include <stdio.h>

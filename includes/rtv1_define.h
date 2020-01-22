@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1_define.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/23 23:17:18 by aait-el-          #+#    #+#             */
-/*   Updated: 2019/12/29 18:06:05 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/06 17:39:47 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,9 @@
 # define P_MIXED_T ": mixed properties types."
 # define P_EXTRA_T ": extranous properties values."
 # define P_MISSING_T ": missing properties."
-
+# define P_CAM_MISSING_T ": missing camera object."
+# define P_READ_ERROR_T ": error occured while processing scene file."
+# define P_CAM_DUPLICATE_T ": multiple cameras."
+# define P_NOT_COMPLETE_T ": scene file is not complete."
+# define P_LONG_T ": properties input is too long."
 #endif
