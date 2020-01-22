@@ -1,3 +1,6 @@
 [submodule "libs/simplist"]
 	path = libs/simplist
 	url = https://github.com/MbarkErras/simplist
+[submodule "libs/centropy"]
+	path = libs/centropy
+	url = https://www.github.com/MbarkErras/centropy

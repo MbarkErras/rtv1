@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../includes/rtv1.h"
 
 void	initialize_raytracer(t_raytracer *r)
 {
@@ -31,7 +31,9 @@ void	ray_constructor(t_raytracer *r, int plane_indexes[2])
 	scalars[Y] =  2.0 * plane_indexes[Y] / (double)HEIGHT - 1;
 
 	r->ray.org = r->scene.camera->vectors[0];
-	r->ray.dir = vecnorm(vecadd(vecadd(vecadd(r->scene.camera->vectors[1],r->scene.camera->vectors[0]),vecopx(r->plane_vectors[X], scalars[X])),vecopx(r->plane_vectors[Y], scalars[Y])));
+	r->ray.dir = vecnorm(vecadd(vecadd(vecadd(r->scene.camera->vectors[1],
+        r->scene.camera->vectors[0]),vecopx(r->plane_vectors[X], scalars[X])),
+        vecopx(r->plane_vectors[Y], scalars[Y])));
 }
 
 void    render_scene(t_raytracer *raytracer)
@@ -46,7 +48,7 @@ void    render_scene(t_raytracer *raytracer)
         while (++plane_indexes[Y] < HEIGHT)
         {
             ray_constructor(raytracer, plane_indexes);         
-            if (hit_loop(raytracer, BIG))
+            if (hit_loop(raytracer, BIG, 0, NULL))
 			{
                 raytracer->image_data[plane_indexes[Y] * WIDTH + plane_indexes[X]] = 
                     color_picker(raytracer);

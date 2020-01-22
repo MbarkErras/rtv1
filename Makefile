@@ -2,7 +2,6 @@ NAME=rtv1
 
 SRCS=	vec1.c \
 		vec2.c \
-		vec3.c \
 		rtv1.c \
 		scene_parser.c \
 		initial_parsing_utilities.c \
@@ -27,7 +26,7 @@ FLAGS= -g -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJS_PATH) $(INCLUDES)/rtv1.h
+$(NAME): $(OBJS_PATH) $(INCLUDES)/rtv1.h $(INCLUDES)/rtv1_define.h
 	make -C $(LIBS_DIR)/centropy
 	make -C $(LIBS_DIR)/simplist
 	gcc $(OBJS_PATH) -I$(INCLUDES) -I$(LIBS_DIR)/centropy/includes -I$(LIBS_DIR)/simplist/includes $(MLX) $(LIBS_DIR)/*/*.a -o $(NAME) -lmlx -framework openGL -framework AppKit

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../includes/rtv1.h"
 
 int     hit_plane(t_raytracer *r, t_object *object, double *distance)
 {
@@ -25,7 +25,7 @@ int     hit_plane(t_raytracer *r, t_object *object, double *distance)
     return (1);
 }
 
-int     hit_sphere(t_raytracer *r, t_object *object, double *distance) // X
+int     hit_sphere(t_raytracer *r, t_object *object, double *distance)
 {
     t_vec3      o_c;
     double      coef[4];
@@ -78,8 +78,7 @@ int     hit_cylinder(t_raytracer *r, t_object *object, double *distance)
 
 int     hit_cone(t_raytracer *r, t_object *object, double *distance)
 {
-    double  coef[3];
-    double  delta;
+    double  coef[4];
     double solutions[2];
 
     object->vectors[1] = vecnorm(object->vectors[1]);
@@ -87,11 +86,16 @@ int     hit_cone(t_raytracer *r, t_object *object, double *distance)
         pow(cos(DEG_TO_RAD(object->scalars[1])), 2);
     coef[B] = 2 * (vecdot(r->ray.dir, object->vectors[1]) * vecdot(vecsub(r->ray.org, object->vectors[0]), object->vectors[1]) - vecdot(r->ray.dir, vecsub(r->ray.org, object->vectors[0])) * pow(cos(DEG_TO_RAD(object->scalars[1])), 2));
     coef[C] = pow(vecdot(vecsub(r->ray.org, object->vectors[0]), object->vectors[1]), 2) - vecdot(vecsub(r->ray.org, object->vectors[0]), vecsub(r->ray.org, object->vectors[0])) * pow(cos(DEG_TO_RAD(object->scalars[1])), 2);
-    delta = coef[B] * coef[B] - 4 * coef[A] * coef[C];
-    solutions[0] = (-coef[B] - sqrt(delta)) / (2.0 * coef[A]);
-    solutions[1] = (-coef[B] + sqrt(delta)) / (2.0 * coef[A]);
-    if (delta < 0.0)
+    coef[DELTA] = coef[B] * coef[B] - 4 * coef[A] * coef[C];
+    if (coef[DELTA] < 0.0)
         return (0);
-    *distance = solutions[0] < solutions[1] ? solutions[0] : solutions[1];
+    solutions[0] = (-coef[B] - sqrt(coef[DELTA])) / (2.0 * coef[A]);
+    solutions[1] = (-coef[B] + sqrt(coef[DELTA])) / (2.0 * coef[A]);
+    if (solutions[0] > 0.0 && solutions[1] > 0.0)
+        *distance = solutions[0] < solutions[1] ? solutions[0] : solutions[1];
+    else  if (solutions[0] < 0.0 && solutions[1] < 0.0)
+        return (0);
+	else
+    	*distance = solutions[0] > solutions[1] ? solutions[0] : solutions[1];
     return (1);
 }

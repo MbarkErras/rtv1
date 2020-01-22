@@ -17,10 +17,16 @@
 # include <stdlib.h>
 # include <math.h>
 # include <mlx.h>
-# include "centropy.h"
-# include "simplist.h"
+# include "../libs/centropy/includes/centropy.h"
+# include "../libs/simplist/includes/simplist.h"
 # include "rtv1_define.h"
-# include "vec3.h"
+
+typedef struct  s_vec3
+{
+    double      x; 
+    double      y;   
+    double      z;    
+}               t_vec3;
 
 typedef struct  s_ray
 {
@@ -81,6 +87,16 @@ typedef struct	s_scene_parser
 	int			i;
 }				t_scene_parser;
 
+t_vec3          vecnorm(t_vec3 vec);
+t_vec3          veccross(t_vec3 a, t_vec3 b);
+t_vec3          vecsub(t_vec3 a, t_vec3 b);
+t_vec3          vecreflect(t_vec3 i, t_vec3 n);
+t_vec3          vecadd(t_vec3 a, t_vec3 b);
+t_vec3          vecopx(t_vec3 a, double x);
+t_vec3	        vecset(double x, double y, double z);
+double          vecdot(t_vec3 a, t_vec3 b);
+double          veclength(t_vec3 vec);
+void            clamping_vector(t_vec3 *rgb);
 
 t_object		*create_object(t_object o);
 t_object		properties_parser(t_scene_parser *automata);
@@ -97,7 +113,7 @@ int     		hit_sphere(t_raytracer *r, t_object *object, double *distance);
 int     		hit_plane(t_raytracer *r, t_object *object, double *distance);
 int     		hit_cylinder(t_raytracer *r, t_object *object, double *distance);
 int     		hit_cone(t_raytracer *r, t_object *object, double *distance);
-int     		hit_loop(t_raytracer *r, double big);
+int     		hit_loop(t_raytracer *r, double big, int c, t_object *self);
 
 int     		color_picker(t_raytracer *r);
 

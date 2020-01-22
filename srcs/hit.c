@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtv1.h"
+#include "../includes/rtv1.h"
 
 t_vec3      get_normal(t_raytracer *r)
 {
@@ -20,7 +20,11 @@ t_vec3      get_normal(t_raytracer *r)
     if (r->hit.object->object_type == SPHERE)
         return (vecnorm(vecsub(r->hit.p, r->hit.object->vectors[0])));
     if (r->hit.object->object_type == PLANE)
-        return (r->hit.object->vectors[1]);
+    {
+        if (vecdot(r->ray.dir, r->hit.object->vectors[1]) < 0.0)
+            return (r->hit.object->vectors[1]);
+        return (vecopx(r->hit.object->vectors[1], -1.0));
+    }
     o_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
 
     if (r->hit.object->object_type == CYLINDER)
@@ -49,7 +53,7 @@ void     hit_objects(t_raytracer *r, t_object *object, double *hit_distance)
         hit_cone(r, object, hit_distance);
 }
 
-int     hit_loop(t_raytracer *r, double big)
+int     hit_loop(t_raytracer *r, double big, int choix, t_object *self)
 {
     double	    hit_distance;
 	t_list		*object;
@@ -59,6 +63,11 @@ int     hit_loop(t_raytracer *r, double big)
 	object = r->scene.objects;
     while (object)
     {
+        if (choix && self == object->content)
+        {
+            object = object->next;
+            continue ;
+        }
         hit_objects(r, object->content, &hit_distance);
         if (hit_distance < r->hit.distance)
 		{
