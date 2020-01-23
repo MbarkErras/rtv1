@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
+#include <stdio.h>
 
 int				hit_plane(t_raytracer *r, t_object *object, double *distance)
 {
@@ -18,6 +19,8 @@ int				hit_plane(t_raytracer *r, t_object *object, double *distance)
 	t_vec3		c_o;
 
 	c_o = vecsub(object->vectors[0], r->ray.org);
+	if (vecdot(object->vectors[1], r->ray.dir) == 0.0)
+		return (0);
 	solution = vecdot(object->vectors[1], c_o) / vecdot(object->vectors[1], r->ray.dir);
 	if (solution <= 0.0)
 		return (0);

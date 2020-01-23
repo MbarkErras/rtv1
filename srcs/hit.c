@@ -29,7 +29,7 @@ static t_vec3	get_normal(t_raytracer *r)
 	if (r->hit.object->object_type == CYLINDER)
 		return (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), vecopx(r->hit.object->vectors[3], vecdot(r->ray.dir, r->hit.object->vectors[3]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[3])))));
 	vec = vecopx(r->hit.object->vectors[3], vecdot(r->ray.dir, r->hit.object->vectors[3]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[3]));
-	vec = vecopx(vec, 1.0 / pow(cos(r->hit.object->scalars[1]), 2));
+	vec = vecopx(vec, 1.0 + pow(tan(r->hit.object->scalars[1]), 2));
 	if (r->hit.object->object_type == CONE)
 		return (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), vec)));
 	return (vecset(0, 0, 0));
