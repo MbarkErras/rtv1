@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2020/01/22 20:30:39 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:25:48 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		render_scene(t_raytracer *raytracer)
 		while (++plane_indexes[Y] < HEIGHT)
 		{
 			ray_constructor(raytracer, plane_indexes);
-			if (hit_loop(raytracer, BIG, 0, NULL))
+			if (hit_loop(raytracer, BIG, NULL))
 				raytracer->image_data[plane_indexes[Y] * WIDTH + plane_indexes[X]] = color_picker(raytracer);
 		}
 	}

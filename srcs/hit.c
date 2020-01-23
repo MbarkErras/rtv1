@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 21:18:33 by aait-el-          #+#    #+#             */
-/*   Updated: 2020/01/22 20:14:46 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:26:08 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void		hit_objects(t_raytracer *r, t_object *object, double *d)
 		hit_cone(r, object, d);
 }
 
-int				hit_loop(t_raytracer *r, double big, int choix, t_object *self)
+int				hit_loop(t_raytracer *r, double big, t_object *self)
 {
 	double		hit_distance;
 	t_list		*object;
@@ -57,7 +57,7 @@ int				hit_loop(t_raytracer *r, double big, int choix, t_object *self)
 	object = r->scene.objects;
 	while (object)
 	{
-		if (choix && self == object->content)
+		if (self && self == object->content)
 		{
 			object = object->next;
 			continue ;

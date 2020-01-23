@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2020/01/22 20:35:31 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:20:32 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int				hit_sphere(t_raytracer *r, t_object *object, double *distance);
 int				hit_plane(t_raytracer *r, t_object *object, double *distance);
 int				hit_cylinder(t_raytracer *r, t_object *obj, double *distance);
 int				hit_cone(t_raytracer *r, t_object *object, double *distance);
-int				hit_loop(t_raytracer *r, double big, int c, t_object *self);
+int				hit_loop(t_raytracer *r, double big, t_object *self);
 int				color_picker(t_raytracer *r);
 
 void			parsing_cleanup(t_scene *s);
