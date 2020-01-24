@@ -13,12 +13,14 @@
 #ifndef RTV1_DEFINE_H
 # define RTV1_DEFINE_H
 
+# define ESC 53
 # define EXEC_NAME "rtv1"
 # define WIDTH 800
 # define HEIGHT 800
 
 # define X 0
 # define Y 1
+# define Z 2
 
 # define MAX_OBJECT_NAME_SIZE 8
 

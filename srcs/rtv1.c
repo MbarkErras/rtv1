@@ -45,6 +45,19 @@ static void		print_parse_results(t_scene s)
 	printf("");
 }
 
+static int				clean_up(t_raytracer *r)
+{
+	mlx_destroy_image(r->mlx_pointers[0], r->mlx_pointers[2]);
+	exit(0);
+}
+
+static int				keys(int key, t_raytracer *r)
+{
+	if (key == ESC)
+		clean_up(r);
+	exit(0);
+}
+
 int				main(int argc, char **argv)
 {
 	int			fd;
@@ -58,4 +71,7 @@ int				main(int argc, char **argv)
 	parse_scene(fd, &raytracer.scene);
 	print_parse_results(raytracer.scene);
 	render_scene(&raytracer);
+	mlx_hook(raytracer.mlx_pointers[1], 17, 0, clean_up, &raytracer);
+	mlx_hook(raytracer.mlx_pointers[1], 2, 0, keys, &raytracer);
+	mlx_loop(raytracer.mlx_pointers[0]);
 }

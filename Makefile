@@ -14,6 +14,7 @@ NAME = rtv1
 
 SRCS =	vec1.c \
 		vec2.c \
+		rotation.c \
 		rtv1.c \
 		scene_parser.c \
 		initial_parsing_utilities.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color_picker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-el- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 23:19:30 by aait-el-          #+#    #+#             */
-/*   Updated: 2020/01/22 19:11:37 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:27:29 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,41 @@ static t_vec3		specular(t_raytracer *r, t_list *light)
 	vector = vecsub(TLIST(light, t_object)->vectors[0], r->hit.p);
 	reflect = vecnorm(vecreflect(vector, r->hit.normal));
 	if (vecdot(reflect, r->ray.dir) > 0.0)
-		color += pow(vecdot(reflect, r->hit.normal), 50.0);
+		color += pow(vecdot(reflect, r->hit.normal), 100.0);
 	return (vecopx(vecset(color, color, color), 255.99));
 }
+#include <stdio.h>
+// int					hit_light(t_raytracer *r, t_object *light)
+// {
+// 	t_hit save;
+// 	int ret;
+
+// 	save = r->hit;
+// 	ft_bzero(&r->hit, sizeof(t_hit));
+// 	r->ray.org = save.p;
+// 	r->ray.dir = vecsub(light->vectors[0], save.p);
+// 	ret = hit_loop(r, BIG, save.object);
+// 	r->hit = save;
+// 	return (ret);
+// }
 
 int					color_picker(t_raytracer *r)
 {
 	t_vec3			rgb;
 	t_list			*light;
+	t_vec3			light_color;
 
 	rgb = vecset(0.0, 0.0, 0.0);
 	light = r->scene.lights;
 	while (light)
 	{
-		rgb = vecadd(rgb, diffuse(r, light));
-		rgb = vecadd(rgb, specular(r, light));
+		// if (!hit_light(r, light->content))
+		// {
+			light_color = d_to_rgb(TLIST(light, t_object)->scalars[0], 1.0);
+			rgb = vecadd(rgb, diffuse(r, light));
+			rgb = vecadd(rgb, specular(r, light));
+			rgb = vecadd(rgb, light_color);
+		// }
 		light = light->next;
 	}
 	rgb.x += 0.2 * (((int)r->hit.object->scalars[0] >> 16) & 0xFF);

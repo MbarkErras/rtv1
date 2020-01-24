@@ -59,9 +59,9 @@ int				hit_cylinder(t_raytracer *r, t_object *object, double *distance)
 	double		solutions[2];
 
 	o_c = vecsub(r->ray.org, object->vectors[0]);
-	coef[A] = vecdot(r->ray.dir, r->ray.dir) - pow(vecdot(r->ray.dir, object->vectors[3]), 2);
-	coef[B] = 2.0 * (vecdot(r->ray.dir, o_c) - (vecdot(r->ray.dir, object->vectors[3]) * vecdot(o_c, object->vectors[3])));
-	coef[C] = vecdot(o_c, o_c) - pow(vecdot(o_c, object->vectors[3]), 2) - pow(object->scalars[1], 2);
+	coef[A] = vecdot(r->ray.dir, r->ray.dir) - pow(vecdot(r->ray.dir, object->vectors[1]), 2);
+	coef[B] = 2.0 * (vecdot(r->ray.dir, o_c) - (vecdot(r->ray.dir, object->vectors[1]) * vecdot(o_c, object->vectors[1])));
+	coef[C] = vecdot(o_c, o_c) - pow(vecdot(o_c, object->vectors[1]), 2) - pow(object->scalars[1], 2);
 	coef[DELTA] = pow(coef[B], 2) - 4.0 * coef[A] * coef[2];
 	if (coef[DELTA] < 0.0)
 		return (0);

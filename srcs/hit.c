@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 21:18:33 by aait-el-          #+#    #+#             */
-/*   Updated: 2020/01/22 20:14:46 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:26:08 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static t_vec3	get_normal(t_raytracer *r)
 	}
 	o_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
 	if (r->hit.object->object_type == CYLINDER)
-		return (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), vecopx(r->hit.object->vectors[3], vecdot(r->ray.dir, r->hit.object->vectors[3]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[3])))));
-	vec = vecopx(r->hit.object->vectors[3], vecdot(r->ray.dir, r->hit.object->vectors[3]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[3]));
+		return (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), vecopx(r->hit.object->vectors[1], vecdot(r->ray.dir, r->hit.object->vectors[1]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[1])))));
+	vec = vecopx(r->hit.object->vectors[1], vecdot(r->ray.dir, r->hit.object->vectors[1]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[1]));
 	vec = vecopx(vec, 1.0 + pow(tan(r->hit.object->scalars[1]), 2));
 	if (r->hit.object->object_type == CONE)
 		return (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), vec)));
@@ -47,7 +47,7 @@ static void		hit_objects(t_raytracer *r, t_object *object, double *d)
 		hit_cone(r, object, d);
 }
 
-int				hit_loop(t_raytracer *r, double big, int choix, t_object *self)
+int				hit_loop(t_raytracer *r, double big, t_object *self)
 {
 	double		hit_distance;
 	t_list		*object;
@@ -57,7 +57,7 @@ int				hit_loop(t_raytracer *r, double big, int choix, t_object *self)
 	object = r->scene.objects;
 	while (object)
 	{
-		if (choix && self == object->content)
+		if (self && self == object->content)
 		{
 			object = object->next;
 			continue ;
