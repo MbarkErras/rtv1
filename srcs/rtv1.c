@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv1.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: merras <mbarekerras@gmail.com>             +#+  +:+       +#+        */
+/*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2020/01/22 20:52:47 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/24 21:01:20 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void		print_parse_results(t_scene s)
 
 static int				clean_up(t_raytracer *r)
 {
+	parsing_cleanup(&r->scene);
 	mlx_destroy_image(r->mlx_pointers[0], r->mlx_pointers[2]);
 	exit(0);
 }
@@ -54,8 +55,36 @@ static int				clean_up(t_raytracer *r)
 static int				keys(int key, t_raytracer *r)
 {
 	if (key == ESC)
+	{
 		clean_up(r);
-	exit(0);
+		exit(0);
+	}
+	return (1);
+}
+
+int				protect_ranges(t_scene scene)
+{
+	t_list *o;
+
+	o = scene.lights;
+	while (o)
+	{
+		if (TLIST(o, t_object)->scalars[1] > 1.00001 ||
+			TLIST(o, t_object)->scalars[1] < -0.0001)
+			return (1);
+		o = o->next;
+	}
+	o = scene.objects;
+	while (o)
+	{
+		if (TLIST(o, t_object)->scalars[0] < 0.0001 ||
+			(TLIST(o, t_object)->scalars[1] < 0.0001 &&
+			TLIST(o, t_object)->object_type != CONE))
+			return (1);
+		o = o->next;
+	}
+	return (0);
+	
 }
 
 int				main(int argc, char **argv)
@@ -69,6 +98,11 @@ int				main(int argc, char **argv)
 		return (ft_perror(EXEC_NAME, argv[1], F_OPEN));
 	raytracer.scene = (t_scene){NULL, NULL, NULL};
 	parse_scene(fd, &raytracer.scene);
+	if (protect_ranges(raytracer.scene))
+	{
+		parsing_cleanup(&raytracer.scene);
+		exit(1);
+	}
 	print_parse_results(raytracer.scene);
 	render_scene(&raytracer);
 	mlx_hook(raytracer.mlx_pointers[1], 17, 0, clean_up, &raytracer);

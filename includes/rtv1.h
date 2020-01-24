@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2020/01/23 17:20:32 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/24 20:42:09 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct	s_object
 {
 	int			object_type;
 	double		scalars[2];
-	t_vec3		vectors[5];
+	t_vec3		vectors[4];
 }				t_object;
 
 typedef struct	s_scene

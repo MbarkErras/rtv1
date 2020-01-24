@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2020/01/23 17:25:48 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/24 20:49:27 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void		initialize_raytracer(t_raytracer *r)
 {
+	r->scene.camera->vectors[1] = vecsub(r->scene.camera->vectors[1],
+		r->scene.camera->vectors[0]);
 	r->mlx_pointers[0] = mlx_init();
 	r->mlx_pointers[1] = mlx_new_window(r->mlx_pointers[0], WIDTH, HEIGHT, "rtv1");
 	r->mlx_pointers[2] = mlx_new_image(r->mlx_pointers[0], WIDTH, HEIGHT);
@@ -30,7 +32,6 @@ static void		initialize_raytracer(t_raytracer *r)
 			t_object)->vectors[0], TLIST(r->scene.objects, t_object)->vectors[2]);
 	/*******************   ROTATION  ************/
 	rotate_direction(r);
-
 }
 
 static void		ray_constructor(t_raytracer *r, int plane_indexes[2])
