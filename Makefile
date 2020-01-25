@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aait-el- <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: merras <merras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/22 20:55:47 by aait-el-          #+#    #+#              #
-#    Updated: 2020/01/22 20:56:31 by aait-el-         ###   ########.fr        #
+#    Updated: 2020/01/25 22:18:43 by merras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OBJS_PATH = $(addprefix $(OBJS_DIR)/, $(OBJS))
 SRCS_PATH = $(addprefix $(SRCS_DIR)/, $(SRCS))
 INCLUDES = includes libs/centropy/includes libs/simplist/includes
 
-FLAGS = -g -Wall -Werror -Wextra
+FLAGS = #-g -Wall -Werror -Wextra
 INCLUDES_FLAG = $(addprefix -I, $(INCLUDES))
 
 all: $(NAME)

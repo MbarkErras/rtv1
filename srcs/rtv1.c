@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:33:18 by merras            #+#    #+#             */
-/*   Updated: 2020/01/24 21:01:20 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/25 23:16:23 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ int				protect_ranges(t_scene scene)
 	return (0);
 	
 }
+
+/*
+** ABIDA
+*/
 
 int				main(int argc, char **argv)
 {

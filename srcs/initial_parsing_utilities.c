@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/25 16:24:11 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/25 23:47:49 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,20 @@ t_object		*create_object(t_object o)
 	return (object);
 }
 
+#include <stdio.h>
+
 void			parsing_cleanup(t_scene *s)
 {
 	free(s->camera);
+	t_list *o;
+	o = s->lights;
+	while (o)
+	{
+		printf("><>> %p\n", o);
+		o = o->next;
+	}
 	list_delete(&s->lights, free);
+	list_delete(&s->objects, free);
 }
 
 void			scene_object_dispatcher(t_scene_parser *s)
