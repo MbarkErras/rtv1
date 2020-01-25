@@ -6,13 +6,13 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/24 20:59:38 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/25 16:24:11 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-int			grammar_checker(char *buffer, int i)
+int		grammar_checker(char *buffer, int i)
 {
 	return(
 		(!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' &&
@@ -27,7 +27,7 @@ int			grammar_checker(char *buffer, int i)
 		);
 }
 
-void    scalar_state(char *buffer, t_scene_parser *s)
+void	scalar_state(char *buffer, t_scene_parser *s)
 {
     if (!s->property_scounter[s->object_type])
 	{
@@ -41,7 +41,7 @@ void    scalar_state(char *buffer, t_scene_parser *s)
 	s->vectors_scalars_separator = 1;
 }
 
-void    vector_state(char *buffer, t_scene_parser *s)
+void	vector_state(char *buffer, t_scene_parser *s)
 {
 	(void)buffer;
     if (!s->property_vcounter[s->object_type])
@@ -55,21 +55,21 @@ void    vector_state(char *buffer, t_scene_parser *s)
 	s->property_vcounter[s->object_type]--;
 }
 
-void    comma_state(char *buffer, t_scene_parser *s)
+void	comma_state(char *buffer, t_scene_parser *s)
 {
     if (s->comma_counter > 1)
 	{
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
 	}
-	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]][s->comma_counter] =
-		ft_atof(buffer + s->offset, 6);
+	s->vectors[s->properties_incrementors[VECTORS_INCREMENTOR]]
+		[s->comma_counter] = ft_atof(buffer + s->offset, 6);
 	(void)buffer;
 	s->comma_counter++;
 	s->offset = s->i + 1;
 }
 
-int    properties_parser_loop(t_scene_parser *s)
+void	properties_parser_loop_read(t_scene_parser *s)
 {
 	int		read_return;
 
@@ -86,10 +86,15 @@ int    properties_parser_loop(t_scene_parser *s)
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, N_PROP));
 	}
+}
+
+int		properties_parser_loop(t_scene_parser *s)
+{
+	properties_parser_loop_read(s);
 	if (s->properties_buffer[s->i] == ',')
 		comma_state(s->properties_buffer, s);
-	else if (s->offset != -1 &&
-			(s->properties_buffer[s->i] == ' ' || s->properties_buffer[s->i] == '\n'))
+	else if (s->offset != -1 && (s->properties_buffer[s->i] == ' ' ||
+		s->properties_buffer[s->i] == '\n'))
 	{
 		if (s->comma_counter == 2)
 			vector_state(s->properties_buffer, s);
@@ -103,7 +108,8 @@ int    properties_parser_loop(t_scene_parser *s)
 		s->comma_counter = 0;
 		s->offset = -1;
 	}
-	if (s->offset == -1 && (ft_isdigit(s->properties_buffer[s->i]) || s->properties_buffer[s->i] == '-'))
+	if (s->offset == -1 && (ft_isdigit(s->properties_buffer[s->i]) ||
+		s->properties_buffer[s->i] == '-'))
 		s->offset = s->i;
 	if (s->properties_buffer[s->i] == '\n')
        return (1);
