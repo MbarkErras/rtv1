@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2020/01/24 20:42:09 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/25 19:05:22 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int				ft_perror(char *command, char *arg, int err);
 int				is_recognized(char *word);
 int				properties_parser_loop(t_scene_parser *s);
 int				scene_parser_loop(t_scene_parser *s);
+
+int				grammar_checker(char *buffer, int i);
 
 void    		rotate_direction(t_raytracer *r);
 void			render_scene(t_raytracer *raytracer);

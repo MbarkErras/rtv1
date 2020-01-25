@@ -6,30 +6,15 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/25 16:24:11 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/25 19:04:57 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-int		grammar_checker(char *buffer, int i)
-{
-	return(
-		(!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' &&
-			buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-') ||
-		(i && (buffer[i] == '.' || buffer[i] == ',') &&
-			!ft_isdigit(buffer[i - 1]) ) ||
-		(i && (buffer[i - 1] == '.' || buffer[i - 1] == ',') &&
-			(!ft_isdigit(buffer[i]) && buffer[i] != '-') ) ||
-		(i && buffer[i] == '-' && buffer[i - 1] != ' ' &&
-			buffer[i - 1] != ',') ||
-		(i && buffer[i - 1] == '-' && !ft_isdigit(buffer[i]))
-		);
-}
-
 void	scalar_state(char *buffer, t_scene_parser *s)
 {
-    if (!s->property_scounter[s->object_type])
+	if (!s->property_scounter[s->object_type])
 	{
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
@@ -44,7 +29,7 @@ void	scalar_state(char *buffer, t_scene_parser *s)
 void	vector_state(char *buffer, t_scene_parser *s)
 {
 	(void)buffer;
-    if (!s->property_vcounter[s->object_type])
+	if (!s->property_vcounter[s->object_type])
 	{
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
@@ -57,7 +42,7 @@ void	vector_state(char *buffer, t_scene_parser *s)
 
 void	comma_state(char *buffer, t_scene_parser *s)
 {
-    if (s->comma_counter > 1)
+	if (s->comma_counter > 1)
 	{
 		parsing_cleanup(s->scene);
 		exit(ft_perror(EXEC_NAME, NULL, P_EXTRA));
@@ -71,9 +56,9 @@ void	comma_state(char *buffer, t_scene_parser *s)
 
 void	properties_parser_loop_read(t_scene_parser *s)
 {
-	int		read_return;
+	int read_return;
 
-    if (s->i > 998 || (read_return =
+	if (s->i > 998 || (read_return =
 		read(s->fd, s->properties_buffer + ++s->i, 1)) < 0)
 	{
 		parsing_cleanup(s->scene);
@@ -109,9 +94,9 @@ int		properties_parser_loop(t_scene_parser *s)
 		s->offset = -1;
 	}
 	if (s->offset == -1 && (ft_isdigit(s->properties_buffer[s->i]) ||
-		s->properties_buffer[s->i] == '-'))
+							s->properties_buffer[s->i] == '-'))
 		s->offset = s->i;
 	if (s->properties_buffer[s->i] == '\n')
-       return (1);
-    return (0);
+		return (1);
+	return (0);
 }
