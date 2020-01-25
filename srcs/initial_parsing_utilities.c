@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/22 20:45:05 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/25 16:24:11 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void			scene_object_dispatcher(t_scene_parser *s)
 				properties_parser(s)), sizeof(t_object)));
 }
 
-int				scene_parser_loop(t_scene_parser *s)
+static int		scene_parser_loop_read(t_scene_parser *s)
 {
 	if ((s->read_return = read(s->fd, s->object_name_buffer + ++s->i, 1)) < 0)
 	{
@@ -71,6 +71,13 @@ int				scene_parser_loop(t_scene_parser *s)
 		else
 			return (1);
 	}
+	return (0);
+}
+
+int				scene_parser_loop(t_scene_parser *s)
+{
+	if (scene_parser_loop_read(s))
+		return (1);
 	if (!s->i && s->object_name_buffer[s->i] == '#')
 		s->comment_flag = 1;
 	if (!s->comment_flag && s->object_name_buffer[s->i] == ':')

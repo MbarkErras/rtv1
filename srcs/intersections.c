@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
-#include <stdio.h>
 
 int				hit_plane(t_raytracer *r, t_object *object, double *distance)
 {
@@ -27,7 +26,7 @@ int				hit_plane(t_raytracer *r, t_object *object, double *distance)
 	*distance = solution;
 	return (1);
 }
-#include<stdio.h>
+
 int				hit_sphere(t_raytracer *r, t_object *object, double *distance)
 {
 	t_vec3		o_c;

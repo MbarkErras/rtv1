@@ -32,20 +32,6 @@ static t_vec3		d_to_rgb(double value)
 	return (rgb);
 }
 
-// int					hit_light(t_raytracer *r, t_object *light)
-// {
-// 	t_hit save;
-// 	int ret;
-
-// 	save = r->hit;
-// 	ft_bzero(&r->hit, sizeof(t_hit));
-// 	r->ray.org = save.p;
-// 	r->ray.dir = vecsub(light->vectors[0], save.p);
-// 	ret = hit_loop(r, BIG, save.object);
-// 	r->hit = save;
-// 	return (ret);
-// }
-
 static t_vec3		diffuse(t_raytracer *r, t_list *light, double dot)
 {
 	t_vec3		diff;
@@ -58,7 +44,7 @@ static t_vec3		diffuse(t_raytracer *r, t_list *light, double dot)
 	intensity = TLIST(light, t_object)->scalars[1];
 	diff.x = dot * object_color.x * light_color.x * intensity / 256.0;
 	diff.y = dot * object_color.y * light_color.y * intensity /256.0;
-	diff.z = dot * object_color.z * light_color.z * intensity /256.0;
+	diff.z = dot * object_color.z * light_color.z * intensity /25.0;
 	return (diff);
 }
 

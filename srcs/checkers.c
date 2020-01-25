@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 21:30:59 by aait-el-          #+#    #+#             */
-/*   Updated: 2020/01/22 18:58:03 by aait-el-         ###   ########.fr       */
+/*   Updated: 2020/01/25 19:04:49 by merras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,18 @@ int		is_recognized(char *word)
 	if (!ft_strcmp(word, "light:"))
 		return (LIGHT);
 	return (0);
+}
+
+int		grammar_checker(char *buffer, int i)
+{
+	return (
+		(!ft_isdigit(buffer[i]) && buffer[i] != ' ' && buffer[i] != '\n' &&
+			buffer[i] != '.' && buffer[i] != ',' && buffer[i] != '-') ||
+		(i && (buffer[i] == '.' || buffer[i] == ',') &&
+			!ft_isdigit(buffer[i - 1])) ||
+		(i && (buffer[i - 1] == '.' || buffer[i - 1] == ',') &&
+			(!ft_isdigit(buffer[i]) && buffer[i] != '-')) ||
+		(i && buffer[i] == '-' && buffer[i - 1] != ' ' &&
+			buffer[i - 1] != ',') ||
+		(i && buffer[i - 1] == '-' && !ft_isdigit(buffer[i])));
 }
