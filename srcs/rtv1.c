@@ -47,7 +47,7 @@ static void		print_parse_results(t_scene s)
 
 static int				clean_up(t_raytracer *r)
 {
-	parsing_cleanup(&r->scene);
+	// parsing_cleanup(&r->scene);
 	mlx_destroy_image(r->mlx_pointers[0], r->mlx_pointers[2]);
 	exit(0);
 }

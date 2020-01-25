@@ -22,46 +22,14 @@ static int			rgb_to_int(t_vec3 rgb)
 	return (color);
 }
 
-static t_vec3		d_to_rgb(double value, double coef)
+static t_vec3		d_to_rgb(double value)
 {
 	t_vec3			rgb;
 
-	rgb.x = coef * (((int)value >> 16) & 0xFF);
-	rgb.y = coef * (((int)value >> 8) & 0xFF);
-	rgb.z = coef * ((int)value & 0xFF);
+	rgb.x = (((int)value >> 16) & 0xFF);
+	rgb.y = (((int)value >> 8) & 0xFF);
+	rgb.z = ((int)value & 0xFF);
 	return (rgb);
-}
-
-static t_vec3		diffuse(t_raytracer *r, t_list *light)
-{
-	t_vec3			vector;
-	double			color;
-	t_vec3			light_color;
-
-	color = 0.0;
-	vector = vecsub(TLIST(light, t_object)->vectors[0], r->hit.p);
-	if (vecdot(vecnorm(vector), r->hit.normal) > 0.0)
-		color = vecdot(vecnorm(vector), r->hit.normal);
-	light_color = vecset(0.0, 0.0, 0.0);
-	light_color = d_to_rgb(TLIST(light, t_object)->scalars[0], 1.0);
-	light_color = vecadd(light_color, d_to_rgb(r->hit.object->scalars[0], color));
-	return (vecopx(light_color, TLIST(light,
-					t_object)->scalars[1] * 256 / veclength(vector)));
-}
-
-static t_vec3		specular(t_raytracer *r, t_list *light)
-{
-	t_vec3			vector;
-	t_vec3			reflect;
-	double			color;
-
-
-	color = 0.0;
-	vector = vecsub(TLIST(light, t_object)->vectors[0], r->hit.p);
-	reflect = vecnorm(vecreflect(vector, r->hit.normal));
-	if (vecdot(reflect, r->ray.dir) > 0.0)
-		color += pow(vecdot(reflect, r->hit.normal), 200.0);
-	return (vecopx(vecset(color, color, color), 256.0));
 }
 
 // int					hit_light(t_raytracer *r, t_object *light)
@@ -78,19 +46,63 @@ static t_vec3		specular(t_raytracer *r, t_list *light)
 // 	return (ret);
 // }
 
+static t_vec3		diffuse(t_raytracer *r, t_list *light, double dot)
+{
+	t_vec3		diff;
+	t_vec3		light_color;
+	t_vec3		object_color;
+	double		intensity;
+
+	light_color = d_to_rgb(TLIST(light, t_object)->scalars[0]);
+	object_color = d_to_rgb(r->hit.object->scalars[0]);
+	intensity = TLIST(light, t_object)->scalars[1];
+	diff.x = dot * object_color.x * light_color.x * intensity / 256.0;
+	diff.y = dot * object_color.y * light_color.y * intensity /256.0;
+	diff.z = dot * object_color.z * light_color.z * intensity /256.0;
+	return (diff);
+}
+
+static t_vec3		specular(t_raytracer *r, t_list *light, t_vec3 direction, double dot)
+{
+	t_vec3		spec;
+	t_vec3		light_color;
+	t_vec3		vector1;
+	t_vec3		vector2;
+	double		coef;
+	double		intensity;
+
+	light_color = d_to_rgb(TLIST(light, t_object)->scalars[0]);
+	vector1 = vecopx(direction, -1.0);
+	vector2 = vecsub(vecopx(r->hit.normal, 2.0 * dot), r->ray.dir);
+	coef = vecdot(vector2, vector1) > 0.0 ? pow(vecdot(vector2, vector1), 30.0) : 0.0;
+	intensity = TLIST(light, t_object)->scalars[1];
+	spec.x = coef * light_color.x * intensity;
+	spec.y = coef * light_color.y * intensity;
+	spec.z = coef * light_color.z * intensity;
+	return (spec);
+}
+
 int					color_picker(t_raytracer *r)
 {
 	t_vec3			rgb;
 	t_list			*light;
+	t_vec3			direction;
+	double			dot;
 
 	rgb = vecset(0.0, 0.0, 0.0);
 	light = r->scene.lights;
+	direction = r->ray.dir;
 	while (light)
 	{
+		r->ray.org = r->hit.p;
+		r->ray.dir = vecnorm(vecsub(TLIST(light, t_object)->vectors[0], r->hit.p));
+		dot =  (vecdot(r->hit.normal, r->ray.dir) > 0.0) ? 
+				vecdot(r->hit.normal, r->ray.dir) : 0;
 		// if (!hit_light(r, light->content))
 		// {
-			rgb = vecadd(rgb, diffuse(r, light));
-			rgb = vecadd(rgb, specular(r, light));
+			 
+			rgb = vecadd(rgb, diffuse(r, light, dot));
+		 	rgb = vecadd(rgb, specular(r, light, direction, dot));
 		// }
 		light = light->next;
 	}

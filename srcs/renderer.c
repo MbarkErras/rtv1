@@ -11,11 +11,9 @@
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
-
+#include <stdio.h>
 static void		initialize_raytracer(t_raytracer *r)
 {
-	r->scene.camera->vectors[1] = vecsub(r->scene.camera->vectors[1],
-		r->scene.camera->vectors[0]);
 	r->mlx_pointers[0] = mlx_init();
 	r->mlx_pointers[1] = mlx_new_window(r->mlx_pointers[0], WIDTH, HEIGHT, "rtv1");
 	r->mlx_pointers[2] = mlx_new_image(r->mlx_pointers[0], WIDTH, HEIGHT);
@@ -41,7 +39,8 @@ static void		ray_constructor(t_raytracer *r, int plane_indexes[2])
 	scalars[X] = 2.0 * plane_indexes[X] / (double)WIDTH - 1;
 	scalars[Y] = 2.0 * plane_indexes[Y] / (double)HEIGHT - 1;
 	r->ray.org = r->scene.camera->vectors[0];
-	r->ray.dir = vecnorm(vecadd(vecadd(vecadd(r->scene.camera->vectors[1], r->scene.camera->vectors[0]),
+	//lookat !! vecsub !!
+	r->ray.dir = vecnorm(vecadd(vecadd(vecsub(r->scene.camera->vectors[1], r->scene.camera->vectors[0]),
 				vecopx(r->plane_vectors[X], scalars[X])), vecopx(r->plane_vectors[Y], scalars[Y])));
 }
 
