@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "rtv1.h"
-
+#include <stdio.h>
 static void		initialize_raytracer(t_raytracer *r)
 {
 	r->mlx_pointers[0] = mlx_init();
@@ -22,7 +22,7 @@ static void		initialize_raytracer(t_raytracer *r)
 		&r->mlx_properties[0], &r->mlx_properties[1], &r->mlx_properties[2]);
 	r->plane_vectors[0] = vecnorm(r->scene.camera->vectors[2]);
 	r->plane_vectors[1] = vecnorm(veccross(r->plane_vectors[0],
-				r->scene.camera->vectors[1]));
+				vecsub(r->scene.camera->vectors[1], r->scene.camera->vectors[0])));
 	if (TLIST(r->scene.objects, t_object)->object_type == SPHERE)
 		TLIST(r->scene.objects, t_object)->vectors[0] =
 			vecadd(TLIST(r->scene.objects, t_object)->vectors[0],

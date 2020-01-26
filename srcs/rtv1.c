@@ -66,6 +66,7 @@ int				main(int argc, char **argv)
 	parse_scene(fd, &raytracer.scene);
 	if (protect_ranges(raytracer.scene))
 	{
+		ft_putstr("error: nooood t9awed\n");
 		parsing_cleanup(&raytracer.scene);
 		exit(1);
 	}

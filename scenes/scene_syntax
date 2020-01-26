@@ -1,6 +1,6 @@
 
 camera:   [x,y,z]   [x,y,z]    [x,y,z]
-		  postion   direction  top
+		  postion   lookat     top
 
 light:    [x,y,z]       										  [c]	 [i]
 	      position      										  color  intensity
