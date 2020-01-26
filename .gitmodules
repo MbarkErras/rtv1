@@ -3,4 +3,4 @@
 	url = https://www.github.com/MbarkErras/simplist.git
 [submodule "libs/centropy"]
 	path = libs/centropy
-	url = https://www.github.com/MbarkErras/centropy.git
+	url = https://github.com/MbarkErras/centropy.git

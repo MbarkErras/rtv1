@@ -6,11 +6,11 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:52:44 by merras            #+#    #+#             */
-/*   Updated: 2020/01/25 23:55:21 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/26 00:47:53 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rtv1.h"
+#include "rtv1.h"
 
 t_object		*create_object(t_object o)
 {
@@ -25,8 +25,6 @@ t_object		*create_object(t_object o)
 	ft_memcpy(object->scalars, o.scalars, sizeof(double[MAX_SCOUNT]));
 	return (object);
 }
-
-#include <stdio.h>
 
 void			parsing_cleanup(t_scene *s)
 {

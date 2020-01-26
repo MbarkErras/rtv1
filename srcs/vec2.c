@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rtv1.h"
+#include "rtv1.h"
 
 t_vec3		vecadd(t_vec3 a, t_vec3 b)
 {
@@ -32,24 +32,23 @@ t_vec3		vecset(double x, double y, double z)
 	return (v);
 }
 
-t_vec3		vecopx(t_vec3 a, double x)
+int			rgb_to_int(t_vec3 rgb)
 {
-	t_vec3	v;
+	int				color;
 
-	v.x = a.x * x;
-	v.y = a.y * x;
-	v.z = a.z * x;
-	return (v);
+	color = (((int)rgb.x & 0x0ff) << 16) | (((int)rgb.y & 0x0ff) << 8) |
+		((int)rgb.z & 0x0ff);
+	return (color);
 }
 
-t_vec3		vecreflect(t_vec3 i, t_vec3 n)
+t_vec3		d_to_rgb(double value)
 {
-	t_vec3	v;
+	t_vec3			rgb;
 
-	v.x = i.x - 2.0 * vecdot(n, i) * n.x;
-	v.y = i.y - 2.0 * vecdot(n, i) * n.y;
-	v.z = i.z - 2.0 * vecdot(n, i) * n.z;
-	return (v);
+	rgb.x = (((int)value >> 16) & 0xFF);
+	rgb.y = (((int)value >> 8) & 0xFF);
+	rgb.z = ((int)value & 0xFF);
+	return (rgb);
 }
 
 void		clamping_vector(t_vec3 *rgb)

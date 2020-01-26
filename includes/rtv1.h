@@ -6,7 +6,7 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:12:38 by merras            #+#    #+#             */
-/*   Updated: 2020/01/25 19:05:22 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/26 01:13:29 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ typedef struct	s_scene_parser
 t_vec3			vecnorm(t_vec3 vec);
 t_vec3			veccross(t_vec3 a, t_vec3 b);
 t_vec3			vecsub(t_vec3 a, t_vec3 b);
-t_vec3			vecreflect(t_vec3 i, t_vec3 n);
 t_vec3			vecadd(t_vec3 a, t_vec3 b);
 t_vec3			vecopx(t_vec3 a, double x);
 t_vec3			vecset(double x, double y, double z);
 double			vecdot(t_vec3 a, t_vec3 b);
-double			veclength(t_vec3 vec);
+t_vec3			d_to_rgb(double value);
+int				rgb_to_int(t_vec3 rgb);
 void			clamping_vector(t_vec3 *rgb);
 
 t_object		*create_object(t_object o);
@@ -109,13 +109,13 @@ int				scene_parser_loop(t_scene_parser *s);
 
 int				grammar_checker(char *buffer, int i);
 
-void    		rotate_direction(t_raytracer *r);
+void			rotate_direction(t_raytracer *r);
 void			render_scene(t_raytracer *raytracer);
 int				hit_sphere(t_raytracer *r, t_object *object, double *distance);
 int				hit_plane(t_raytracer *r, t_object *object, double *distance);
 int				hit_cylinder(t_raytracer *r, t_object *obj, double *distance);
 int				hit_cone(t_raytracer *r, t_object *object, double *distance);
-int				hit_loop(t_raytracer *r, double big, t_object *self);
+int				hit_loop(t_raytracer *r, t_object *self);
 int				color_picker(t_raytracer *r);
 
 void			parsing_cleanup(t_scene *s);

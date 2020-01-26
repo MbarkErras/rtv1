@@ -35,30 +35,30 @@ OBJS_PATH = $(addprefix $(OBJS_DIR)/, $(OBJS))
 SRCS_PATH = $(addprefix $(SRCS_DIR)/, $(SRCS))
 INCLUDES = includes libs/centropy/includes libs/simplist/includes
 
-FLAGS = #-g -Wall -Werror -Wextra
+FLAGS = -g -Wall -Werror -Wextra
 INCLUDES_FLAG = $(addprefix -I, $(INCLUDES))
 
 all: $(NAME)
 
 $(NAME): $(OBJS_PATH)
-	make -C $(LIBS_DIR)/centropy
-	make -C $(LIBS_DIR)/simplist
-	gcc $(OBJS_PATH) $(INCLUDES_FLAG) $(MLX) $(LIBS_DIR)/*/*.a -o $(NAME) -lmlx -framework openGL -framework AppKit
+	@make -C $(LIBS_DIR)/centropy
+	@make -C $(LIBS_DIR)/simplist
+	@gcc $(OBJS_PATH) $(INCLUDES_FLAG) $(MLX) $(LIBS_DIR)/*/*.a -o $(NAME) -lmlx -framework openGL -framework AppKit
 
 $(OBJS_PATH): $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c | $(OBJS_DIR)
-	gcc $(FLAGS) $(INCLUDES_FLAG) -c $< -o $@
+	@gcc $(FLAGS) $(INCLUDES_FLAG) -c $< -o $@
 
 $(OBJS_DIR):
 	mkdir $(OBJS_DIR)
 
 clean:
-	make -C $(LIBS_DIR)/centropy clean
-	make -C $(LIBS_DIR)/simplist clean
+	@make -C $(LIBS_DIR)/centropy clean
+	@make -C $(LIBS_DIR)/simplist clean
 	rm -rf $(OBJS_DIR)
 
 fclean: clean
-	make -C $(LIBS_DIR)/centropy fclean
-	make -C $(LIBS_DIR)/simplist fclean
+	@make -C $(LIBS_DIR)/centropy fclean
+	@make -C $(LIBS_DIR)/simplist fclean
 	rm -rf $(NAME)
 
 re: fclean all

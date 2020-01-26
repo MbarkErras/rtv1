@@ -6,33 +6,44 @@
 /*   By: merras <merras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/24 21:18:33 by aait-el-          #+#    #+#             */
-/*   Updated: 2020/01/23 17:26:08 by merras           ###   ########.fr       */
+/*   Updated: 2020/01/26 01:21:00 by aait-el-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rtv1.h"
+#include "rtv1.h"
+
+static t_vec3	help_plane(t_raytracer *r)
+{
+	if (vecdot(r->ray.dir, r->hit.object->vectors[1]) > 0.0)
+		return (r->hit.object->vectors[1]);
+	return (vecopx(r->hit.object->vectors[1], -1.0));
+}
 
 static t_vec3	get_normal(t_raytracer *r)
 {
 	t_vec3		vec;
 	t_vec3		o_c;
+	t_vec3		norm;
 
 	if (r->hit.object->object_type == SPHERE)
 		return (vecnorm(vecsub(r->hit.p, r->hit.object->vectors[0])));
 	if (r->hit.object->object_type == PLANE)
-	{
 		if (vecdot(r->ray.dir, r->hit.object->vectors[1]) < 0.0)
-			return (r->hit.object->vectors[1]);
-		return (vecopx(r->hit.object->vectors[1], -1.0));
-	}
+			return (help_plane(r));
 	o_c = vecsub(r->ray.org, r->hit.object->vectors[0]);
+	norm = (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]),
+					vecopx(r->hit.object->vectors[1],
+						vecdot(r->ray.dir, r->hit.object->vectors[1]) *
+						r->hit.distance + vecdot(o_c,
+							r->hit.object->vectors[1])))));
 	if (r->hit.object->object_type == CYLINDER)
-		return (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), vecopx(r->hit.object->vectors[1], vecdot(r->ray.dir, r->hit.object->vectors[1]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[1])))));
-	vec = vecopx(r->hit.object->vectors[1], vecdot(r->ray.dir, r->hit.object->vectors[1]) * r->hit.distance + vecdot(o_c, r->hit.object->vectors[1]));
+		return (norm);
+	vec = vecopx(r->hit.object->vectors[1], vecdot(r->ray.dir,
+				r->hit.object->vectors[1]) * r->hit.distance + vecdot(o_c,
+					r->hit.object->vectors[1]));
 	vec = vecopx(vec, 1.0 + pow(tan(r->hit.object->scalars[1]), 2));
-	if (r->hit.object->object_type == CONE)
-		return (vecnorm(vecsub(vecsub(r->hit.p, r->hit.object->vectors[0]), vec)));
-	return (vecset(0, 0, 0));
+	return (r->hit.object->object_type == CONE ? vecnorm(vecsub(
+	vecsub(r->hit.p, r->hit.object->vectors[0]), vec)) : vecset(0, 0, 0));
 }
 
 static void		hit_objects(t_raytracer *r, t_object *object, double *d)
@@ -47,13 +58,13 @@ static void		hit_objects(t_raytracer *r, t_object *object, double *d)
 		hit_cone(r, object, d);
 }
 
-int				hit_loop(t_raytracer *r, double big, t_object *self)
+int				hit_loop(t_raytracer *r, t_object *self)
 {
 	double		hit_distance;
 	t_list		*object;
 
-	r->hit.distance = big;
-	hit_distance = big;
+	r->hit.distance = BIG;
+	hit_distance = BIG;
 	object = r->scene.objects;
 	while (object)
 	{
@@ -72,5 +83,5 @@ int				hit_loop(t_raytracer *r, double big, t_object *self)
 		}
 		object = object->next;
 	}
-	return (r->hit.distance == big ? 0 : 1);
+	return (r->hit.distance == BIG ? 0 : 1);
 }

@@ -10,11 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/rtv1.h"
+#include "rtv1.h"
 
-double		veclength(t_vec3 vec)
+t_vec3		vecopx(t_vec3 a, double x)
 {
-	return (sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z));
+	t_vec3	v;
+
+	v.x = a.x * x;
+	v.y = a.y * x;
+	v.z = a.z * x;
+	return (v);
 }
 
 double		vecdot(t_vec3 a, t_vec3 b)
